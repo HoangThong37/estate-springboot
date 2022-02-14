@@ -39,7 +39,7 @@ public class BuildingServiceImpl implements BuildingService {
 			List<BuildingEntity> buildingEntities = buildingRepository.buildingSearch(params, types);
 			List<BuildingSearchReponse> buildingResponses = new ArrayList<>();
 			for(BuildingEntity entity : buildingEntities) {
-				BuildingSearchReponse model = buildingConverter.ConvertBuilding(entity);
+				BuildingSearchReponse model = buildingConverter.convertBuildingSerachReponse(entity);
 				buildingResponses.add(model);
 			}
 			return buildingResponses;
