@@ -1,4 +1,4 @@
-package com.laptrinhjavaweb.controller;
+package com.laptrinhjavaweb.api;
 
 import java.util.List;
 import java.util.Map;
@@ -11,10 +11,10 @@ import com.laptrinhjavaweb.dto.response.BuildingSearchReponse;
 import com.laptrinhjavaweb.service.BuildingService;
 
 @RestController
-public class BuildingController {
+public class BuildingAPI {
 	
 	private  BuildingService buildingService;
-	public BuildingController(BuildingService buildingService) {
+	public BuildingAPI(BuildingService buildingService) {
 		this.buildingService = buildingService;
 	}
 	

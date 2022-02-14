@@ -26,7 +26,7 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 		List<BuildingEntity> buildingSearch = new ArrayList<>();
 		try {
 //			conn = DriverManager.getConnection(DB_URL, USER, PASS);
-			conn = ConnectionUtils.getConnections();
+			conn = ConnectionUtils.getConnection();
 			if (conn != null) {
 				System.out.println("success connected");
 				

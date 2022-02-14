@@ -19,7 +19,7 @@ public class DistrictRepositoryImpl implements DistrictRepository {
 		ResultSet rs = null;
 		DistrictEntity districtEntity = new DistrictEntity();
 		try {
-			conn = ConnectionUtils.getConnections();
+			conn = ConnectionUtils.getConnection();
 			if (conn != null) {
 				System.out.println("Kết nối thành công");
 				StringBuilder query = new StringBuilder("Select id, name from district where 1 = 1");
