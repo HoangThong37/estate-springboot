@@ -4,38 +4,37 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.PreparedStatement;
+
 import com.laptrinhjavaweb.repository.DistrictRepository;
-import com.laptrinhjavaweb.repository.entity.BuildingEntity;
 import com.laptrinhjavaweb.repository.entity.DistrictEntity;
-import com.mysql.jdbc.PreparedStatement;
+import com.laptrinhjavaweb.utils.ConnectionUtils;
 
 public class DistrictRepositoryImpl implements DistrictRepository {
-	private final String DB_URL = "jdbc:mysql://localhost:3306/estatebasic";
-	private final String USER = "root";
-	private final String PASS = "123456";
 
 	@Override
 	public DistrictEntity findByCode(Integer id) {
 		Connection conn = null;
-		java.sql.PreparedStatement stmt = null;
+		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		DistrictEntity districtEntity = new DistrictEntity();
 		try {
-			conn = DriverManager.getConnection(DB_URL, USER, PASS);
-			if (id != null) {
+			conn = ConnectionUtils.getConnections();
+			if (conn != null) {
+				System.out.println("Kết nối thành công");
 				StringBuilder query = new StringBuilder("Select id, name from district where 1 = 1");
-				stmt = conn.prepareStatement(query.toString());
-				stmt.setInt(1, id);
-				rs = stmt.executeQuery();
-				while (rs.next()) {
-					districtEntity.setName(rs.getString("name")); // set gtri name cho building
+				if (id != null) {
+					query.append(" and id = ? ");
+					stmt = conn.prepareStatement(query.toString());
+					stmt.setInt(1, id);
+					while (rs.next()) {
+						districtEntity.setName(rs.getString("name")); // set gtri name cho building
+
+					}
 				}
+				return districtEntity;
+
 			}
-			return districtEntity;
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -1,10 +1,10 @@
-package com.laptrinhjavaweb.controller;
+package com.laptrinhjavaweb.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class test {
+public class ConnectionUtils {
 	public static Connection getConnections() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -16,13 +16,4 @@ public class test {
 			return null;
 		}
 	}
-	public static void main(String[] args) {
-		if (getConnections() != null) {
-			System.out.println("Truy cap thanh cong");
-		}
-		if (getConnections() == null) {
-			System.out.println("Truy cap that bai");
-		}
-	}
-
 }

@@ -6,23 +6,31 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.laptrinhjavaweb.Converter.BuildingConverter;
 import com.laptrinhjavaweb.dto.response.BuildingSearchReponse;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 import com.laptrinhjavaweb.repository.entity.BuildingEntity;
+import com.laptrinhjavaweb.repository.impl.BuildingRepositoryImpl;
 import com.laptrinhjavaweb.service.BuildingService;
 import com.laptrinhjavaweb.utils.ValidateUtils;
 
 @Service
+@Repository
 public class BuildingServiceImpl implements BuildingService {
-
-	@Autowired
-	private BuildingRepository buildingRepository;
+	private BuildingRepository buildingRepository = new BuildingRepositoryImpl();
+	private BuildingConverter buildingConverter ;
 	
+	public BuildingServiceImpl(BuildingConverter buildingConverter) {
+		this.buildingConverter = buildingConverter;
+	}
+
 //	@Autowired
-//	private BuildingConverter ConvertBuilding;
+//	private BuildingRepository buildingRepository;
+//	@Autowired
+//	private BuildingConverter buildingConverter;
 
 	@Override
 	public List<BuildingSearchReponse> buildingSearch(Map<String, Object> params, List<String> types) {
@@ -31,7 +39,7 @@ public class BuildingServiceImpl implements BuildingService {
 			List<BuildingEntity> buildingEntities = buildingRepository.buildingSearch(params, types);
 			List<BuildingSearchReponse> buildingResponses = new ArrayList<>();
 			for(BuildingEntity entity : buildingEntities) {
-				BuildingSearchReponse model = BuildingConverter.ConvertBuilding(entity);
+				BuildingSearchReponse model = buildingConverter.ConvertBuilding(entity);
 				buildingResponses.add(model);
 			}
 			return buildingResponses;

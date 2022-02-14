@@ -1,7 +1,6 @@
 package com.laptrinhjavaweb.repository.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,24 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.feed.RssChannelHttpMessageConverter;
 import org.springframework.stereotype.Repository;
 
-import com.laptrinhjavaweb.Converter.BuildingConverter;
-import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
-import com.laptrinhjavaweb.dto.response.BuildingSearchReponse;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 import com.laptrinhjavaweb.repository.entity.BuildingEntity;
-import com.laptrinhjavaweb.utils.StringUtils;
+import com.laptrinhjavaweb.utils.ConnectionUtils;
 import com.laptrinhjavaweb.utils.ValidateUtils;
 
 @Repository
 public class BuildingRepositoryImpl implements BuildingRepository {
-
-	private final String DB_URL = "jdbc:mysql://localhost:3306/estatebasic";
-	private final String USER = "root";
-	private final String PASS = "123456";
 
 	@Override
 	public List<BuildingEntity> buildingSearch(Map<String, Object> params, List<String> types) {
@@ -35,7 +25,8 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 		ResultSet rs = null;
 		List<BuildingEntity> buildingSearch = new ArrayList<>();
 		try {
-			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+//			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			conn = ConnectionUtils.getConnections();
 			if (conn != null) {
 				System.out.println("success connected");
 				
@@ -66,7 +57,7 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 			}
 			return buildingSearch;
 
-		} catch (SQLException | ArithmeticException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
