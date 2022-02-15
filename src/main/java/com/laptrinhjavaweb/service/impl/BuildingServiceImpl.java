@@ -20,39 +20,43 @@ import com.laptrinhjavaweb.utils.ValidateUtils;
 @Service
 @Repository
 public class BuildingServiceImpl implements BuildingService {
-	private BuildingRepository buildingRepository = new BuildingRepositoryImpl();
-	private BuildingConverter buildingConverter ;
-	
+/*	private BuildingRepository buildingRepository = new BuildingRepositoryImpl();
+	private BuildingConverter buildingConverter;
+
 	public BuildingServiceImpl(BuildingConverter buildingConverter) {
 		this.buildingConverter = buildingConverter;
-	}
-
-//	@Autowired
-//	private BuildingRepository buildingRepository;
-//	@Autowired
-//	private BuildingConverter buildingConverter;
+	}*/
+	@Autowired
+	private BuildingRepository buildingRepository;
+	
+	@Autowired
+	private BuildingConverter buildingConverter;
 
 	@Override
-	public List<BuildingSearchReponse> buildingSearch(Map<String, Object> params, List<String> types) {
-			Map<String, Object> validParams = validateParams(params);	// xem có dữ liệu truyền vào k
-			// convert entity -> reponse
-			List<BuildingEntity> buildingEntities = buildingRepository.buildingSearch(params, types);
-			List<BuildingSearchReponse> buildingResponses = new ArrayList<>();
-			for(BuildingEntity entity : buildingEntities) {
-				BuildingSearchReponse model = buildingConverter.convertBuildingSerachReponse(entity);
-				buildingResponses.add(model);
-			}
-			return buildingResponses;
+	public List<BuildingSearchReponse> buildingSearch(Map<String, String> params, List<String> types) {
+		List<BuildingSearchReponse> buildingResponses = new ArrayList<>();
+		if (!params.isEmpty() || !types.isEmpty()) {
+		 List<BuildingEntity> buildingEntities = buildingRepository.buildingSearch(params, types);
+		 for (BuildingEntity entity : buildingEntities) {
+			BuildingSearchReponse model = buildingConverter.convertBuildingSerachReponse(entity);
+			buildingResponses.add(model);
+		} 
 	}
-
-		private Map<String, Object> validateParams(Map<String, Object> params) {
-			Map<String, Object> validParams = new HashMap<>();
-			for(Map.Entry<String, Object> entry : params.entrySet()) {  // entrySet : được sử dụng để trả lại đối tượng Set có chứa tất cả các keys và values. 
-				if (ValidateUtils.isValid(entry.getValue())) {
-					validParams.put(entry.getKey().toLowerCase(), entry.getValue());
-				}			
-			}
-			return validParams;
-		}
-
+		return buildingResponses;
+	}
 }
+
+//  Service thì không cần validateParams nữa, vì mình sử dụng trực tiếp Map<String, String> luôn, chỉ cần check như sau là đủ.
+
+/*
+ * private Map<String, Object> validateParams(Map<String, Object> params) {
+ * Map<String, Object> validParams = new HashMap<>(); for(Map.Entry<String,
+ * Object> entry : params.entrySet()) { // entrySet : được sử dụng để trả lại
+ * đối tượng Set có chứa tất cả các keys và values. if
+ * (ValidateUtils.isValid(entry.getValue())) {
+ * validParams.put(entry.getKey().toLowerCase(), entry.getValue()); } } return
+ * validParams; }
+ */
+
+/*			Map<String, Object> validParams = validateParams(params);  xem có dữ liệu truyền vào k
+convert entity -> reponse*/

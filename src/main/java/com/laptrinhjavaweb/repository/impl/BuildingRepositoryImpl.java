@@ -19,7 +19,7 @@ import com.laptrinhjavaweb.utils.ValidateUtils;
 public class BuildingRepositoryImpl implements BuildingRepository {
 
 	@Override
-	public List<BuildingEntity> buildingSearch(Map<String, Object> params, List<String> types) {
+	public List<BuildingEntity> buildingSearch(Map<String, String> params, List<String> types) {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -78,7 +78,7 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 		return new ArrayList<>();
 	}
 
-	private void buildingSqlWithOutJoin(Map<String, Object> params, StringBuilder whereSql) {
+	private void buildingSqlWithOutJoin(Map<String, String> params, StringBuilder whereSql) {
 		if (ValidateUtils.isValid(params.get("name"))) {
 			whereSql.append("and bd.name like '%").append(params.get("name")).append("%'");
 		}
@@ -113,7 +113,7 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 
 	}
 
-	private void buildingSqlWithJoin(Map<String, Object> params, List<String> types, StringBuilder whereSql,
+	private void buildingSqlWithJoin(Map<String, String> params, List<String> types, StringBuilder whereSql,
 			StringBuilder joinSql) {
 		if (ValidateUtils.isValid(params.get("AreaRentFrom")) || ValidateUtils.isValid(params.get("AreaRentTo"))) {
 			joinSql.append(" inner join rentarea as ra on ra.id = bd.id");

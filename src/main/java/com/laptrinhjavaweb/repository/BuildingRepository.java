@@ -8,5 +8,5 @@ import com.laptrinhjavaweb.repository.entity.BuildingEntity;
 
 public interface BuildingRepository {
 
-List<BuildingEntity> buildingSearch(Map<String, Object> params, List<String> types);
+List<BuildingEntity> buildingSearch(Map<String, String> params, List<String> types);
 }

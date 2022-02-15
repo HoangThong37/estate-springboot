@@ -19,7 +19,7 @@ public class BuildingAPI {
 	}
 	
 	@GetMapping(value = "/api/building")
-	public List<BuildingSearchReponse> showBuilding(@RequestParam(required = false) Map<String, Object> params,
+	public List<BuildingSearchReponse> showBuilding(@RequestParam(required = false) Map<String, String> params,
 			@RequestParam(required = false) List<String> types) {
 		return buildingService.buildingSearch(params, types);
 	}

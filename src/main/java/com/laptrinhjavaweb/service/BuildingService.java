@@ -7,7 +7,7 @@ import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingSearchReponse;
 
 public interface BuildingService {
-	List<BuildingSearchReponse> buildingSearch(Map<String, Object> params, List<String> types);
+	List<BuildingSearchReponse> buildingSearch(Map<String, String> params, List<String> types);
 
 
 
