@@ -71,18 +71,15 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 		if (ValidateUtils.isNotBlank(name)) {
 			whereSql.append("and bd.name like '%").append(name).append("%'");
 		}
-		
 		// street
 		String street = params.getOrDefault("street", null);
 		if (ValidateUtils.isNotBlank(street)) {
 			whereSql.append("and bd.street like '%").append(street).append("%'");
 		}
-		
 		//ward
 		String ward = params.getOrDefault("ward", null);
 		if (ValidateUtils.isNotBlank(ward)) {
 			whereSql.append("and bd.ward like '%").append(params.get("ward")).append("%'");
-		}
 		
 		//level
 		String level = params.getOrDefault("level", null);
@@ -118,34 +115,28 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 		if (ValidateUtils.isNotBlank(numberofbasement)) {
 			whereSql.append("and bd.numberofbasement = ").append(params.get("numberofbasement"));
 		}
-	}
+	} }
 
 	private void buildingSqlWithJoin(Map<String, String> params, List<String> types, StringBuilder whereSql,
 			StringBuilder joinSql) {
+		String AreaRentFrom = params.getOrDefault("AreaRentFrom", null);
+		String AreaRentTo = params.getOrDefault("AreaRentTo", null);
 		
-		if (ValidateUtils.isValid(params.get("AreaRentFrom")) || ValidateUtils.isValid(params.get("AreaRentTo"))) {
+		if (ValidateUtils.isNotBlank(AreaRentFrom) || ValidateUtils.isNotBlank(AreaRentTo)) {
 			joinSql.append(" inner join rentarea as ra on ra.id = bd.id");
-			if (ValidateUtils.isValid(params.get("AreaRentFrom"))) {
-				whereSql.append(" ra.value >=").append(params.get("AreaRentFrom"));
+			if (ValidateUtils.isNotBlank(AreaRentFrom)) {
+				whereSql.append(" ra.value >=").append(AreaRentFrom);
 			}
-			if (ValidateUtils.isValid(params.get("AreaRentTo"))) {
-				whereSql.append(" ra.value <=").append(params.get("AreaRentTo"));
+			if (ValidateUtils.isNotBlank(AreaRentTo)) {
+				whereSql.append(" ra.value <=").append(AreaRentTo);
 			}
 		}
-
-		if (ValidateUtils.isValid(params.get("AreaRentFrom")) || ValidateUtils.isValid(params.get("AreaRentTo"))) {
-			joinSql.append(" inner join rentarea as ra on ra.id = bd.id");
-			if (ValidateUtils.isValid(params.get("AreaRentFrom"))) {
-				whereSql.append(" ra.value >=").append(params.get("AreaRentFrom"));
-			}
-			if (ValidateUtils.isValid(params.get("AreaRentTo"))) {
-				whereSql.append(" ra.value <=").append(params.get("AreaRentTo"));
-			}
-		}
-		if (ValidateUtils.isValid(params.get("staffId"))) {
+		
+        String staffId = params.getOrDefault("staffId", null);
+		if (ValidateUtils.isNotBlank(staffId)) {
 			joinSql.append(
 					" inner join assignmentbuilding as ab on ab.buildingid = bd.id inner join user as u on ab.staffid = u.id ");
-			whereSql.append(" and staffid = ").append(params.get("staffId"));
+			whereSql.append(" and staffid = ").append(staffId);
 		}
 
 		// BuildingTypes()

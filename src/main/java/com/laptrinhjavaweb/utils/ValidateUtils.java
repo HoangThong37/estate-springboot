@@ -19,11 +19,10 @@ public class ValidateUtils {
 		return false;
 	}
 
+	 /* Nếu truyền vào giá trị null là dính Exception,
+	 isNotBlank là bao gồm cả check != null và != "" */
 	public static boolean isNotBlank(String str) {
-		if (!str.isEmpty()) {
-			return true;
-		}
-		return false;
+		return str != null && !BuildingConstant.EMPTY_STRING.equals(str);
 	}
 
 	public static List<Long> isValid(List<Long> list) {
