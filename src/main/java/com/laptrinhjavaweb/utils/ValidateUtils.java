@@ -19,6 +19,13 @@ public class ValidateUtils {
 		return false;
 	}
 
+	public static boolean isNotBlank(String str) {
+		if (!str.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+
 	public static List<Long> isValid(List<Long> list) {
 		List<Long> result = new ArrayList<Long>();
 		if (!list.isEmpty()) {

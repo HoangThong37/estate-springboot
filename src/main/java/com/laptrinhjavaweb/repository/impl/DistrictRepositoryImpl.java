@@ -39,13 +39,7 @@ public class DistrictRepositoryImpl implements DistrictRepository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				conn.close();
-				stmt.close();
-				rs.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			ConnectionUtils.close(conn, stmt, rs);
 		}
 		return new DistrictEntity();
 	}

@@ -29,7 +29,7 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 			conn = ConnectionUtils.getConnection();
 			if (conn != null) {
 				System.out.println("success connected");
-				
+
 				StringBuilder sql = new StringBuilder("SELECT bd.name,bd.floorarea,bd.street,bd.ward,bd.districtid,"
 						+ "bd.rentprice,bd.brokeragefee,bd.servicefee\r\n"
 						+ " FROM building as bd INNER JOIN district as ds on bd.districtid = ds.id");
@@ -41,8 +41,8 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 				sql.append(joinSql).append(" where 1=1 ").append(whereSql).append(" GROUP BY bd.id");
 				stmt = conn.createStatement();
 				rs = stmt.executeQuery(sql.toString());
-				
-				while (rs.next()) {   // hứng kết quả
+
+				while (rs.next()) { // hứng kết quả
 					BuildingEntity building = new BuildingEntity();
 					building.setDistrictid(rs.getInt("bd.districtid"));
 					building.setName(rs.getString("bd.name"));
@@ -60,61 +60,69 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if (conn != null) {
-					conn.close();
-				}
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (rs != null) {
-					rs.close();
-				}
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			ConnectionUtils.close(conn, stmt, rs);
 		}
 		return new ArrayList<>();
 	}
 
 	private void buildingSqlWithOutJoin(Map<String, String> params, StringBuilder whereSql) {
-		if (ValidateUtils.isValid(params.get("name"))) {
-			whereSql.append("and bd.name like '%").append(params.get("name")).append("%'");
+		// name
+		String name = params.getOrDefault("name", null);
+		if (ValidateUtils.isNotBlank(name)) {
+			whereSql.append("and bd.name like '%").append(name).append("%'");
 		}
-		if (ValidateUtils.isValid(params.get("street"))) {
-			whereSql.append("and bd.street like '%").append(params.get("street")).append("%'");
+		
+		// street
+		String street = params.getOrDefault("street", null);
+		if (ValidateUtils.isNotBlank(street)) {
+			whereSql.append("and bd.street like '%").append(street).append("%'");
 		}
-		if (ValidateUtils.isValid(params.get("ward"))) {
+		
+		//ward
+		String ward = params.getOrDefault("ward", null);
+		if (ValidateUtils.isNotBlank(ward)) {
 			whereSql.append("and bd.ward like '%").append(params.get("ward")).append("%'");
 		}
-		if (ValidateUtils.isValid(params.get("level"))) {
+		
+		//level
+		String level = params.getOrDefault("level", null);
+		if (ValidateUtils.isNotBlank(level)) {
 			whereSql.append(" and bd.level like '%").append(params.get("level")).append("%'");
 		}
-		if (ValidateUtils.isValid(params.get("direction"))) {
+		
+		//direction
+		String direction = params.getOrDefault("direction", null);
+		if (ValidateUtils.isNotBlank(direction)) {
 			whereSql.append(" and bd.direction like '%").append(params.get("direction")).append("%'");
 		}
 		// floorarea
-		if (ValidateUtils.isValid(params.get("floorArea"))) {
+		String floorArea = params.getOrDefault("floorArea", null);
+		if (ValidateUtils.isNotBlank(floorArea)) {
 			whereSql.append(" and bd.floorarea =").append(params.get("floorArea"));
 		}
-		// rentprice
-		if (ValidateUtils.isValid(params.get("rentPriceFrom"))) {
+		
+		// rentpriceFrom
+		String rentpriceFrom = params.getOrDefault("rentPriceFrom", null);
+		if (ValidateUtils.isNotBlank(rentpriceFrom)) {
 			whereSql.append(" and bd.rentprice >= ").append(params.get("rentPriceFrom"));
 		}
-		if (ValidateUtils.isValid(params.get("rentPriceTo"))) {
+		
+		//rentPriceTo
+		String rentpriceTo = params.getOrDefault("rentPriceTo", null);
+		if (ValidateUtils.isNotBlank(rentpriceTo)) {
 			whereSql.append(" and bd.rentprice <= ").append(params.get("rentPriceTo"));
 		}
 
 		// numberofbasement
-		if (ValidateUtils.isValid(params.get("numberofbasement"))) {
+		String numberofbasement = params.getOrDefault("numberofbasement", null);
+		if (ValidateUtils.isNotBlank(numberofbasement)) {
 			whereSql.append("and bd.numberofbasement = ").append(params.get("numberofbasement"));
 		}
-
 	}
 
 	private void buildingSqlWithJoin(Map<String, String> params, List<String> types, StringBuilder whereSql,
 			StringBuilder joinSql) {
+		
 		if (ValidateUtils.isValid(params.get("AreaRentFrom")) || ValidateUtils.isValid(params.get("AreaRentTo"))) {
 			joinSql.append(" inner join rentarea as ra on ra.id = bd.id");
 			if (ValidateUtils.isValid(params.get("AreaRentFrom"))) {
@@ -135,10 +143,11 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 			}
 		}
 		if (ValidateUtils.isValid(params.get("staffId"))) {
-			joinSql.append(" inner join assignmentbuilding as ab on ab.buildingid = bd.id inner join user as u on ab.staffid = u.id ");
+			joinSql.append(
+					" inner join assignmentbuilding as ab on ab.buildingid = bd.id inner join user as u on ab.staffid = u.id ");
 			whereSql.append(" and staffid = ").append(params.get("staffId"));
 		}
-		
+
 		// BuildingTypes()
 		if (types != null && !types.isEmpty()) {
 			joinSql.append(" inner join buildingrenttype as brt on brt.buildingid = bd.id\n "
@@ -148,5 +157,6 @@ public class BuildingRepositoryImpl implements BuildingRepository {
 				buildingtypes.add(" rt.code like '%" + item + "%'");
 			}
 			whereSql.append(" and( ").append(String.join(" OR ", buildingtypes)).append(")");
-		} }
+		}
+	}
 }
