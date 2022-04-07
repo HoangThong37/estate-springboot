@@ -1,26 +1,23 @@
-package com.laptrinhjavaweb.Converter;
+package com.laptrinhjavaweb.converter;
 
-import com.laptrinhjavaweb.dto.response.BuildingSearchReponse;
-import com.laptrinhjavaweb.repository.DistrictRepository;
-import com.laptrinhjavaweb.repository.entity.BuildingEntity;
-import com.laptrinhjavaweb.repository.entity.DistrictEntity;
-import com.laptrinhjavaweb.repository.impl.DistrictRepositoryImpl;
-
+import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.RoleDTO;
+import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.RoleEntity;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class BuildingConverter {
-	private final DistrictRepository districtRepository = new DistrictRepositoryImpl();
+    @Autowired
+    private ModelMapper modelMapper;
 
-	public static BuildingSearchReponse ConvertBuilding(BuildingEntity entity) {
-		DistrictRepository districtRepository = new DistrictRepositoryImpl();		
-		BuildingSearchReponse model = new BuildingSearchReponse();
-		
-		DistrictEntity districtEntity = districtRepository.findByCode(entity.getDistrictid());
-		model.setName(entity.getName());
-		model.setAddress(entity.getStreet() + " , " + entity.getWard() + " , " + entity.getName());
-		model.setFloorArea(entity.getFloorarea());
-		model.setRentPrice(entity.getRentprice());
-		model.setServiceFee(entity.getServicefee());
-		model.setBrokerageFee(entity.getBrokeragefee());
-		return model;
-	}
+    public BuildingDTO convertToDto(BuildingEntity entity) {
+        BuildingDTO result = modelMapper.map(entity, BuildingDTO.class);
+        return result;
+    }
+
+    public BuildingEntity convertToEntity(BuildingDTO dto) {
+        BuildingEntity result = modelMapper.map(dto, BuildingEntity.class);
+        return result;
+    }
 }
