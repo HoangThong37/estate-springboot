@@ -2,6 +2,7 @@ package com.laptrinhjavaweb.api.admin;
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.reponse.BuildingSearchReponse;
+import com.laptrinhjavaweb.exception.FieldRequireException;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 import com.laptrinhjavaweb.service.impl.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,11 @@ public class BuildingAPI {
 
     @PostMapping("api/building")
     public BuildingDTO createBuilding(@RequestBody BuildingDTO newBuilding) {
-        return buildingService.insert(newBuilding) ;
+        try {
+            return buildingService.insert(newBuilding) ;
+        } catch (FieldRequireException ex) {
+            throw ex; //  throw ex xong ta ném cái hàm để nó bắt lại thì ta dùng controllerAdvice
+        }
     }
 
     @PutMapping("api/building/{id}")

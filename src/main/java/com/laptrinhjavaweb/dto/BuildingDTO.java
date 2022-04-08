@@ -7,7 +7,7 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
     private String district;
     private String address;
     private String structure;
-    private Integer numberOfBasement;
+    private String numberOfBasement;
     private Integer floorArea; // diện tích sàn
     private String direction;
     private String level;
@@ -87,11 +87,11 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
         this.structure = structure;
     }
 
-    public Integer getNumberOfBasement() {
+    public String getNumberOfBasement() {
         return numberOfBasement;
     }
 
-    public void setNumberOfBasement(Integer numberOfBasement) {
+    public void setNumberOfBasement(String numberOfBasement) {
         this.numberOfBasement = numberOfBasement;
     }
 
@@ -223,7 +223,7 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
         this.brokerageFee = brokerageFee;
     }
 
-    public String[] getBuildingType() {
+    public String getBuildingType() {
         return buildingType;
     }
 

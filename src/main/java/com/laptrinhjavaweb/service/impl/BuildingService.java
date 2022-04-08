@@ -1,16 +1,21 @@
 package com.laptrinhjavaweb.service.impl;
 
+import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.converter.BuildingConverter;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.reponse.BuildingSearchReponse;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.enums.DistrictsEnum;
+import com.laptrinhjavaweb.exception.FieldNullException;
+import com.laptrinhjavaweb.exception.FieldRequireException;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.repository.custom.BuildingRepsitoryCustom;
 import com.laptrinhjavaweb.service.IBuildingService;
+import com.laptrinhjavaweb.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +34,8 @@ public class BuildingService implements IBuildingService {
     @Autowired
     private BuildingRepository buildingRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+//    @Autowired
+//    private UserRepository userRepository;
 
     @Autowired
     private BuildingConverter buildingConverter;
@@ -55,17 +60,39 @@ public class BuildingService implements IBuildingService {
 
     @Override
     public void delete(Long[] ids) {
-
+        for (Long item : ids) {
+            BuildingEntity buildingEntity = buildingRepository.findOne(item);
+            buildingEntity.setId(0L);
+            buildingRepository.save(buildingEntity);
+        }
     }
 
     @Override
+    @Transactional
     public BuildingDTO update(Long id, BuildingDTO buildingDTO) {
-        return null;
+        if (!ValidateUtils.isValid(buildingDTO.getName()) || !ValidateUtils.isValid(buildingDTO.getDistrict())) {
+            throw new FieldNullException(SystemConstant.FIELD_IS_NULL_OR_EMPTY);
+        } else {
+            BuildingEntity oldBuilding = buildingRepository.findOne(id);
+            BuildingEntity buildingEntity = buildingConverter.convertToUpdate(oldBuilding, buildingDTO);
+            if (buildingDTO.getBuildingType().length() > 0) {
+                String types = String.join(",", buildingDTO.getBuildingType());
+                buildingEntity.setType(types);
+            }
+            return buildingConverter.convertToDto(buildingRepository.save(buildingEntity));
+        }
     }
 
     @Override
+    @Transactional
     public BuildingDTO insert(BuildingDTO newBuilding) {
-        return null;
+        if (newBuilding.getName() == null) {
+            throw new FieldRequireException("Name is require");
+        } else  {
+           BuildingEntity buildingEntity = buildingConverter.convertToEntity(newBuilding);
+           buildingRepository.save(buildingEntity);
+        }
+        return newBuilding;
     }
 
     @Override

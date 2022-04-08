@@ -13,8 +13,8 @@ public class BuildingConverter {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private BuildingService buildingService;
+   @Autowired 
+   private BuildingService buildingService;
 
 
     public BuildingDTO convertToDto(BuildingEntity entity) {
@@ -35,6 +35,23 @@ public class BuildingConverter {
         return building;
     }
 
-
+    public BuildingEntity convertToUpdate(BuildingEntity entity, BuildingDTO dto) {
+        entity.setName(dto.getName());
+        entity.setStreet(dto.getStreet());
+        entity.setWard(dto.getWard());
+        entity.setDistrict(dto.getDistrict());
+        entity.setStructure(dto.getStructure());
+        entity.setNumberOfBasement(dto.getNumberOfBasement());
+        entity.setFloorArea(dto.getFloorArea());
+        entity.setDirection(dto.getDirection());
+        entity.setLevel(dto.getLevel());
+        entity.setRentPrice(dto.getRentPrice());
+        entity.setRentPriceDescription(dto.getRentPriceDescription());
+        entity.setType(dto.getBuildingType());
+        entity.setManagerName(dto.getManagerName());
+        entity.setManagerPhone(dto.getManagerPhone());
+        return entity;
+    }
+    
 }
 

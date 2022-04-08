@@ -17,4 +17,7 @@ public class SystemConstant {
     public static final String MESSAGE_RESPONSE = "messageResponse";
     public static final String PASSWORD_DEFAULT = "123456";
     public static final String CHANGE_PASSWORD_FAIL = "change_password_fail";
+
+    public static final String FIELD_IS_NULL_OR_EMPTY = "Giá_trị_rỗng";
+
 }
