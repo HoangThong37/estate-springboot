@@ -223,7 +223,7 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
         this.brokerageFee = brokerageFee;
     }
 
-    public String getBuildingType() {
+    public String[] getBuildingType() {
         return buildingType;
     }
 

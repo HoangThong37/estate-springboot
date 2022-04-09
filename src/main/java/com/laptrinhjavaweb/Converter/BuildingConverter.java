@@ -47,7 +47,7 @@ public class BuildingConverter {
         entity.setLevel(dto.getLevel());
         entity.setRentPrice(dto.getRentPrice());
         entity.setRentPriceDescription(dto.getRentPriceDescription());
-        entity.setType(dto.getBuildingType());
+//        entity.setType(dto.getBuildingType());
         entity.setManagerName(dto.getManagerName());
         entity.setManagerPhone(dto.getManagerPhone());
         return entity;

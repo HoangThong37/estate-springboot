@@ -75,7 +75,7 @@ public class BuildingService implements IBuildingService {
         } else {
             BuildingEntity oldBuilding = buildingRepository.findOne(id);
             BuildingEntity buildingEntity = buildingConverter.convertToUpdate(oldBuilding, buildingDTO);
-            if (buildingDTO.getBuildingType().length() > 0) {
+            if (buildingDTO.getBuildingType().length > 0) {
                 String types = String.join(",", buildingDTO.getBuildingType());
                 buildingEntity.setType(types);
             }
