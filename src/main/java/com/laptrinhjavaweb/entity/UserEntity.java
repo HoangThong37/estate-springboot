@@ -43,9 +43,15 @@ public class UserEntity extends BaseEntity {
         this.assignmentCustomers = assignmentCustomers;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public List<UserRoleEntity> getUserRoles() {
+        return userRoles;
     }
+
+    public void setUserRoles(List<UserRoleEntity> userRoles) {
+        this.userRoles = userRoles;
+    }
+
+    private List<RoleEntity> roles = new ArrayList<>();
 
     public String getUserName() {
         return userName;
@@ -79,19 +85,19 @@ public class UserEntity extends BaseEntity {
         this.status = status;
     }
 
+    public List<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleEntity> roles) {
+        this.roles = roles;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<UserRoleEntity> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(List<UserRoleEntity> userRoles) {
-        this.userRoles = userRoles;
     }
 }
