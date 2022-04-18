@@ -1,10 +1,18 @@
 package com.laptrinhjavaweb.repository.custom.impl;
 
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
+import com.laptrinhjavaweb.entity.AssignmentBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.RentAreaEntity;
+import com.laptrinhjavaweb.entity.UserEntity;
+import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
+import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.repository.custom.BuildingRepsitoryCustom;
 import com.laptrinhjavaweb.utils.ValidateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -21,6 +29,12 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private RentAreaRepository rentAreaRepository;
+
+    @Autowired
+    private AssignmentBuildingRepository assignmentBuildingRepository;
+
     @Override
     public List<BuildingEntity> findAll(BuildingSearchBuilder builder) {
         StringBuilder sql = new StringBuilder("SELECT * from building as b ");
@@ -31,6 +45,28 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
         sql.append(" group by b.id");
         Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
         return query.getResultList();
+    }
+
+    @Override
+    public void assignmentBuilding(List<UserEntity> userEntities, BuildingEntity buildingEntity) {
+
+    }
+
+    @Override
+    @Transactional
+    public void deleteBuilding(BuildingEntity buildingEntity) { // xóa building
+        if (buildingEntity.getRentAreas().size() > 0) {
+            for (RentAreaEntity item : buildingEntity.getRentAreas()) {
+                RentAreaEntity rentAreaEntity = rentAreaRepository.findOne(item.getId());
+                entityManager.remove(rentAreaEntity);
+            }
+        }
+        if (buildingEntity.getAssignmentBuildings().size() > 0) {
+            for (AssignmentBuildingEntity item : buildingEntity.getAssignmentBuildings()) {
+                AssignmentBuildingEntity assignmentBuildingEntity = assignmentBuildingRepository.findOne(item.getId());
+                entityManager.remove(assignmentBuildingEntity);
+            }
+        }
     }
 
     private StringBuilder buildingJoinQuerry(BuildingSearchBuilder builder, StringBuilder sql) {

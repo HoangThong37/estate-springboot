@@ -1,14 +1,9 @@
-/*
 package com.laptrinhjavaweb.service;
 
 public interface IRentAreaService {
-//    String getRentAreaValueBuildingId(Long id);
+//   diện tích thuê
 
 
 
-   */
-/* String getRentAreaValueBuildingId(Long id);
-    void deleteBuildingRentArea(Long buildingId);*//*
 
 }
-*/

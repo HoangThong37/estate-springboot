@@ -2,9 +2,12 @@ package com.laptrinhjavaweb.controller.admin;
 
 import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.reponse.BuildingTypeReponse;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.service.IBuildingService;
+import com.laptrinhjavaweb.service.IDistrictService;
 import com.laptrinhjavaweb.service.IUserService;
+import com.laptrinhjavaweb.service.impl.BuildingTypesService;
 import com.laptrinhjavaweb.utils.MessageUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +29,17 @@ public class BuildingController {
     private IBuildingService buildingService;
 
     @Autowired
-    private IUserService iUserService;
+    private IUserService userService;
 
     @Autowired
     private MessageUtils messageUtil;
+
+    @Autowired
+    private IDistrictService districtService;
+
+    @Autowired
+    private BuildingTypesService buildingTypesService;
+
 
     @RequestMapping(value = "/building-list", method = RequestMethod.GET)
     public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest,
@@ -37,10 +47,10 @@ public class BuildingController {
                                      @RequestParam(required = false) List<String> types) {
         ModelAndView mav = new ModelAndView("admin/building/list");
         mav.addObject("modelSearch", buildingSearchRequest);
-/*        mav.addObject("modelDistrict",districtService.getAll());
+        mav.addObject("modelDistrict",districtService.getAll());
         mav.addObject("modelStaff",userService.getAllStaff());
-        mav.addObject("modelBuildingType",buildingTypeService.getAll());
-        mav.addObject("modelBuildings",buildingService.findAll(params,rentTypes));*/
+        mav.addObject("modelBuildingType",buildingTypesService.getAll());
+        mav.addObject("modelBuildings",buildingService.findAll(params,types));
         return mav;
     }
 

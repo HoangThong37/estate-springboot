@@ -1,4 +1,3 @@
-/*
 package com.laptrinhjavaweb.converter;
 import com.laptrinhjavaweb.dto.RentAreaDTO;
 import com.laptrinhjavaweb.entity.RentAreaEntity;
@@ -26,4 +25,3 @@ public class RentAreaConverter {
         return result;
     }
 }
-*/

@@ -2,6 +2,7 @@ package com.laptrinhjavaweb.service;
 
 import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
+import com.laptrinhjavaweb.dto.reponse.StaffAssignmentReponse;
 import com.laptrinhjavaweb.exception.MyException;
 import org.springframework.data.domain.Pageable;
 
@@ -20,5 +21,6 @@ public interface IUserService {
     UserDTO resetPassword(long id);
     UserDTO updateProfileOfUser(String id, UserDTO userDTO);
     void delete(long[] ids);
-    Map<Long, String> getstaffMaps();
+    List<UserDTO> getAllStaff();
+    List<StaffAssignmentReponse> getAllStaffAssignmentBuilding(Long buildingID);
 }

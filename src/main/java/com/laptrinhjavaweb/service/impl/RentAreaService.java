@@ -1,7 +1,5 @@
-/*
 package com.laptrinhjavaweb.service.impl;
 
-import com.laptrinhjavaweb.converter.RentAreaConverter;
 import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.service.IRentAreaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +11,13 @@ public class RentAreaService implements IRentAreaService {
     @Autowired
     private RentAreaRepository repository;
 
-    @Autowired
+
+
+/*    @Autowired
     private RentAreaConverter rentAreaConverter;
 
 
-*/
-/*    @Override
+    @Override
     public String getRentAreaValueBuildingId(Long id) {
         List<String> result = new ArrayList<>();
         try {
@@ -30,7 +29,6 @@ public class RentAreaService implements IRentAreaService {
 
         }
         return String.join(",", result);
-    }*//*
+    }*/
 
 }
-*/
