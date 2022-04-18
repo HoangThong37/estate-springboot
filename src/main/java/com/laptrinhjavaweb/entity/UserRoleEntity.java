@@ -1,3 +1,4 @@
+/*
 package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
@@ -30,3 +31,4 @@ public class UserRoleEntity extends BaseEntity {
         this.userEntity = userEntity;
     }
 }
+*/

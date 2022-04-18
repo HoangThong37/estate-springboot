@@ -6,39 +6,29 @@ import javax.persistence.*;
 @Table(name = "assignmentbuilding")
 public class AssignmentBuildingEntity extends BaseEntity {
 
-    @Column(name = "staffid")
-    private Long staffid;
-
+    // building qhe n vs assigmnmentbuilding
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buildingid")
-    private BuildingEntity assignmentBuilding;
+    private BuildingEntity building;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    // user qhe n vs assigmnmentbuilding
+    @ManyToOne
     @JoinColumn(name = "staffid")
-    private UserEntity userEntity;
+    private UserEntity user;
 
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public BuildingEntity getBuilding() {
+        return building;
     }
 
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setBuilding(BuildingEntity building) {
+        this.building = building;
     }
 
-    public Long getStaffid() {
-        return staffid;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setStaffid(Long staffid) {
-        this.staffid = staffid;
-    }
-
-    public BuildingEntity getAssignmentBuilding() {
-        return assignmentBuilding;
-    }
-
-    public void setAssignmentBuilding(BuildingEntity assignmentBuilding) {
-        this.assignmentBuilding = assignmentBuilding;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }

@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class BuildingConverter {
     @Autowired
@@ -17,8 +19,12 @@ public class BuildingConverter {
    private BuildingService buildingService;
 
 
+
     public BuildingDTO convertToDto(BuildingEntity entity) {
         BuildingDTO result = modelMapper.map(entity, BuildingDTO.class);
+        result.setAddress(entity.getStreet() + entity.getWard() + buildingService.getDistrictByEnums(entity.getDistrict()));
+        result.setRentArea(entity.getRentAreas().stream()
+                                                .map(item -> item.getValue()).map(item -> item.toString()).collect(Collectors.joining()));
         return result;
     }
 

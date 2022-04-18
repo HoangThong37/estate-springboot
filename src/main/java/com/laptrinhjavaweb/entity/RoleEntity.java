@@ -8,28 +8,14 @@ import java.util.List;
 @Table(name = "role")
 public class RoleEntity extends BaseEntity {
 
-    private static final long serialVersionUID = -6525302831793188081L;
-
     @Column(nullable = false)
     private String name;
 
     @Column(unique = true, nullable = false)
     private String code;
 
-    /*@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private List<UserEntity> users = new ArrayList<>();*/
-
-    @OneToMany(mappedBy = "roleEntity")
-    private List<UserRoleEntity> userRoles = new ArrayList<>();
-
-
-    public List<UserRoleEntity> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(List<UserRoleEntity> userRoles) {
-        this.userRoles = userRoles;
-    }
+    @ManyToMany(mappedBy = "roles")
+    private List<UserEntity> users = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -47,5 +33,11 @@ public class RoleEntity extends BaseEntity {
         this.code = code;
     }
 
+    public List<UserEntity> getUsers() {
+        return users;
+    }
 
+    public void setUsers(List<UserEntity> users) {
+        this.users = users;
+    }
 }

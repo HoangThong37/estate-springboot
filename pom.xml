@@ -13,6 +13,12 @@
 		<version>1.5.22.RELEASE</version>
 	</parent>
 
+	<!--<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.9.RELEASE</version>
+	</parent>-->
+
 	<properties>
 		<mysql.version>8.0.13</mysql.version>
 		<sitemesh.version>2.4.2</sitemesh.version>

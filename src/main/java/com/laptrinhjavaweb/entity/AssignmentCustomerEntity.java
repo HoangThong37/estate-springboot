@@ -3,16 +3,16 @@ package com.laptrinhjavaweb.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "assignmentbuilding")
+@Table(name = "assignmentcustomer")
 public class AssignmentCustomerEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "staffid")
+    @JoinColumn(name = "staffid",nullable = false)
     private UserEntity userEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customerid")
-    private CustomerEntity customer;
+    @JoinColumn(name = "customerid",nullable = false)
+    private CustomerEntity customerEntity;
 
     public UserEntity getUserEntity() {
         return userEntity;
@@ -22,11 +22,11 @@ public class AssignmentCustomerEntity extends BaseEntity {
         this.userEntity = userEntity;
     }
 
-    public CustomerEntity getCustomer() {
-        return customer;
+    public CustomerEntity getCustomerEntity() {
+        return customerEntity;
     }
 
-    public void setCustomer(CustomerEntity customer) {
-        this.customer = customer;
+    public void setCustomerEntity(CustomerEntity customerEntity) {
+        this.customerEntity = customerEntity;
     }
 }

@@ -6,15 +6,26 @@ import javax.persistence.*;
 @Table(name = "transaction")
 public class TransactionEntity extends BaseEntity {
 
+    @Column(name = "code")
+    private String code;
+
     @Column(name = "note")
     private String note;
 
-    @Column(name = "type")
-    private String transactionType;
+    @Column(name = "staffid")
+    private Long staffID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customerid")
+    @JoinColumn(name = "customerid",nullable = false)
     private CustomerEntity customerEntity;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getNote() {
         return note;
@@ -24,12 +35,12 @@ public class TransactionEntity extends BaseEntity {
         this.note = note;
     }
 
-    public String getTransactionType() {
-        return transactionType;
+    public Long getStaffID() {
+        return staffID;
     }
 
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
+    public void setStaffID(Long staffID) {
+        this.staffID = staffID;
     }
 
     public CustomerEntity getCustomerEntity() {

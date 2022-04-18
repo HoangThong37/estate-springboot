@@ -236,6 +236,7 @@
             url: '${buildingAPI}',
             data: JSON.stringify(data),
             dataType: "json",
+            contentType : "application/json",
             success: function (response) {
                 console.log('success');
             },

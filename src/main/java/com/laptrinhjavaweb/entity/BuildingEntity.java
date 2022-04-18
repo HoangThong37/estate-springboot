@@ -7,6 +7,7 @@ import java.util.List;
 @Entity
 @Table(name = "building")
 public class BuildingEntity extends BaseEntity {
+
     // id,  createdDate ....
     // nullable = false => y/c k đc null
     // nullable = true  => nó sẽ định nghĩa gtri đó là duy nhất
@@ -43,12 +44,9 @@ public class BuildingEntity extends BaseEntity {
 
     @Column(name = "rentpricedescription")
     private Integer rentPriceDescription;
-
+/*
     @Column(name = "rentareadescription")
-    private Integer rentAreaDescription;
-
-    @Column(name = "type")
-    private String type;
+    private Integer rentAreaDescription;*/
 
     @Column(name = "servicefee")
     private Integer serviceFee;
@@ -56,11 +54,11 @@ public class BuildingEntity extends BaseEntity {
     @Column(name = "carfee")
     private String carFee;
 
-    @Column(name = "createddate")
-    private String motorbikefee;
+    @Column(name = "motofee")
+    private String motoFee;
 
-    @Column(name = "overtimeFee")
-    private String overtimefee;
+    @Column(name = "overtimefee")
+    private String overtimeFee;
 
     @Column(name = "waterfee")
     private String waterFee;
@@ -80,48 +78,23 @@ public class BuildingEntity extends BaseEntity {
     @Column(name = "decorationtime")
     private String decorationTime;
 
-    @Column(name = "brokeragefee")
-    private Integer brokeragefee;
-
-    @Column(name = "note")
-    private String note;
-
-    @Column(name = "linkofbuilding")
-    private String linkOfBuilding;
-
-    @Column(name = "map")
-    private String map;
-
-    @Column(name = "avatar")
-    private String avatar;
-
     @Column(name = "managerphone")
     private String managerPhone;
 
     @Column(name = "managername")
     private String managerName;
 
-    @OneToMany(mappedBy = "assignmentBuilding")
+    @Column(name = "type")
+    private String type;
+
+    //
+    // qhe 1-n vs assignmentbuilding
+    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
     private List<AssignmentBuildingEntity> assignmentBuildings = new ArrayList<>();
-
-    @OneToMany(mappedBy = "rentArea")
-    private List<RentAreaEntity>  rentAreas = new ArrayList<>();
-
-    public List<AssignmentBuildingEntity> getAssignmentBuildings() {
-        return assignmentBuildings;
-    }
-
-    public void setAssignmentBuildings(List<AssignmentBuildingEntity> assignmentBuildings) {
-        this.assignmentBuildings = assignmentBuildings;
-    }
-
-    public List<RentAreaEntity> getRentAreas() {
-        return rentAreas;
-    }
-
-    public void setRentAreas(List<RentAreaEntity> rentAreas) {
-        this.rentAreas = rentAreas;
-    }
+    //
+    // quan hệ 1 - n vs rentarea
+    @OneToMany(mappedBy = "building", fetch = FetchType.LAZY)
+    private List<RentAreaEntity> rentAreas = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -211,21 +184,6 @@ public class BuildingEntity extends BaseEntity {
         this.rentPriceDescription = rentPriceDescription;
     }
 
-    public Integer getRentAreaDescription() {
-        return rentAreaDescription;
-    }
-
-    public void setRentAreaDescription(Integer rentAreaDescription) {
-        this.rentAreaDescription = rentAreaDescription;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public Integer getServiceFee() {
         return serviceFee;
@@ -243,20 +201,20 @@ public class BuildingEntity extends BaseEntity {
         this.carFee = carFee;
     }
 
-    public String getMotorbikefee() {
-        return motorbikefee;
+    public String getMotoFee() {
+        return motoFee;
     }
 
-    public void setMotorbikefee(String motorbikefee) {
-        this.motorbikefee = motorbikefee;
+    public void setMotoFee(String motoFee) {
+        this.motoFee = motoFee;
     }
 
-    public String getOvertimefee() {
-        return overtimefee;
+    public String getOvertimeFee() {
+        return overtimeFee;
     }
 
-    public void setOvertimefee(String overtimefee) {
-        this.overtimefee = overtimefee;
+    public void setOvertimeFee(String overtimeFee) {
+        this.overtimeFee = overtimeFee;
     }
 
     public String getWaterFee() {
@@ -307,46 +265,6 @@ public class BuildingEntity extends BaseEntity {
         this.decorationTime = decorationTime;
     }
 
-    public Integer getBrokeragefee() {
-        return brokeragefee;
-    }
-
-    public void setBrokeragefee(Integer brokeragefee) {
-        this.brokeragefee = brokeragefee;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public String getLinkOfBuilding() {
-        return linkOfBuilding;
-    }
-
-    public void setLinkOfBuilding(String linkOfBuilding) {
-        this.linkOfBuilding = linkOfBuilding;
-    }
-
-    public String getMap() {
-        return map;
-    }
-
-    public void setMap(String map) {
-        this.map = map;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
     public String getManagerPhone() {
         return managerPhone;
     }
@@ -361,5 +279,29 @@ public class BuildingEntity extends BaseEntity {
 
     public void setManagerName(String managerName) {
         this.managerName = managerName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<AssignmentBuildingEntity> getAssignmentBuildings() {
+        return assignmentBuildings;
+    }
+
+    public void setAssignmentBuildings(List<AssignmentBuildingEntity> assignmentBuildings) {
+        this.assignmentBuildings = assignmentBuildings;
+    }
+
+    public List<RentAreaEntity> getRentAreas() {
+        return rentAreas;
+    }
+
+    public void setRentAreas(List<RentAreaEntity> rentAreas) {
+        this.rentAreas = rentAreas;
     }
 }

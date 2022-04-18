@@ -1,4 +1,5 @@
 package com.laptrinhjavaweb.dto.reponse;
+
 public class BuildingSearchReponse { // đầu ra
     private String name;
     private String address; // = đường + phường + quận

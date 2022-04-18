@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "assignmentbuilding")
+@Table(name = "customer")
 public class CustomerEntity extends BaseEntity {
 
     @Column(name = "fullname")
@@ -17,19 +17,11 @@ public class CustomerEntity extends BaseEntity {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "customerEntity")
+    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY)
     private List<TransactionEntity> transactions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY)
     private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
-
-    public List<AssignmentCustomerEntity> getAssignmentCustomers() {
-        return assignmentCustomers;
-    }
-
-    public void setAssignmentCustomers(List<AssignmentCustomerEntity> assignmentCustomers) {
-        this.assignmentCustomers = assignmentCustomers;
-    }
 
     public String getFullname() {
         return fullname;
@@ -61,5 +53,13 @@ public class CustomerEntity extends BaseEntity {
 
     public void setTransactions(List<TransactionEntity> transactions) {
         this.transactions = transactions;
+    }
+
+    public List<AssignmentCustomerEntity> getAssignmentCustomers() {
+        return assignmentCustomers;
+    }
+
+    public void setAssignmentCustomers(List<AssignmentCustomerEntity> assignmentCustomers) {
+        this.assignmentCustomers = assignmentCustomers;
     }
 }

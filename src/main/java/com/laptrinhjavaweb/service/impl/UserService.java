@@ -57,6 +57,7 @@ public class UserService implements IUserService {
         List<UserDTO> result = new ArrayList<>();
         for (UserEntity userEntity : newsEntities) {
             UserDTO userDTO = userConverter.convertToDto(userEntity);
+            // suửa ở đây
             userDTO.setRoleCode(userEntity.getRoles().get(0).getCode());
             result.add(userDTO);
         }

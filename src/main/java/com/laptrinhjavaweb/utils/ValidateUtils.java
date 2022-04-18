@@ -1,7 +1,5 @@
 package com.laptrinhjavaweb.utils;
-
 import com.laptrinhjavaweb.constant.BuildingConstant;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +16,17 @@ public class ValidateUtils {
         }
         return false;
     }
+/*
 
-    /* Nếu truyền vào giá trị null là dính Exception,
-    isNotBlank là bao gồm cả check != null và != "" */
+ Nếu truyền vào giá trị null là dính Exception,
+    isNotBlank là bao gồm cả check != null và != ""
+*/
+
     public static boolean isNotBlank(String str) {
         return str != null && !BuildingConstant.EMPTY_STRING.equals(str);
     }
 
-    public static List<Long> isValid(List<Long> list) {
+    public static List<Long> isValids(List<Long> list) {
         List<Long> result = new ArrayList<Long>();
         if (!list.isEmpty()) {
             for (Long item : list) {

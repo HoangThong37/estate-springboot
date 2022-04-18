@@ -25,33 +25,23 @@ public class UserEntity extends BaseEntity {
     @Column(name = "email", unique = true)
     private String email;
 
-    /*@ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))*/
-    @OneToMany(mappedBy = "userEntity")
-    private List<UserRoleEntity>  userRoles = new ArrayList<>();
-
-    @OneToMany(mappedBy = "userEntity")
-    private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
-
-    public List<AssignmentCustomerEntity> getAssignmentCustomers() {
-        return assignmentCustomers;
-    }
-
-    public void setAssignmentCustomers(List<AssignmentCustomerEntity> assignmentCustomers) {
-        this.assignmentCustomers = assignmentCustomers;
-    }
-
-    public List<UserRoleEntity> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(List<UserRoleEntity> userRoles) {
-        this.userRoles = userRoles;
-    }
-
+            inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
     private List<RoleEntity> roles = new ArrayList<>();
+
+    // qhe 1-n vs assignmentbuilding
+    @OneToMany(mappedBy = "user")
+    private List<AssignmentBuildingEntity> assignmentBuildings = new ArrayList<>();
+
+    public List<AssignmentBuildingEntity> getAssignmentBuildings() {
+        return assignmentBuildings;
+    }
+
+    public void setAssignmentBuildings(List<AssignmentBuildingEntity> assignmentBuildings) {
+        this.assignmentBuildings = assignmentBuildings;
+    }
 
     public String getUserName() {
         return userName;
