@@ -163,7 +163,7 @@ public class UserService implements IUserService {
     @Override
     public List<UserDTO> getAllStaff() {
         List<UserDTO> result = new ArrayList<>();
-        for (UserEntity item : userRepositoryCustom.getAllStaff()) {
+        for (UserEntity item : userRepository.getAllStaff()) {
             UserDTO userDTO = userConverter.convertToDto(item);
             result.add(userDTO);
         }

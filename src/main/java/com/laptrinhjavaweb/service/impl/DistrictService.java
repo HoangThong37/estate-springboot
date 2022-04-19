@@ -4,7 +4,6 @@ import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.reponse.DistrictReponse;
 import com.laptrinhjavaweb.enums.DistrictsEnum;
 import com.laptrinhjavaweb.service.IDistrictService;
-import netscape.javascript.JSUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,13 +11,14 @@ import java.util.List;
 
 @Service
 public class DistrictService implements IDistrictService {
+
     @Override
     public List<DistrictReponse> getAll() {
         List<DistrictReponse> result = new ArrayList<>();
         for (DistrictsEnum item : DistrictsEnum.values()) {
             DistrictReponse districtReponse = new DistrictReponse();
-            districtReponse.setName(item.name());
-            districtReponse.setCode(item.getDistrictValue());
+            districtReponse.setCode(item.name());
+            districtReponse.setName(item.getDistrictValue());
             result.add(districtReponse);
         }
         return result;
@@ -30,8 +30,8 @@ public class DistrictService implements IDistrictService {
         try {
             for (DistrictsEnum item : DistrictsEnum.values()) {
                 DistrictReponse districtReponse = new DistrictReponse();
-                districtReponse.setName(item.name());
-                districtReponse.setCode(item.getDistrictValue());
+                districtReponse.setCode(item.name());
+                districtReponse.setName(item.getDistrictValue());
                 if (buildingDTO.getDistrict() != null && buildingDTO.getDistrict().equals(item.name())) {
                     districtReponse.setSelected("selected");
                     result.add(districtReponse);

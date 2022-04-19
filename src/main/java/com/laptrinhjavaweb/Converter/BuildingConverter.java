@@ -2,12 +2,15 @@ package com.laptrinhjavaweb.converter;
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.reponse.BuildingSearchReponse;
+import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.service.impl.BuildingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -36,9 +39,21 @@ public class BuildingConverter {
     // convert từ Entity qua Reponse
     public BuildingSearchReponse convertToBuildingSearchReponse(BuildingEntity buildingEntity) {
         BuildingSearchReponse building = modelMapper.map(buildingEntity, BuildingSearchReponse.class);
-        building.setAddress(buildingEntity.getStreet() + buildingEntity.getWard()
+        building.setAddress(buildingEntity.getStreet() + "_" + buildingEntity.getWard() + "_"
                 + buildingService.getDistrictByEnums(buildingEntity.getDistrict()));
         return building;
+    }
+
+    public BuildingSearchRequest toBuildingSearchRequest(BuildingSearchRequest buildingSearchRequest){
+        if(buildingSearchRequest.getTypes() != null){
+            List<String> result = new ArrayList<>();
+            for(String item : buildingSearchRequest.getTypes()){
+                result.add("'"+ item + "'");
+            }
+            buildingSearchRequest.setTypes(result);
+        }
+
+        return buildingSearchRequest;
     }
 
     public BuildingEntity convertToUpdate(BuildingEntity entity, BuildingDTO dto) {

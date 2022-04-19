@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface RentAreaRepository extends RentAreaRepositoryCustom,  JpaRepository<RentAreaEntity, Long>  {
+public interface RentAreaRepository extends RentAreaRepositoryCustom, JpaRepository<RentAreaEntity, Long>  {
     List<RentAreaEntity> findByBuildingEntity(BuildingEntity buildingEntity);
 }
 

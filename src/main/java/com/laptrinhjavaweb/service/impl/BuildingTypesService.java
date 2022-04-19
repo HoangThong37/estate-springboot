@@ -4,11 +4,13 @@ import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.reponse.BuildingTypeReponse;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.service.IBuildingTypeService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Service
 public class BuildingTypesService implements IBuildingTypeService {
     @Override
     public List<BuildingTypeReponse> getAll() {

@@ -5,250 +5,310 @@
 <head>
     <title>Chỉnh sửa tòa nhà</title>
 </head>
+<body>
 <div class="main-content">
     <div class="main-content-inner">
         <div class="breadcrumbs" id="breadcrumbs">
             <script type="text/javascript">
-                try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
             </script>
 
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <a href="#">Home</a>
+                    <a href="<c:url value="/admin/home"/> ">Trang chủ</a>
                 </li>
-                <li class="active">Dashboard</li>
+                <li class="active">Chi tiết building</li>
             </ul><!-- /.breadcrumb -->
+
+
         </div>
 
         <div class="page-content">
-            <div class="row">  <!-- chính là chia 12 clum -->
+            <div class="row">
                 <div class="col-xs-12">
-                    <form class="form-horizontal" role="form" id="formEdit">
+                    <form:form commandName="modelBuilding" cssClass="form-horizontal" role="form" id="formEdit">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="name">Tên tòa nhà</label>
+                            <label class="col-sm-3 control-label no-padding-right">
+                                Tên toà nhà</label>
                             <div class="col-sm-9">
-                                <input type="text" id="name" class="form-control" name="name" value=""/>
+                                <form:input path="name" cssClass="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                Đường</label>
+                            <div class="col-sm-9">
+                                <form:input path="street" cssClass="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                Phường</label>
+
+                            <div class="col-sm-9">
+                                <form:input path="ward" cssClass="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                Quận</label>
+
+                            <div class="col-sm-9">
+                                <select class="form-control" id="sel1" name="district">
+                                    <option selected disabled>Chọn Quận</option>
+                                    <c:forEach var="item" items="${modelDistrict}">
+                                        <option ${item.selected} value="${item.code}">${item.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                Hướng</label>
+
+                            <div class="col-sm-9">
+                                <form:input path="direction" cssClass="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                Hạng</label>
+
+                            <div class="col-sm-9">
+                                <form:input path="level" cssClass="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="staffId">Người quản lý sản phẩm</label>
+                            <label class="col-sm-3 control-label no-padding-right">
+                                Cấu trúc</label>
+
                             <div class="col-sm-9">
-                                <input type="text" id="staffId" class="form-control" name="staffId"/>
+                                <form:input path="structure" cssClass="form-control"/>
                             </div>
                         </div>
-
-                        <%--<div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="district">Quận</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="district" class="form-control" name="district"/>
-                            </div>
-                        </div>--%>
-
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="ward">Phường</label>
+                            <label class="col-sm-3 control-label no-padding-right">
+                                Số tầng hầm</label>
+
                             <div class="col-sm-9">
-                                <input type="text" id="ward" class="form-control" name="ward" value=""/>
+                                <input type="number" class="form-control" name="numberOfBasement"
+                                       value="${modelBuilding.numberOfBasement}"/>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="street">Đường</label>
+                            <label class="col-sm-3 control-label no-padding-right">
+                                Diện tích sàn</label>
                             <div class="col-sm-9">
-                                <input type="text" id="street" class="form-control" name="street" value=""/>
+                                <input type="number" class="form-control" name="floorArea"
+                                       value="${modelBuilding.floorArea}"/>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="stucture">Kết cấu</label>
+                            <label class="col-sm-3 control-label no-padding-right"
+                            >
+                                Giá thuê</label>
                             <div class="col-sm-9">
-                                <input type="text" id="stucture" class="form-control" name="stucture" />
+                                <form:input path="rentPrice" cssClass="form-control"/>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="numberOfBasement">Số tầng hầm</label>
+                            <label class="col-sm-3 control-label no-padding-right"
+                            >
+                                Chú thích giá thuê</label>
                             <div class="col-sm-9">
-                                <input type="number" id="numberOfBasement" class="form-control" name="numberOfBasement"/>
+                                <form:input path="rentPriceDescription" cssClass="form-control"/>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="floorArea">Diện tích sàn</label>
+                            <label class="col-sm-3 control-label no-padding-right"
+                            >
+                                Phí dịch vụ</label>
                             <div class="col-sm-9">
-                                <input type="number" id="floorArea" class="form-control" name="floorArea" />
+                                <form:input path="serviceFee" cssClass="form-control"/>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="direction">Hướng</label>
+                            <label class="col-sm-3 control-label no-padding-right"
+                            >
+                                Diện tích thuê</label>
                             <div class="col-sm-9">
-                                <input type="text" id="direction" class="form-control" name="direction" />
+                                <form:input path="rentArea" cssClass="form-control"/>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="level">Hạng</label>
+                            <label class="col-sm-3 control-label no-padding-right"
+                            >
+                                Phí ô tô</label>
                             <div class="col-sm-9">
-                                <input type="text" id="level" class="form-control" name="level" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="rentArea">Diện tích thuê</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="rentArea" class="form-control" name="rentArea" />
+                                <form:input path="carFee" cssClass="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="rentAreaDescription">Mô tả diện tích</label>
+                            <label class="col-sm-3 control-label no-padding-right"
+                            >
+                                Phí mô tô</label>
                             <div class="col-sm-9">
-                                <input type="text" id="rentAreaDescription" class="form-control" name="rentAreaDescription" />
+                                <form:input path="motoFee" cssClass="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="costDescription">Mô tả giá</label>
+                            <label class="col-sm-3 control-label no-padding-right"
+                            >
+                                Phí ngoài giờ</label>
                             <div class="col-sm-9">
-                                <input type="number" id="costDescription" class="form-control" name="costDescription" />
+                                <form:input path="overTimeFee" cssClass="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="serviceCost">Phí dịch vụ</label>
+                            <label class="col-sm-3 control-label no-padding-right"
+                            >
+                                Phí nước</label>
                             <div class="col-sm-9">
-                                <input type="text" id="serviceCost" class="form-control" name="serviceCost" />
+                                <form:input path="waterFee" cssClass="form-control"/>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"
+                            >
+                                Phí điện</label>
+                            <div class="col-sm-9">
+                                <form:input path="electricityFee" cssClass="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"
+                            >
+                                Tiền Cọc</label>
+                            <div class="col-sm-9">
+                                <form:input path="deposit" cssClass="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"
+                            >
+                                Payment</label>
+                            <div class="col-sm-9">
+                                <form:input path="payment" cssClass="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"
+                            >
+                                Thời gian thuê</label>
+                            <div class="col-sm-9">
+                                <form:input path="rentTime" cssClass="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"
+                                   name="numberOfBasement">
+                                Thời gian dercor</label>
+                            <div class="col-sm-9">
+                                <form:input path="decorationTime" cssClass="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                Tên quản lí</label>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="carCort">Phí ô tô</label>
                             <div class="col-sm-9">
-                                <input type="text" id="carCort" class="form-control" name="carCort" />
+                                <form:input path="managerName" cssClass="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="motorCort">Phí mô tô</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="motorCort" class="form-control" name="motorCort" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="overtimeCort">Phí ngoài giờ</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="overtimeCort" class="form-control" name="overtimeCort" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="electricBill">Tiền điện</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="electricBill" class="form-control" name="electricBill" />
-                            </div>
-                        </div>
+                            <label class="col-sm-3 control-label no-padding-right">
+                                Số điện thoại quản lí</label>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="deposit">Đặt cọc</label>
                             <div class="col-sm-9">
-                                <input type="text" id="deposit" class="form-control" name="deposit" />
+                                <form:input path="managerPhone" cssClass="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="payment">Thanh toán</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="payment" class="form-control" name="payment" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="timeRent">Thời hạn thuê</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="timeRent" class="form-control" name="timeRent" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="timeDecorator">Thời gian trang trí</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="timeDecorator" class="form-control" name="timeDecorator" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="managerName">Tên quản lí</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="managerName" class="form-control" name="managerName" />
-                            </div>
-                        </div>
+                            <label class="col-sm-3 control-label no-padding-right">
+                                Loại toà nhà</label>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="managerPhone">Số điện thoại quản lí</label>
                             <div class="col-sm-9">
-                                <input type="number" id="managerPhone" class="form-control" name="managerPhone" />
+                                <c:forEach var="item" items="${modelBuildingType}">
+                                    <input class="form-check-input" name="type" type="checkbox"
+                                        ${item.checked} value="${item.code}">
+                                    <label class="form-check-label">
+                                            ${item.name}
+                                    </label>
+                                </c:forEach>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="costTips">Phí môi giới</label>
+                            <label class="col-sm-3 control-label no-padding-right">
+                            </label>
                             <div class="col-sm-9">
-                                <input type="number" id="costTips" class="form-control" name="costTips" />
+                                <button type="button" class="btn btn-primary" id="btnAddBuilding">Thêm toà
+                                    nhà
+                                </button>
+                                <button type="button" class="btn btn-primary">Huỷ</button>
                             </div>
                         </div>
+                    </form:form>
 
-                       <%-- <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">Loại tòa nhà</label>
-                            <div class="col-sm-9">
-                                <label class="checkbox-inline"><input type="checkbox" value="TANG_TRET" id="buildingTypes1" name="buildingTypes">Tầng trệt</label>
-                                <label class="checkbox-inline"><input type="checkbox" value="NGUYEN_CAN" id="buildingTypes2" name="buildingTypes">Nguyên căn</label>
-                                <label class="checkbox-inline"><input type="checkbox" value="NGUYEN_CAN" id="buildingTypes3" name="buildingTypes">Nội thất</label>
-                            </div>
-                        </div>--%>
-                        <div class="form-group">
-<%--                            <label class="col-sm-3 control-label no-padding-right"></label>--%>
-                            <div class="col-sm-9">
-                                <button type="button" class="btn btn-primary" id="btnAddBuilding">Thêm tòa nhà</button>
-                                <button type="button" class="btn btn-primary">Hủy</button>
-                            </div>
-                        </div>
-
-                    </form>
                 </div>
-            </div><!-- /.row -->
+
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+
+
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+
+                <div class="col-xs-12">
+
+                </div><!-- /.span -->
+
+
+            </div>
         </div><!-- /.page-content -->
     </div>
 </div><!-- /.main-content -->
 <script>
-    $('#btnAddBuilding').click(function(e) {
+    $('#btnAddBuilding').click(function (e) {
         e.preventDefault();
-        var data = {};
-        var buildingTypes = [];
-        var formData = $('#formEdit').serializeArray();
-        /* $.each(formData, function (index, v) {
-             if (v.name == 'buildingTypes') {
-                 buildingTypes.push(v.value);
-             } else {
-                 data["" +v.name+ ""] = v.value;
-             }
-         });
-         data['buildingTypes'] = buildingTypes; */
-        $.each(formData, function (index, v) {
-            data["" + v.name + ""] = v.value;
-
-        });
-
+        let data = {}
+        let formData = $('#formEdit').serializeArray();
+        let id = ${modelBuilding.id}+'';
+        if((id)!=''){
+            data["id"] = id;
+        }
+        let buildingTypes = [];
+        formData.forEach(item=>{
+            if(item.name=="type"){
+                buildingTypes.push(item.value);
+            }
+            data[item.name] = item.value
+        })
+        data["type"] = buildingTypes;
         $.ajax({
-            type: 'POST',
-            url: '${buildingAPI}',
+            type: "post",
+            url: '<c:url value="/api/building"/>',
             data: JSON.stringify(data),
-            dataType: "json",
-            contentType : "application/json",
+            dataType: "json",//kieu du lieu tu server tra ve client
+            contentType: "application/json",//kieu du lieu tu client gui ve server
             success: function (response) {
-                console.log('success');
+                window.location.href='<c:url value="/admin/building-list" />'
             },
             error: function (response) {
-                console.log('failed');
-                console.log(response);
+                alert("fail")
+                console.log(response)
             }
         });
-
-    });
-    function assginmentBuilding() {
-        openModalAssingmentBuilding();
-    }
+    })
 </script>
+</body>
+
 </html>

@@ -7,6 +7,7 @@ import com.laptrinhjavaweb.entity.RentAreaEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
 import com.laptrinhjavaweb.repository.RentAreaRepository;
+import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.repository.custom.BuildingRepsitoryCustom;
 import com.laptrinhjavaweb.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
@@ -33,23 +33,153 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
     private RentAreaRepository rentAreaRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private AssignmentBuildingRepository assignmentBuildingRepository;
 
     @Override
     public List<BuildingEntity> findAll(BuildingSearchBuilder builder) {
-        StringBuilder sql = new StringBuilder("SELECT * from building as b ");
+        /*StringBuilder sql = new StringBuilder("SELECT * from building as b ");
         sql = buildingJoinQuerry(builder, sql);
         sql.append(" where 1 = 1 ");
         sql = buildingSqlPart1WithBuilder(builder, sql);
         sql = buildingSqlPart2WithBuilder(builder, sql);
         sql.append(" group by b.id");
         Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
-        return query.getResultList();
+        return query.getResultList();*/
+        try {
+            String sql = buildQuery(builder);
+            Query query = entityManager.createNativeQuery(sql, BuildingEntity.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
+    public String buildQuery(BuildingSearchBuilder buildingSearchBuilder) {
+        StringBuilder queryFinal = new StringBuilder("select * from building as bd ");
+//		bd.id,bd.name,bd.street,bd.ward,bd.district,bd.managername,"
+//				+ "bd.managerphone,bd.floorarea,bd.rentpricedescription,bd.rentprice,bd.servicefee
+        StringBuilder join = new StringBuilder();
+        buildJoinQuery(join, buildingSearchBuilder);
+        StringBuilder where = new StringBuilder("\nwhere 1=1 ");
+        List<String> likeFields = Arrays.asList("name", "ward", "street", "managername", "managerphone");
+        List<String> operatorFields = Arrays.asList("floorarea", "district", "numberOfBasement", "direction", "level");
+        buildQueryPart1(buildingSearchBuilder, where, likeFields, operatorFields);
+        buildQueryPart2(buildingSearchBuilder, where);
+        where.append("\ngroup by bd.id");
+        queryFinal.append(join).append(where);
+        System.out.println("===================================");
+        System.out.println(queryFinal.toString());
+        return queryFinal.toString();
+    }
+
+    public void buildJoinQuery(StringBuilder join, BuildingSearchBuilder buildingSearchBuilder) {
+        if (ValidateUtils.isValid(buildingSearchBuilder.getRentAreaTo())
+                || ValidateUtils.isValid(buildingSearchBuilder.getRentAreaFrom()))
+            join.append("\ninner join rentarea as ra on bd.id = ra.buildingid ");
+        if (ValidateUtils.isValid(buildingSearchBuilder.getStaffID()))
+            join.append(
+                    "\ninner join assignmentbuilding as ab on bd.id = ab.buildingid inner join user as u on ab.staffid = u.id ");
+    }
+
+    public void buildQueryPart1(BuildingSearchBuilder buildingSearchBuilder, StringBuilder where,
+                                List<String> likeFields, List<String> operatorFields) {
+        try {
+            Field[] fields = BuildingSearchBuilder.class.getDeclaredFields();
+            for (Field field : fields) {
+                field.setAccessible(true);
+                Object fieldValue = field.get(buildingSearchBuilder);
+                if (ValidateUtils.isValid(fieldValue)) {
+                    String fieldName = field.getName().toLowerCase();
+                    for (String operatorField : operatorFields) {
+                        if (operatorField.equals(fieldName)) {
+                            if (field.getType().toString().equals("class java.lang.String")) {
+                                where.append(String.format("\nand bd.%s = '%s'", fieldName, fieldValue.toString()));
+                                break;
+                            }
+                            if (field.getType().toString().equals("class java.lang.Integer")) {
+                                where.append(String.format("\nand bd.%s = %s", fieldName, fieldValue.toString()));
+                                break;
+                            }
+                        }
+                    }
+                    for (String likeField : likeFields) {
+                        if (likeField.equals(fieldName)) {
+                            where.append(String.format("\nand bd.%s like '%s'", fieldName,
+                                    "%" + fieldValue.toString() + "%"));
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void buildQueryPart2(BuildingSearchBuilder buildingSearchBuilder, StringBuilder where) {
+        if (buildingSearchBuilder.getTypes() != null && buildingSearchBuilder.getTypes().size() > 0) {
+            where.append("\nand (");
+            String renttypes = buildingSearchBuilder.getTypes().stream()
+                    .map(item -> ("bd.type like '%" + item + "%'")).collect(Collectors.joining(" or "));
+            where.append(renttypes);
+            where.append(" )");
+        }
+
+        if (ValidateUtils.isValid(buildingSearchBuilder.getStaffID())) {
+            where.append("\nand u.id = " + buildingSearchBuilder.getStaffID());
+        }
+
+        if (ValidateUtils.isValid(buildingSearchBuilder.getRentAreaFrom())) {
+            where.append("\nand EXISTS (select * from rentarea as ra where bd.id=ra.buildingid and ra.value >= "
+                    + buildingSearchBuilder.getRentAreaFrom() + ")");
+        }
+        if (ValidateUtils.isValid(buildingSearchBuilder.getRentAreaTo())) {
+            where.append("\nand EXISTS (select * from rentarea as ra where bd.id=ra.buildingid and ra.value <= "
+                    + buildingSearchBuilder.getRentAreaTo() + ")");
+        }
+
+        if (ValidateUtils.isValid(buildingSearchBuilder.getRentPriceFrom())) {
+            where.append("\nand bd.rentprice >= " + buildingSearchBuilder.getRentPriceFrom());
+        }
+        if (ValidateUtils.isValid(buildingSearchBuilder.getRentPriceTo())) {
+            where.append("\nand bd.rentprice <= " + buildingSearchBuilder.getRentPriceTo());
+        }
+    }
+
+    @Transactional
     @Override
     public void assignmentBuilding(List<UserEntity> userEntities, BuildingEntity buildingEntity) {
+        for(UserEntity item : userRepository.getAllStafByBuildingId(buildingEntity.getId())){
+            int flag = 0;
+            for (UserEntity item2 : userEntities){
+                if(item.getId()==item2.getId())
+                    flag++;
+            }
+            if(flag==0){
+                AssignmentBuildingEntity assignmentBuildingEntity
+                        = assignmentBuildingRepository.findByBuildingEntityAndUserEntity(buildingEntity,item);
+                entityManager.remove(assignmentBuildingEntity);
+            }
 
+        }
+        for(UserEntity item : userEntities){
+            int flag = 0;
+            for (UserEntity item2 : userRepository.getAllStafByBuildingId(buildingEntity.getId())){
+                if(item.getId()==item2.getId())
+                    flag++;
+            }
+            if(flag==0){
+
+                AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
+                assignmentBuildingEntity.setBuilding(buildingEntity);
+                assignmentBuildingEntity.setUser(item);
+                entityManager.persist(assignmentBuildingEntity);
+            }
+        }
     }
 
     @Override
@@ -67,9 +197,10 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
                 entityManager.remove(assignmentBuildingEntity);
             }
         }
+        entityManager.remove(buildingEntity);
     }
 
-    private StringBuilder buildingJoinQuerry(BuildingSearchBuilder builder, StringBuilder sql) {
+    /*private StringBuilder buildingJoinQuerry(BuildingSearchBuilder builder, StringBuilder sql) {
         if (ValidateUtils.isValid(builder.getRentAreaFrom()) || ValidateUtils.isValid(builder.getRentAreaFrom())) {
             sql.append(" inner join rentarea as ra on ra.id = bd.id");
         }
@@ -91,15 +222,16 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
                         && !fieldName.startsWith("arearent")) {
                     // getValue
                     Object objectValue = field.get(builder);
-                    if (objectValue != null)
-                    if (objectValue instanceof String) {
-                        sql.append(" and b." + fieldName.toLowerCase() + " like '%" + objectValue + "%'");
+                    if (objectValue != null) {
+                        if (objectValue instanceof String) {
+                            sql.append(" and b." + fieldName.toLowerCase() + " like '%" + objectValue + "%'");
 
-                    } else if (objectValue instanceof Integer) {
-                        sql.append(" and b." + fieldName.toLowerCase() + " = " + objectValue + "");
+                        } else if (objectValue instanceof Integer) {
+                            sql.append(" and b." + fieldName.toLowerCase() + " = " + objectValue + "");
+                        }
                     }
                 }
-            }
+            }ô
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -134,7 +266,7 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
             sql.append(" and u.id = " + builder.getStaffID());
         }
         return sql;
-    }
+    }*/
 
     /*@Override
     public List<BuildingEntity> findAll(Map<String, Object> params, List<String> types) {
