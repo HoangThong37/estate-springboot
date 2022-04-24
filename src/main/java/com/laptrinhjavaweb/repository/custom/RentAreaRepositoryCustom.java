@@ -7,5 +7,5 @@ import com.laptrinhjavaweb.repository.custom.impl.RentAreaRepositoryImpl;
 import java.util.List;
 
 public interface RentAreaRepositoryCustom {
-    void saveAllByBuilding(List<RentAreaEntity> rentAreaEntities, BuildingEntity buildingEntity); // diện tích thuê
+    void saveAllByBuilding(List<RentAreaEntity> rentAreaEntitis, BuildingEntity buildingEntity);// diện tích thuê
 }

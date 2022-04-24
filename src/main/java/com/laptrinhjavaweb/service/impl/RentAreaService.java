@@ -26,42 +26,26 @@ public class RentAreaService implements IRentAreaService {
     private BuildingConverter buildingConverter;
     @Autowired
     private BuildingRepository buildingRepository;
+
     @Override
     public void saveAllByBuilding(List<RentAreaDTO> rentAreaDTOS, BuildingDTO buildingDTO) {
-        List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
-        for(RentAreaDTO item: rentAreaDTOS) {
+        List<RentAreaEntity> result = new ArrayList<>();
+        for (RentAreaDTO item : rentAreaDTOS) {
             RentAreaEntity rentAreaEntity = rentAreaConverter.convertToRentAreaEntity(item);
-            rentAreaEntities.add(rentAreaEntity);
+            result.add(rentAreaEntity);
         }
 
-        if(buildingDTO.getId()!=null){
-            BuildingEntity  buildingEntity = buildingRepository.findById(buildingDTO.getId());
-            rentAreaRepository.saveAllByBuilding(rentAreaEntities,buildingEntity);
-        }else {
-            BuildingEntity  buildingEntity = buildingConverter.convertToEntity(buildingDTO);
-            rentAreaRepository.saveAllByBuilding(rentAreaEntities,buildingEntity);
+        if (buildingDTO.getId() != null) {
+            BuildingEntity buildingEntity = buildingRepository.findById(buildingDTO.getId());
+            rentAreaRepository.saveAllByBuilding(result, buildingEntity);
+        } else {
+            BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
+            rentAreaRepository.saveAllByBuilding(result, buildingEntity);
         }
     }
-
-
-
-
-/*    @Autowired
-    private RentAreaConverter rentAreaConverter;
-
-
-    @Override
-    public String getRentAreaValueBuildingId(Long id) {
-        List<String> result = new ArrayList<>();
-        try {
-            List<RentAreaEntity> rentAreaEntities = (List<RentAreaEntity>) repository.findByRentAreaAndId(id);
-            for (RentAreaEntity item : rentAreaEntities)  {
-                result.add(item.getValue().toString());
-            }
-        } catch (Exception e) {
-
-        }
-        return String.join(",", result);
-    }*/
-
 }
+
+
+
+
+

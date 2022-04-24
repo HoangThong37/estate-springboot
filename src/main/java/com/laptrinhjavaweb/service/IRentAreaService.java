@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IRentAreaService {
 //   diện tích thuê
-void saveAllByBuilding(List<RentAreaDTO> rentAreaDTOS, BuildingDTO buildingDTO);
+   void saveAllByBuilding(List<RentAreaDTO> rentAreaDTOS, BuildingDTO buildingDTO);
 
 
 

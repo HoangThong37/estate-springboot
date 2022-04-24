@@ -5,7 +5,6 @@ import com.laptrinhjavaweb.dto.reponse.DistrictReponse;
 import com.laptrinhjavaweb.enums.DistrictsEnum;
 import com.laptrinhjavaweb.service.IDistrictService;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 

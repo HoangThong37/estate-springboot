@@ -1,6 +1,6 @@
 package com.laptrinhjavaweb.dto.reponse;
 
-public class BuildingSearchReponse { // đầu ra
+public class BuildingSearchReponse extends  BaseReponse { // đầu ra
     private String name;
     private String address; // = đường + phường + quận
     private Integer floorArea; // diện tích sàn;

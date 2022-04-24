@@ -6,8 +6,10 @@ import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.reponse.BuildingTypeReponse;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.service.IBuildingService;
+
 import com.laptrinhjavaweb.service.IDistrictService;
 import com.laptrinhjavaweb.service.IUserService;
+
 import com.laptrinhjavaweb.service.impl.BuildingTypesService;
 import com.laptrinhjavaweb.utils.MessageUtils;
 import org.apache.commons.lang.StringUtils;
@@ -41,12 +43,13 @@ public class BuildingController {
    @Autowired
    private BuildingConverter buildingConverter;
 
+
     @GetMapping("/building-list")
     public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest,
                                      @RequestParam(required = false) Map<String, Object> params,
                                      @RequestParam(required = false) List<String> types) {
         ModelAndView mav = new ModelAndView("admin/building/list");
-        mav.addObject("modelSearch", buildingConverter.toBuildingSearchRequest(buildingSearchRequest));
+        mav.addObject("modelSearch", buildingConverter.convertToBuildingSearchRequest(buildingSearchRequest));
         mav.addObject("modelDistrict",districtService.getAll());
         mav.addObject("modelStaff",userService.getAllStaff());
         mav.addObject("modelBuildingType",buildingTypesService.getAll());
@@ -66,7 +69,17 @@ public class BuildingController {
             modelAndView.addObject("modelDistrict",districtService.getAll());
             modelAndView.addObject("modelBuildingType",buildingTypesService.getAll());
             modelAndView.addObject("modelBuilding",new BuildingDTO());
-        }
+      }
+//
         return modelAndView;
     }
+
+//    private void initMessageResponse(ModelAndView mav, HttpServletRequest request) {
+//        String message = request.getParameter("message");
+//        if (message != null && StringUtils.isNotEmpty(message)) {
+//            Map<String, String> messageMap = messageUtil.getMessage(message);
+//            mav.addObject(SystemConstant.ALERT, messageMap.get(SystemConstant.ALERT));
+//            mav.addObject(SystemConstant.MESSAGE_RESPONSE, messageMap.get(SystemConstant.MESSAGE_RESPONSE));
+//        }
+//    }
 }

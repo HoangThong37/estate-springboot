@@ -1,10 +1,11 @@
 package com.laptrinhjavaweb.dto.request;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AssignmentBuildingRequest {
-    List<Integer> staffIds = new ArrayList<>();
+public class AssignmentBuildingRequest  {
+     private List<Integer> staffIds = new ArrayList<>();
 
     public List<Integer> getStaffIds() {
         return staffIds;

@@ -12,7 +12,7 @@ public class AssignmentBuildingEntity extends BaseEntity {
     private BuildingEntity building;
 
     // user qhe n vs assigmnmentbuilding
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "staffid")
     private UserEntity user;
 

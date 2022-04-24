@@ -9,16 +9,17 @@ import java.util.Map;
 
 public interface IBuildingService {
     List<BuildingSearchReponse> findAll(Map<String, Object> params, List<String> types);
-    void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingID);
-    void delete(Long ids);
+    List<BuildingSearchReponse> findFieldName(String name);
+    void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingId);
+
+    List<BuildingDTO> findBuildingByDTO(Map<String, Object> request, List<String> types);
+
+    BuildingDTO insert(BuildingDTO buildingDTO);
+    BuildingDTO update(Long id, BuildingDTO buildingDTO);
+    void delete(Long id);
     BuildingDTO findById(long id);
     BuildingDTO save(BuildingDTO buildingDTO);
-
-    String getDistrictByEnums(String value);
-/*    Map<String, String> getDistricts();
+    Map<String, String> getDistricts();
     Map<String, String> getBuildingTypes();
- List<BuildingSearchRequest> findBuildingByDTO(Map<String, Object> request, List<String> types);
-    BuildingDTO update(Long id, BuildingDTO buildingDTO);
-    BuildingDTO insert(BuildingDTO newBuilding);
-    List<BuildingDTO> fillAll();*/
+
 }

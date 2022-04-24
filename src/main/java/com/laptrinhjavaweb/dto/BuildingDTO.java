@@ -1,6 +1,8 @@
 package com.laptrinhjavaweb.dto;
 
-public class BuildingDTO extends AbstractDTO<BuildingDTO> {
+import java.util.List;
+
+public class BuildingDTO extends AbstractDTO {
     private String name;
     private String street;
     private String ward;
@@ -24,7 +26,7 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
     private String rentTime;
     private String decorationTime;
     private String brokerageFee;
-    private String[] buildingType = new String[]{};
+    private List<String> buildingType;
     private String note;
     private String linkOfBuilding;
     private String map;
@@ -223,11 +225,11 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
         this.brokerageFee = brokerageFee;
     }
 
-    public String[] getBuildingType() {
+    public List<String> getBuildingType() {
         return buildingType;
     }
 
-    public void setBuildingType(String[] buildingType) {
+    public void setBuildingType(List<String> buildingType) {
         this.buildingType = buildingType;
     }
 

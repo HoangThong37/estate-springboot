@@ -1,6 +1,7 @@
 package com.laptrinhjavaweb.service.impl;
 
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
+import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.converter.BuildingConverter;
 import com.laptrinhjavaweb.converter.RentAreaConverter;
 import com.laptrinhjavaweb.dto.BuildingDTO;
@@ -9,19 +10,18 @@ import com.laptrinhjavaweb.dto.reponse.BuildingSearchReponse;
 import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
+import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.enums.DistrictsEnum;
+import com.laptrinhjavaweb.exception.FieldNullException;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.service.IBuildingService;
 import com.laptrinhjavaweb.utils.MapUtil;
+import com.laptrinhjavaweb.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class BuildingService implements IBuildingService {
@@ -41,23 +41,6 @@ public class BuildingService implements IBuildingService {
     @Autowired
     private RentAreaConverter rentAreaConverter;
 
-    @Override
-    @Transactional
-    public BuildingDTO save(BuildingDTO buildingDTO) {
-        BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
-        try {
-            BuildingEntity buildingEntity1 = buildingRepository.save(buildingEntity);
-            if (buildingDTO.getRentArea() != null) {
-                List<RentAreaDTO> rentAreaDTOS = rentAreaConverter.toRentAreaDTOs(buildingEntity1.getId(), buildingDTO);
-                rentAreaService.saveAllByBuilding(rentAreaDTOS, buildingDTO);
-            }
-            return buildingConverter.convertToDto(buildingEntity1);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return buildingDTO;
-    }
 
     @Override
     public List<BuildingSearchReponse> findAll(Map<String, Object> params, List<String> types) {
@@ -67,60 +50,36 @@ public class BuildingService implements IBuildingService {
         for (BuildingEntity item : buildingEntities) {
             result.add(buildingConverter.convertToBuildingSearchReponse(item));
         }
+        return result;
 /*        // java 8
         List<BuildingSearchReponse> buildingSearchReponses = buildingEntities.stream()
                                                                              .map(item -> buildingConverter.convertToBuildingSearchReponse(item))
                                                                              .collect(Collectors.toList());
         return buildingSearchReponses;*/
-        return result;
     }
 
-    @Override
-    public void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingID) {
-        List<UserEntity> userEntities = new ArrayList<>();
-        for (Integer item : assignmentBuildingRequest.getStaffIds()) {
-            userEntities.add(userRepository.findOneById(item.longValue()));
-        }
-        BuildingEntity buildingEntity = buildingRepository.findById(buildingID);
-        buildingRepository.assignmentBuilding(userEntities, buildingEntity);
-     /*   BuildingEntity buildingEntity = buildingRepository.findById(buildingID);*/
-
-    }
-
-    // JAVA 7
-/*        List<BuildingSearchReponse> result = new ArrayList<>();
-        List<BuildingEntity> buildingEntities = buildingRepositoryCustom.findAll(params, types);
-        for (BuildingEntity item : buildingEntities) {
-            BuildingSearchReponse model = buildingConverter.convertToBuildingSearchReponse(item);
-            result.add(model);
-        }
-        List<BuildingSearchReponse> buildingSearchReponses = buildingEntities.stream()
-                                                                             .map(item -> buildingConverter.convertToBuildingSearchReponse(item))
-                                                                             .collect(Collectors.toList());
-        return buildingSearchReponses;*/
-   // sử dụng builder pattern
     private BuildingSearchBuilder convertParamToBuilder(Map<String, Object> params, List<String> types) {
         try {
-        Map<String, Object> paramsLowerKey = toLowerKey(params);
-        BuildingSearchBuilder result = new BuildingSearchBuilder.Builder()
-                .name(MapUtil.getObject(paramsLowerKey, "name", String.class))
-                .floorArea(MapUtil.getObject(paramsLowerKey, "floorarea", Integer.class))
-                .district(MapUtil.getObject(paramsLowerKey, "districtcode", String.class))
-                .ward(MapUtil.getObject(paramsLowerKey, "ward", String.class))
-                .street(MapUtil.getObject(paramsLowerKey, "street", String.class))
-                .numberOfBasement(MapUtil.getObject(paramsLowerKey, "numberofbasement", Integer.class))
-                .direction(MapUtil.getObject(paramsLowerKey, "direction", String.class))
-                .level(MapUtil.getObject(paramsLowerKey, "level", String.class))
-                .rentAreaFrom(MapUtil.getObject(paramsLowerKey, "rentareafrom", Integer.class))
-                .rentAreaTo(MapUtil.getObject(paramsLowerKey, "rentareato", Integer.class))
-                .rentPriceFrom(MapUtil.getObject(paramsLowerKey, "rentpricefrom", Integer.class))
-                .rentPriceTo(MapUtil.getObject(paramsLowerKey, "rentpriceto", Integer.class))
-                .managerName(MapUtil.getObject(paramsLowerKey, "managername", String.class))
-                .managerPhone(MapUtil.getObject(paramsLowerKey, "managerphone", String.class))
-                .staffID(MapUtil.getObject(paramsLowerKey, "staffid", Integer.class))
-                .types(types)
-                .build();
-        return result;
+            Map<String, Object> paramsLowerKey = toLowerKey(params);
+            BuildingSearchBuilder result = new BuildingSearchBuilder.Builder()
+                    .name(MapUtil.getObject(paramsLowerKey, "name", String.class))
+                    .floorArea(MapUtil.getObject(paramsLowerKey, "floorarea", Integer.class))
+                    .district(MapUtil.getObject(paramsLowerKey, "districtcode", String.class))
+                    .ward(MapUtil.getObject(paramsLowerKey, "ward", String.class))
+                    .street(MapUtil.getObject(paramsLowerKey, "street", String.class))
+                    .numberOfBasement(MapUtil.getObject(paramsLowerKey, "numberofbasement", Integer.class))
+                    .direction(MapUtil.getObject(paramsLowerKey, "direction", String.class))
+                    .level(MapUtil.getObject(paramsLowerKey, "level", String.class))
+                    .rentAreaFrom(MapUtil.getObject(paramsLowerKey, "rentareafrom", Integer.class))
+                    .rentAreaTo(MapUtil.getObject(paramsLowerKey, "rentareato", Integer.class))
+                    .rentPriceFrom(MapUtil.getObject(paramsLowerKey, "rentpricefrom", Integer.class))
+                    .rentPriceTo(MapUtil.getObject(paramsLowerKey, "rentpriceto", Integer.class))
+                    .managerName(MapUtil.getObject(paramsLowerKey, "managername", String.class))
+                    .managerPhone(MapUtil.getObject(paramsLowerKey, "managerphone", String.class))
+                    .staffID(MapUtil.getObject(paramsLowerKey, "staffid", Integer.class))
+                    .types(types)
+                    .build();
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -136,29 +95,104 @@ public class BuildingService implements IBuildingService {
     }
 
     @Override
-    public void delete(Long ids) {
-            BuildingEntity buildingEntity = buildingRepository .findById(ids);
-            if (buildingEntity != null) {
-                buildingRepository.deleteBuilding(buildingEntity);
+    public List<BuildingSearchReponse> findFieldName(String name) {
+        List<BuildingSearchReponse> result = new ArrayList<>();
+        List<BuildingEntity> buildingEntities = buildingRepository.findByNameContaining(name);
+        for (BuildingEntity item : buildingEntities) {
+            result.add(buildingConverter.convertToBuildingSearchReponse(item));
         }
+        return result;
     }
 
     @Override
-    public String getDistrictByEnums(String value) {
-        String district = "";
-        for (DistrictsEnum item : DistrictsEnum.values()) {
-            if (item.toString().equals(value)) {
-                district += item.getDistrictValue();
-            }
+    public void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingId) {
+        List<UserEntity> result = new ArrayList<>();
+        for (Integer item : assignmentBuildingRequest.getStaffIds()) {
+            result.add(userRepository.findOnedById(item.longValue()));
         }
-        return district;
+        BuildingEntity buildingEntity = buildingRepository.findById(buildingId);
+        buildingRepository.assignmentBuilding(result, buildingEntity);
     }
+
+    @Override
+    public List<BuildingDTO> findBuildingByDTO(Map<String, Object> request, List<String> types) {
+       /* Map<String, Object> validate = validateParams(request);
+        List<BuildingDTO> result = new ArrayList<>();
+        List<BuildingEntity> buildingEntities = buildingRepository.getBuildings(validateParams, buildingTypes);
+        for (BuildingEntity item : buildingEntities) {
+            BuildingDTO buildingDTO = buildingConverter.convertToDto(item);
+            result.add(buildingDTO);
+        }
+        return result;*/
+        return null;
+    }
+
+    private Map<String, Object> validateParams(Map<String, Object> request) {
+        /* Map<String, Object> validatePa*/
+        return null;
+
+    }
+
+
+    @Override
+    public BuildingDTO insert(BuildingDTO buildingDTO) {
+        if (!ValidateUtils.isValid(buildingDTO.getName()) || !ValidateUtils.isValid(buildingDTO.getDistrict())) {
+            throw new FieldNullException(SystemConstant.FIELD_IS_NULL_OR_EMPTY);
+        } else {
+            BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
+
+            String types = String.join(",", buildingDTO.getBuildingType());
+        }
+        return buildingDTO;
+    }
+
+    @Override
+    public BuildingDTO update(Long id, BuildingDTO buildingDTO) {
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
+        BuildingEntity buildingEntity = buildingRepository.findById(id);
+        if (buildingEntity != null) {
+            buildingRepository.deleteBuilding(buildingEntity);
+        }
+    }
+
+    // JAVA 7
+ /*       List<BuildingSearchReponse> result = new ArrayList<>();
+        List<BuildingEntity> buildingEntities = buildingRepositoryCustom.findAll(params, types);
+        for (BuildingEntity item : buildingEntities) {
+            BuildingSearchReponse model = buildingConverter.convertToBuildingSearchReponse(item);
+            result.add(model);
+        }
+        List<BuildingSearchReponse> buildingSearchReponses = buildingEntities.stream()
+                                                                             .map(item -> buildingConverter.convertToBuildingSearchReponse(item))
+                                                                             .collect(Collectors.toList());
+        return buildingSearchReponses;*/
+
 
     @Override
     public BuildingDTO findById(long id) {
         BuildingEntity buildingEntity = buildingRepository.findById(id);
         return buildingConverter.convertToDto(buildingEntity);
-        /*return id!=null?buildingConverter.convertToDto(buildingRepository.findById(id)):new BuildingDTO();*/
+    }
+
+    @Override
+    public BuildingDTO save(BuildingDTO buildingDTO) {
+        BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
+        try {
+            BuildingEntity buildingGetIdAfterSave = buildingRepository.save(buildingEntity);
+            if (buildingDTO.getRentArea() != null) {
+                List<RentAreaDTO> rentAreaDTOS = rentAreaConverter.convertRentAreaToDto(buildingGetIdAfterSave.getId(), buildingDTO);
+                rentAreaService.saveAllByBuilding(rentAreaDTOS, buildingDTO);
+            }
+            return buildingConverter.convertToDto(buildingGetIdAfterSave);
+        } catch (Exception e) {
+            System.out.println("Lỗi Building Service");
+            e.printStackTrace();
+            return null;
+        }
     }
 //
 //    @Override
@@ -191,62 +225,33 @@ public class BuildingService implements IBuildingService {
 //
 
 //
-//    @Override
-//    public Map<String, String> getDistricts() {
-//        Map<String, String> districts = new HashMap<>();
-//        for (DistrictsEnum item: DistrictsEnum.values()) {
-//            districts.put(item.toString(), item.getDistrictValue());
-//        }
-//        return districts;
-//    }
-//
-//    @Override
-//    public Map<String, String> getBuildingTypes() {
-//        Map<String, String> buildingTypes = new HashMap<>();
-//        for (BuildingTypesEnum item: BuildingTypesEnum.values()) {
-//            buildingTypes.put(item.toString(), item.getBuildingTypeValue());
-//        }
-//        return buildingTypes;
-//    }
-//
-//    @Override
-//    public String getDistrictByEnums(String value) {
-//        String district = "";
-//        for (DistrictsEnum item : DistrictsEnum.values()) {
-//            if (item.toString().equals(value)) {
-//                district += item.getDistrictValue();
-//            }
-//        }
-//        return district;
-//    }
-//
-//    @Override
-//    public List<BuildingSearchReponse> buildingSearch(Map<String, String> params, List<String> types) {
-//        List<BuildingSearchReponse> buildingResponses = new ArrayList<>();
-//        if (!params.isEmpty() || !types.isEmpty()) {
-//            List<BuildingEntity> buildingEntities = buildingRepositoryCustom.buildingSearch(params, types);
-//            for (BuildingEntity entity : buildingEntities) {
-//                BuildingSearchReponse model = buildingConverter.convertToBuildingSearchReponse(entity);
-//                buildingResponses.add(model);
-//            }
-//        }
-//        return buildingResponses;
-//    }
-//
-//  @Override
-//    public List<BuildingSearchRequest> findBuildingByDT(Map<String, Object> request, List<String> types) {
-//        return null;
-//    }
-
-/*   @Override
-    public List<BuildingDTO> fillAll() {
-        List<BuildingDTO> result = new ArrayList<>();
-        List<BuildingEntity> entities = buildingRepository.findAll();
-        for (BuildingEntity item : entities) {
-            BuildingDTO buildingDTO = buildingConverter.convertToDto(item);
-            result.add(buildingDTO);
+    @Override
+    public Map<String, String> getDistricts() {
+        Map<String, String> districts = new HashMap<>();
+        for (DistrictsEnum item: DistrictsEnum.values()) {
+            districts.put(item.toString(), item.getDistrictValue());
         }
-        return result;
+        return districts;
+    }
+
+    @Override
+    public Map<String, String> getBuildingTypes() {
+        Map<String, String> buildingTypes = new HashMap<>();
+        for (BuildingTypesEnum item: BuildingTypesEnum.values()) {
+            buildingTypes.put(item.toString(), item.getBuildingTypeValue());
+        }
+        return buildingTypes;
+    }
+
+  /*  @Override
+    public String getDistrictByEnums(String value) {
+        String district = "";
+        for (DistrictsEnum item : DistrictsEnum.values()) {
+            if (item.toString().equals(value)) {
+                district += item.getDistrictValue();
+            }
+        }
+        return district;
     }*/
 
 }

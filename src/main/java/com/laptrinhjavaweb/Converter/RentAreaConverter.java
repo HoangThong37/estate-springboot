@@ -3,6 +3,7 @@ import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.RentAreaDTO;
 import com.laptrinhjavaweb.entity.RentAreaEntity;
 import com.laptrinhjavaweb.repository.BuildingRepository;
+
 import com.laptrinhjavaweb.service.impl.RentAreaService;
 import com.laptrinhjavaweb.utils.ParseIntUtil;
 import org.modelmapper.ModelMapper;
@@ -15,7 +16,7 @@ import java.util.List;
 @Component
 public class RentAreaConverter {
 
-    @Autowired
+   @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
@@ -38,12 +39,13 @@ public class RentAreaConverter {
         return result;
     }
 
-    public List<RentAreaDTO> toRentAreaDTOs(Long buildingIdAfterSave, BuildingDTO buildingDTO) {
+    public List<RentAreaDTO> convertRentAreaToDto(Long buildingIdAfterSave, BuildingDTO buildingDTO) {
         List<RentAreaDTO> rentAreaDTOS = new ArrayList<>();
         BuildingDTO buildingDTOGetRentArea = buildingConverter.convertToDto(buildingRepository.findById(buildingIdAfterSave));
-        if(buildingDTOGetRentArea.getRentArea().equals(buildingDTO.getRentArea()))
+        if (buildingDTOGetRentArea.getRentArea().equals(buildingDTO.getRentArea())) {
             return new ArrayList<>();
-        String[] rentArea = buildingDTO.getRentArea() != null ? buildingDTO.getRentArea().trim().split(",") : null;
+        }
+        String[] rentArea = (buildingDTO.getRentArea() != null) ? buildingDTO.getRentArea().trim().split(",") : null;
         if (rentArea != null) {
             for (String item : rentArea) {
                 RentAreaDTO rentAreaDTO = new RentAreaDTO();
@@ -52,7 +54,8 @@ public class RentAreaConverter {
                 rentAreaDTOS.add(rentAreaDTO);
             }
             return rentAreaDTOS;
-        } else
+        } else {
             return new ArrayList<>();
+        }
     }
 }

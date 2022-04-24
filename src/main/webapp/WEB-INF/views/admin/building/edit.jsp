@@ -24,7 +24,6 @@
                 <li class="active">Chi tiết building</li>
             </ul><!-- /.breadcrumb -->
 
-
         </div>
 
         <div class="page-content">
@@ -157,14 +156,14 @@
                                 <form:input path="motoFee" cssClass="form-control"/>
                             </div>
                         </div>
-                        <div class="form-group">
+                       <%-- <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"
                             >
                                 Phí ngoài giờ</label>
                             <div class="col-sm-9">
                                 <form:input path="overTimeFee" cssClass="form-control"/>
                             </div>
-                        </div>
+                        </div>--%>
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"
                             >

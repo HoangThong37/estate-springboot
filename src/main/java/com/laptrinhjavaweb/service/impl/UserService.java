@@ -5,13 +5,16 @@ import com.laptrinhjavaweb.converter.UserConverter;
 import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.dto.reponse.StaffAssignmentReponse;
+import com.laptrinhjavaweb.entity.AssignmentBuildingEntity;
 import com.laptrinhjavaweb.entity.RoleEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
+/*import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;*/
 import com.laptrinhjavaweb.repository.RoleRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
-import com.laptrinhjavaweb.repository.custom.UserRepositoryCustom;
+/*import com.laptrinhjavaweb.repository.custom.UserRepositoryCustom;*/
 import com.laptrinhjavaweb.service.IUserService;
+import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,8 +32,6 @@ import java.util.stream.Stream;
 
 @Service
 public class UserService implements IUserService {
-    @Autowired
-    private UserRepositoryCustom userRepositoryCustom;
 
     @Autowired
     private UserRepository userRepository;
@@ -161,28 +162,17 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<UserDTO> getAllStaff() {
-        List<UserDTO> result = new ArrayList<>();
-        for (UserEntity item : userRepository.getAllStaff()) {
-            UserDTO userDTO = userConverter.convertToDto(item);
-            result.add(userDTO);
-        }
-        return result;
+    public List<StaffAssignmentReponse> getAllStaffAssignmentBuilding(Long buildingID) {
+       return userConverter.convertToStaffAssignmentReponse(userRepository.getAllStaffByBuildingId(buildingID));
     }
 
     @Override
-    public List<StaffAssignmentReponse> getAllStaffAssignmentBuilding(Long buildingID) {
-        return userConverter.toStaffAssignmentResponses(userRepositoryCustom.getAllStafByBuildingId(buildingID));
+    public List<UserDTO> getAllStaff() {
+        List<UserDTO> result = new ArrayList<>();
+        for (UserEntity item : userRepository.getAllStaff()) {
+            result.add(userConverter.convertToDto(item));
+        }
+        return result;
     }
 
- /*   @Override
-    public Map<Long, String> getstaffMaps() {
-        Map<Long, String> result = new HashMap<>();
-        List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "staff");
-        for (UserEntity item : staffs) {
-            result.put(item.getId(), item.getFullName());
-        }
-
-        return result;
-    }*/
 }

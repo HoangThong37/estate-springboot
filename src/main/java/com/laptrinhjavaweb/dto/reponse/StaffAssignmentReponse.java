@@ -1,12 +1,13 @@
 package com.laptrinhjavaweb.dto.reponse;
 
-public class StaffAssignmentReponse {
+import com.laptrinhjavaweb.dto.UserDTO;
+
+public class StaffAssignmentReponse  extends UserDTO  {
     private String checkes = "";
 
     public String getCheckes() {
         return checkes;
     }
-
     public void setCheckes(String checkes) {
         this.checkes = checkes;
     }

@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface UserRepositoryCustom {
     List<UserEntity> getAllStaff();
-    List<UserEntity> getAllStafByBuildingId(Long buildingId);
+    List<UserEntity> getAllStaffByBuildingId(Long buildingId);
 }

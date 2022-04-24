@@ -1,11 +1,22 @@
 package com.laptrinhjavaweb.utils;
 import com.laptrinhjavaweb.constant.BuildingConstant;
+import com.laptrinhjavaweb.constant.SystemConstant;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ValidateUtils {
     public static boolean isValid(Object obj) {
-        boolean isTrue = null != obj && !BuildingConstant.EMPTY_STRING.equals(obj.toString());
+       if (obj == null) {
+           return false;
+       } else if (!obj.toString().equals(SystemConstant.EMPTY_STRING)) {
+           return true;
+       }
+        return false;
+    }
+/*
+
+ boolean isTrue = null != obj && !BuildingConstant.EMPTY_STRING.equals(obj.toString());
         // truyền vào isTrue khác null và khác rỗng
         if (isTrue) {
             if (obj instanceof String) {
@@ -15,14 +26,13 @@ public class ValidateUtils {
             }
         }
         return false;
-    }
-/*
+
 
  Nếu truyền vào giá trị null là dính Exception,
     isNotBlank là bao gồm cả check != null và != ""
 */
 
-    public static boolean isNotBlank(String str) {
+/*    public static boolean isNotBlank(String str) {
         return str != null && !BuildingConstant.EMPTY_STRING.equals(str);
     }
 
@@ -37,6 +47,6 @@ public class ValidateUtils {
             return result;
         }
         return new ArrayList<>();
-    }
+    }*/
 }
 

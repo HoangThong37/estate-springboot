@@ -35,7 +35,7 @@ public class UserController {
 
 	@RequestMapping(value = "/admin/user-list", method = RequestMethod.GET)
 	public ModelAndView getNews(@ModelAttribute(SystemConstant.MODEL) UserDTO model, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("building-list");
+		ModelAndView mav = new ModelAndView("admin/user/list");
 		DisplayTagUtils.of(request, model);
 		List<UserDTO> news = userService.getUsers(model.getSearchValue(),
 				new PageRequest(model.getPage() - 1, model.getMaxPageItems()));
@@ -48,7 +48,7 @@ public class UserController {
 
 	@RequestMapping(value = "/admin/user-edit", method = RequestMethod.GET)
 	public ModelAndView addUser(@ModelAttribute(SystemConstant.MODEL) UserDTO model, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("building-edit");
+		ModelAndView mav = new ModelAndView("admin/user/edit");
 		model.setRoleDTOs(roleService.getRoles());
 		initMessageResponse(mav, request);
 		mav.addObject(SystemConstant.MODEL, model);
@@ -67,7 +67,7 @@ public class UserController {
 
 	@RequestMapping(value = "/admin/user-edit-{id}", method = RequestMethod.GET)
 	public ModelAndView updateUser(@PathVariable("id") Long id, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("building-edit");
+		ModelAndView mav = new ModelAndView("admin/user/edit");
 		UserDTO model = userService.findUserById(id);
 		model.setRoleDTOs(roleService.getRoles());
 		initMessageResponse(mav, request);
