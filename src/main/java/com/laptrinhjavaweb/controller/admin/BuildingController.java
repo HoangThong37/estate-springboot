@@ -31,8 +31,8 @@ public class BuildingController {
     @Autowired
     private IUserService userService;
 
-    @Autowired
-    private MessageUtils messageUtil;
+//    @Autowired
+//    private MessageUtils messageUtil;
 
     @Autowired
     private IDistrictService districtService;

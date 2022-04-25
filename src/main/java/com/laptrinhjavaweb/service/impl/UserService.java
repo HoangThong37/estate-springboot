@@ -170,7 +170,9 @@ public class UserService implements IUserService {
     public List<UserDTO> getAllStaff() {
         List<UserDTO> result = new ArrayList<>();
         for (UserEntity item : userRepository.getAllStaff()) {
-            result.add(userConverter.convertToDto(item));
+            UserDTO userDTO = userConverter.convertToDto(item);
+            result.add(userDTO);
+//            result.add(userConverter.convertToDto(item));
         }
         return result;
     }

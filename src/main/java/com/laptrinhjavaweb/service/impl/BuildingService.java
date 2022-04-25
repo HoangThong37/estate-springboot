@@ -141,7 +141,7 @@ public class BuildingService implements IBuildingService {
         } else {
             BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
 
-            String types = String.join(",", buildingDTO.getBuildingType());
+            String types = String.join(",", buildingDTO.getType());
         }
         return buildingDTO;
     }

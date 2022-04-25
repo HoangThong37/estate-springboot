@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
-<c:url var="buildingAPI" value="/api/building "/>
+<c:url var="buildingEditURL" value="/api/building"></c:url>
 <html>
 <head>
-    <title>Chỉnh sửa tòa nhà</title>
+    <title>Chi tiết toà nhà</title>
 </head>
 <body>
 <div class="main-content">
@@ -23,6 +23,7 @@
                 </li>
                 <li class="active">Chi tiết building</li>
             </ul><!-- /.breadcrumb -->
+
 
         </div>
 
@@ -156,14 +157,14 @@
                                 <form:input path="motoFee" cssClass="form-control"/>
                             </div>
                         </div>
-                       <%-- <div class="form-group">
+                        <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"
                             >
                                 Phí ngoài giờ</label>
                             <div class="col-sm-9">
                                 <form:input path="overTimeFee" cssClass="form-control"/>
                             </div>
-                        </div>--%>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"
                             >

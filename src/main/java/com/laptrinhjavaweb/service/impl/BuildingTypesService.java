@@ -31,8 +31,8 @@ public class BuildingTypesService implements IBuildingTypeService {
             BuildingTypeReponse buildingTypeReponse = new BuildingTypeReponse();
             buildingTypeReponse.setCode(item.name());
             buildingTypeReponse.setName(item.getBuildingTypeValue());
-            if (buildingDTO.getBuildingType() != null) {
-                for (String check : buildingDTO.getBuildingType()) {
+            if (buildingDTO.getType() != null) {
+                for (String check : buildingDTO.getType()) {
                     if (check.equals(item.name())) {
                         buildingTypeReponse.setChecked("checked");
                     }

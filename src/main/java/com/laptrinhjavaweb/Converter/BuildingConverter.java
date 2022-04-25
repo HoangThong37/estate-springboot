@@ -20,8 +20,8 @@ public class BuildingConverter {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private BuildingService buildingService;
+//    @Autowired
+//    private BuildingService buildingService;
 
     // cv từ DTO <<- ENTITY
     public BuildingDTO convertToDto(BuildingEntity entity) {
@@ -38,7 +38,7 @@ public class BuildingConverter {
             for (String item : types) {
                 arrayList.add(item);
             }
-            result.setBuildingType(arrayList);
+            result.setType(arrayList);
          }
        /* result.setAddress(entity.getStreet() + entity.getWard() + buildingService.getDistrictByEnums(entity.getDistrict()));
         result.setRentArea(entity.getRentAreas().stream()
@@ -49,8 +49,8 @@ public class BuildingConverter {
     // cv từ DTO -> Entity
     public BuildingEntity convertToEntity(BuildingDTO dto) {
         BuildingEntity result = modelMapper.map(dto, BuildingEntity.class);
-        if (dto.getBuildingType() != null) {
-            String type = String.join(",", dto.getBuildingType());
+        if (dto.getType() != null) {
+            String type = String.join(",", dto.getType());
             result.setType(type);
         }
         return result;

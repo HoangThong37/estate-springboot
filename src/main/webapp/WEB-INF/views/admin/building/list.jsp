@@ -1,13 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page import="com.laptrinhjavaweb.dto.DistrictDTO" %>
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
-<c:url var="buildingListURL" value="/admin/building-list"/>
-<c:url var="formAjax" value="/api/user"/>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<c:url var="buildingListURL" value="/admin/building-list"></c:url>
+<html>
 <head>
     <title>Danh sách toà nhà</title>
 </head>
 <body>
+
 
 <div class="main-content">
     <div class="main-content-inner">
@@ -39,8 +40,6 @@
                             </a>
                         </div>
                     </div>
-
-
                     <div class="widget-body">
                         <div class="widget-main">
                             <form:form commandName="modelSearch" action="${buildingListURL}" id="listForm" method="get">
@@ -338,76 +337,6 @@
 
     </div>
 </div>
-
-<%--<script>
-    function assingmentBuilding(buildingId) {
-        openModalAssingmentBuilding();
-        $('#buildingId').val(buildingId);
-        console.log($('#buildingId').val());
-    }
-    function openModalAssingmentBuilding() {
-        $('#assingmentBuildingModal').modal();
-    }
-    $('#btnAssignBuilding').click(function (e) {
-        e.preventDefault();
-        var data = {}
-        var staffs = []
-        data['buildingId'] = $('#buildingId').val();
-        //   $('#staffList').find('tbody input[type=checkbox]')
-        //   staffId.push()
-        var staffs = ('#staffList').find('tbody input[type=checkbox]:checked').map(function () {
-            return $(this).val();
-        }).get();
-        data['staffs'] = staffs;
-        assignment(data);
-    });
-    function assignment(data) {
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:8081/api-user",
-            data: JSON.stringify(data),
-            dataType: "json",
-            contentType : "application/json",
-            success: function (response) {
-                console.log('success');
-            },
-            error: function (response) {
-                console.log('failed');
-                console.log(response);
-            }
-        });
-    }
-    $('#btnDeleteBuilding').click(function (e) {
-        e.preventDefault();
-        var data = {};
-        var buildingIds = ('#buildingList').find('tbody input[type=checkbox]:checked').map(function () {
-            return $(this).val();
-        }).get();
-        data['buildingIds'] = buildingIds;
-        deleteBuilding(data);
-    });
-    function deleteBuilding(data) {
-        $.ajax({
-            type: "DELETE",
-            url: "http://localhost:8081/api-building",
-            data: JSON.stringify(data),
-            dataType: "json",
-            contentType : "application/json",
-            success: function (response) {
-                console.log('success');
-            },
-            error: function (response) {
-                console.log('success');
-                console.log(response);
-            }
-        });
-    }
-    $('#btnSearch').click(function (e) {
-        e.preventDefault();
-        $('#listForm').submit();
-    });
-</script>--%>
-
 <script>
     let buildingAssId;
 
@@ -519,11 +448,12 @@
         window.location.href = "<c:url value="/admin/building-edit"/>" + "?buildingid=" + value;
     }
 
-    if ((${modelSearch.rentTypes}) != []) {
-        $.each(${modelSearch.rentTypes}, function (index, value) {
+    if ((${modelSearch.types}) != []) {
+        $.each(${modelSearch.types}, function (index, value) {
             $("#rent[value='" + value + "']").prop('checked', true);
         });
     }
+
 </script>
 </body>
 </html>
