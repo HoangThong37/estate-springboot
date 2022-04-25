@@ -9,10 +9,9 @@ public class RentAreaEntity extends BaseEntity {
     @Column(name = "value")
     private Integer value;
 
-    // qhe n vs building
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "buildingid", nullable = false)
-    private BuildingEntity building;
+    @JoinColumn(name = "buildingid",nullable = false)
+    private BuildingEntity buildingEntity;
 
     public Integer getValue() {
         return value;
@@ -22,11 +21,13 @@ public class RentAreaEntity extends BaseEntity {
         this.value = value;
     }
 
-    public BuildingEntity getBuilding() {
-        return building;
+    public BuildingEntity getBuildingEntity() {
+        return buildingEntity;
     }
 
-    public void setBuilding(BuildingEntity building) {
-        this.building = building;
+    public void setBuildingEntity(BuildingEntity buildingEntity) {
+        this.buildingEntity = buildingEntity;
     }
+
+
 }

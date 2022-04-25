@@ -16,7 +16,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     public ResponseEntity<Map<String,Object>> handleNullPointerException(NullPointerException e){
         Map<String,Object> results = new HashMap<>();
         results.put("Status",HttpStatus.INTERNAL_SERVER_ERROR.value());
-        results.put("value","Loi khong duoc de null");
+        results.put("value","Không được NULL");
         results.put("value",e.getMessage());
         return new ResponseEntity<>(results, HttpStatus.INTERNAL_SERVER_ERROR);
     }

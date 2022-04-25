@@ -9,26 +9,24 @@ import java.util.List;
 public class CustomerEntity extends BaseEntity {
 
     @Column(name = "fullname")
-    private String fullname;
-
+    private String fullName;
     @Column(name = "phone")
     private String phone;
-
     @Column(name = "email")
     private String email;
 
     @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY)
-    private List<TransactionEntity> transactions = new ArrayList<>();
+    private List<AssignmentCustomerEntity> assignmentCustomerEntities = new ArrayList<>();
 
     @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY)
-    private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
+    private List<TransactionEntity> transactionEntities = new ArrayList<>();
 
-    public String getFullname() {
-        return fullname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPhone() {
@@ -47,19 +45,21 @@ public class CustomerEntity extends BaseEntity {
         this.email = email;
     }
 
-    public List<TransactionEntity> getTransactions() {
-        return transactions;
+    public List<AssignmentCustomerEntity> getAssignmentCustomerEntities() {
+        return assignmentCustomerEntities;
     }
 
-    public void setTransactions(List<TransactionEntity> transactions) {
-        this.transactions = transactions;
+    public void setAssignmentCustomerEntities(List<AssignmentCustomerEntity> assignmentCustomerEntities) {
+        this.assignmentCustomerEntities = assignmentCustomerEntities;
     }
 
-    public List<AssignmentCustomerEntity> getAssignmentCustomers() {
-        return assignmentCustomers;
+    public List<TransactionEntity> getTransactionEntities() {
+        return transactionEntities;
     }
 
-    public void setAssignmentCustomers(List<AssignmentCustomerEntity> assignmentCustomers) {
-        this.assignmentCustomers = assignmentCustomers;
+    public void setTransactionEntities(List<TransactionEntity> transactionEntities) {
+        this.transactionEntities = transactionEntities;
     }
+
+
 }

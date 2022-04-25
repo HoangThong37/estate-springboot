@@ -27,7 +27,7 @@ public class BuildingConverter {
     public BuildingDTO convertToDto(BuildingEntity entity) {
         BuildingDTO result = modelMapper.map(entity, BuildingDTO.class);
         List<String> rentAreas = new ArrayList<>();
-        for (RentAreaEntity item : entity.getRentAreas()) {
+        for (RentAreaEntity item : entity.getRentAreaEntities()) {
             rentAreas.add(String.valueOf(item.getValue()));
         }
         String rentArea = String.join(",", rentAreas); // join tách bằng dấu ,

@@ -8,10 +8,8 @@ public class TransactionEntity extends BaseEntity {
 
     @Column(name = "code")
     private String code;
-
     @Column(name = "note")
     private String note;
-
     @Column(name = "staffid")
     private Long staffID;
 
@@ -27,20 +25,20 @@ public class TransactionEntity extends BaseEntity {
         this.code = code;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
     public Long getStaffID() {
         return staffID;
     }
 
     public void setStaffID(Long staffID) {
         this.staffID = staffID;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public CustomerEntity getCustomerEntity() {
@@ -50,4 +48,5 @@ public class TransactionEntity extends BaseEntity {
     public void setCustomerEntity(CustomerEntity customerEntity) {
         this.customerEntity = customerEntity;
     }
+
 }

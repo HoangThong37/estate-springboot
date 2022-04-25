@@ -6,5 +6,5 @@ import com.laptrinhjavaweb.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AssignmentBuildingRepository extends JpaRepository<AssignmentBuildingEntity, Long> {
-    AssignmentBuildingEntity findByBuildingAndUser(BuildingEntity buildingEntity, UserEntity userEntity);
+    AssignmentBuildingEntity findByBuildingEntityAndUserEntity(BuildingEntity buildingEntity, UserEntity userEntity);
 }

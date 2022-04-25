@@ -141,7 +141,7 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
             }
             if (i == 0) {
                 AssignmentBuildingEntity assignmentBuildingEntity
-                        = assignmentBuildingRepository.findByBuildingAndUser(buildingEntity, item);
+                        = assignmentBuildingRepository.findByBuildingEntityAndUserEntity(buildingEntity, item);
                 entityManager.remove(assignmentBuildingEntity); // xóa
             }
         }
@@ -154,8 +154,8 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
             }
             if (i == 0) {
                 AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
-                assignmentBuildingEntity.setBuilding(buildingEntity);
-                assignmentBuildingEntity.setUser(item);
+                assignmentBuildingEntity.setBuildingEntity(buildingEntity);
+                assignmentBuildingEntity.setUserEntity(item);
                 entityManager.persist(assignmentBuildingEntity); // thêm mới
             }
         }
@@ -164,14 +164,14 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
     @Transactional
     @Override
     public void deleteBuilding(BuildingEntity buildingEntity) { // xóa building
-        if (buildingEntity.getRentAreas().size() > 0) {
-           for (RentAreaEntity item : buildingEntity.getRentAreas()) {
+        if (buildingEntity.getRentAreaEntities().size() > 0) {
+           for (RentAreaEntity item : buildingEntity.getRentAreaEntities()) {
                RentAreaEntity rentAreaEntity = rentAreaRepository.findOne(item.getId());
                entityManager.remove(rentAreaEntity);
            }
         }
-        if (buildingEntity.getAssignmentBuildings().size() > 0) {
-            for (AssignmentBuildingEntity item1 : buildingEntity.getAssignmentBuildings()) {
+        if (buildingEntity.getAssignmentBuildingEntities().size() > 0) {
+            for (AssignmentBuildingEntity item1 : buildingEntity.getAssignmentBuildingEntities()) {
                 AssignmentBuildingEntity assignmentBuilding = assignmentBuildingRepository.findOne(item1.getId());
                 entityManager.remove(assignmentBuilding);
             }
