@@ -31,25 +31,16 @@ public class BuildingController {
     @Autowired
     private IUserService userService;
 
-//    @Autowired
-//    private MessageUtils messageUtil;
-
     @Autowired
     private IDistrictService districtService;
 
     @Autowired
     private BuildingTypesService buildingTypesService;
 
-   @Autowired
-   private BuildingConverter buildingConverter;
-
 
     @GetMapping("/building-list")
     public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest) {
-        //                                             @RequestParam(required = false) Map<String, Object> params,
-        //                                             @RequestParam(required = false) List<String> types
         ModelAndView mav = new ModelAndView("admin/building/list");
-//        mav.addObject("modelSearch", buildingConverter.convertToBuildingSearchRequest(buildingSearchRequest));
         mav.addObject("modelDistrict",districtService.getAll());
         mav.addObject("modelStaff",userService.getAllStaff());
         mav.addObject("modelBuildingType",buildingTypesService.getAll());

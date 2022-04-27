@@ -168,25 +168,6 @@ public class BuildingService implements IBuildingService {
         buildingRepository.assignmentBuilding(result, buildingEntity);
     }
 
-    @Override
-    public List<BuildingDTO> findBuildingByDTO(Map<String, Object> request, List<String> types) {
-       /* Map<String, Object> validate = validateParams(request);
-        List<BuildingDTO> result = new ArrayList<>();
-        List<BuildingEntity> buildingEntities = buildingRepository.getBuildings(validateParams, buildingTypes);
-        for (BuildingEntity item : buildingEntities) {
-            BuildingDTO buildingDTO = buildingConverter.convertToDto(item);
-            result.add(buildingDTO);
-        }
-        return result;*/
-        return null;
-    }
-
-    private Map<String, Object> validateParams(Map<String, Object> request) {
-        /* Map<String, Object> validatePa*/
-        return null;
-
-    }
-
 
     @Override
     public BuildingDTO insert(BuildingDTO buildingDTO) {
@@ -194,7 +175,6 @@ public class BuildingService implements IBuildingService {
             throw new FieldNullException(SystemConstant.FIELD_IS_NULL_OR_EMPTY);
         } else {
             BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
-
             String types = String.join(",", buildingDTO.getType());
         }
         return buildingDTO;
@@ -235,29 +215,60 @@ public class BuildingService implements IBuildingService {
     @Override
     @Transactional
     public BuildingDTO save(BuildingDTO buildingDTO) {
-//        BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
-        try {
-           /* BuildingEntity buildingGetIdAfterSave = buildingRepository.save(buildingEntity);
+/*             BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
+            BuildingEntity buildingGetIdAfterSave = buildingRepository.save(buildingEntity);
             if (buildingDTO.getRentArea() != null) {
                 List<RentAreaDTO> rentAreaDTOS = rentAreaConverter.convertRentAreaToDto(buildingGetIdAfterSave.getId(), buildingDTO);
                 rentAreaService.saveAllByBuilding(rentAreaDTOS, buildingDTO);
             }
             return buildingConverter.convertToDto(buildingGetIdAfterSave);*/
+        try {
             Long buildingId = buildingDTO.getId();
             BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
             if (buildingId != null) {
                 rentAreaRepository.deleteByBuildingEntity_Id(buildingId);
             }
-            BuildingDTO buildingSave = buildingConverter.convertToDto(buildingRepository.save(buildingEntity));
+            BuildingDTO savedBuilding = buildingConverter.convertToDto(buildingRepository.save(buildingEntity));
             rentAreaRepository.save(buildingEntity.getRentAreaEntities());
-            return buildingSave;
+            return savedBuilding;
 
         } catch (Exception e) {
-            System.out.println("Lỗi Building Service");
+            System.out.println("Error Save Building Service");
             e.printStackTrace();
             return null;
         }
     }
+
+    @Override
+    public Map<String, String> getDistricts() {
+        Map<String, String> districts = new HashMap<>();
+        for (DistrictsEnum item: DistrictsEnum.values()) {
+            districts.put(item.toString(), item.getDistrictValue());
+        }
+        return districts;
+    }
+
+    @Override
+    public Map<String, String> getBuildingTypes() {
+        Map<String, String> buildingTypes = new HashMap<>();
+        for (BuildingTypesEnum item: BuildingTypesEnum.values()) {
+            buildingTypes.put(item.toString(), item.getBuildingTypeValue());
+        }
+        return buildingTypes;
+    }
+
+    /*    @Override
+    public List<BuildingDTO> findBuildingByDTO(Map<String, Object> request, List<String> types) {
+        Map<String, Object> validate = validateParams(request);
+        List<BuildingDTO> result = new ArrayList<>();
+        List<BuildingEntity> buildingEntities = buildingRepository.getBuildings(validateParams, buildingTypes);
+        for (BuildingEntity item : buildingEntities) {
+            BuildingDTO buildingDTO = buildingConverter.convertToDto(item);
+            result.add(buildingDTO);
+        }
+        return result;
+        return null;
+    }*/
 //
 //    @Override
 //    @Transactional
@@ -289,23 +300,7 @@ public class BuildingService implements IBuildingService {
 //
 
 //
-    @Override
-    public Map<String, String> getDistricts() {
-        Map<String, String> districts = new HashMap<>();
-        for (DistrictsEnum item: DistrictsEnum.values()) {
-            districts.put(item.toString(), item.getDistrictValue());
-        }
-        return districts;
-    }
 
-    @Override
-    public Map<String, String> getBuildingTypes() {
-        Map<String, String> buildingTypes = new HashMap<>();
-        for (BuildingTypesEnum item: BuildingTypesEnum.values()) {
-            buildingTypes.put(item.toString(), item.getBuildingTypeValue());
-        }
-        return buildingTypes;
-    }
 
   /*  @Override
     public String getDistrictByEnums(String value) {

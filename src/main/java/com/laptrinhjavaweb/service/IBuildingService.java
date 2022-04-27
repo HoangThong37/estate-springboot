@@ -14,8 +14,6 @@ public interface IBuildingService {
     List<BuildingSearchReponse> findFieldName(String name);
     void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingId);
 
-    List<BuildingDTO> findBuildingByDTO(Map<String, Object> request, List<String> types);
-
     BuildingDTO insert(BuildingDTO buildingDTO);
     BuildingDTO update(Long id, BuildingDTO buildingDTO);
     void delete(Long id);
@@ -24,5 +22,5 @@ public interface IBuildingService {
     Map<String, String> getDistricts();
     Map<String, String> getBuildingTypes();
 
-
+    /* List<BuildingDTO> findBuildingByDTO(Map<String, Object> request, List<String> types);*/
 }
