@@ -9,6 +9,6 @@ import java.util.Map;
 public interface BuildingRepsitoryCustom {
     List<BuildingEntity> findAll(BuildingSearchBuilder builder);
     void assignmentBuilding(List<UserEntity> userEntities, BuildingEntity buildingEntity);
-    void deleteBuilding(BuildingEntity buildingEntity);
+  //  void deleteBuilding(BuildingEntity buildingEntity);
 }
 

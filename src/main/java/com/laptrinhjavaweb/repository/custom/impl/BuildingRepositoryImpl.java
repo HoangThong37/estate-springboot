@@ -161,7 +161,7 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
         }
     }
 
-    @Transactional
+   /* @Transactional
     @Override
     public void deleteBuilding(BuildingEntity buildingEntity) { // xóa building
         if (buildingEntity.getRentAreaEntities().size() > 0) {
@@ -177,7 +177,7 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
             }
         }
         entityManager.remove(buildingEntity);
-    }
+    }*/
 
 
 }

@@ -29,8 +29,8 @@ public class RentAreaRepositoryImpl implements RentAreaRepositoryCustom  {
 //    @Override
 //    public void saveAllByBuilding(List<RentAreaEntity> rentAreaEntitis, BuildingEntity buildingEntity) {
 //        List<RentAreaEntity> rentAreaEntityListByBuilding = new ArrayList<>();
-//        if (buildingEntity.getRentAreas().size()>0){
-//            rentAreaEntityListByBuilding = rentAreaRepository.findByBuilding(buildingEntity);
+//        if (buildingEntity.getRentAreaEntities().size()>0){
+//            rentAreaEntityListByBuilding = rentAreaRepository.findByBuildingEntity(buildingEntity);
 //        }
 //
 //        if(rentAreaEntitis.size() > 0){

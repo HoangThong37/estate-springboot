@@ -1,5 +1,7 @@
 package com.laptrinhjavaweb.repository;
 
+import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.RentAreaDTO;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RentAreaEntity;
 import com.laptrinhjavaweb.repository.custom.RentAreaRepositoryCustom;
@@ -9,6 +11,8 @@ import java.util.List;
 
 public interface RentAreaRepository extends RentAreaRepositoryCustom, JpaRepository<RentAreaEntity, Long>  {
     List<RentAreaEntity> findByBuildingEntity(BuildingEntity buildingEntity);
+    void deleteByBuildingEntity_Id(Long id);
+//    void saveAllByBuilding(List<RentAreaDTO> rentAreaDTOS, BuildingDTO buildingDTO);
 }
 
 

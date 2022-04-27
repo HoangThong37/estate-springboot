@@ -9,4 +9,5 @@ import java.util.List;
 public interface BuildingRepository extends BuildingRepsitoryCustom, JpaRepository<BuildingEntity, Long> {
     List<BuildingEntity> findByNameContaining(String name); // truy vấn like
     BuildingEntity findById(Long id);
+    void deleteByBuilding_Id(Long id);
 }
