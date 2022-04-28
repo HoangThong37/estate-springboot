@@ -8,6 +8,7 @@ import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.RentAreaDTO;
 import com.laptrinhjavaweb.dto.reponse.BuildingSearchReponse;
 import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
+import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
@@ -186,10 +187,11 @@ public class BuildingService implements IBuildingService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         BuildingEntity buildingEntity = buildingRepository.findById(id);
         if (buildingEntity != null) {
-            buildingRepository.deleteByBuilding_Id(id);
+            buildingRepository.deleteById(buildingEntity.getId());
         }
     }
 
@@ -226,7 +228,7 @@ public class BuildingService implements IBuildingService {
             Long buildingId = buildingDTO.getId();
             BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
             if (buildingId != null) {
-                rentAreaRepository.deleteByBuildingEntity_Id(buildingId);
+                rentAreaRepository.deleteByBuildingEntityId(buildingId);
             }
             BuildingDTO savedBuilding = buildingConverter.convertToDto(buildingRepository.save(buildingEntity));
             rentAreaRepository.save(buildingEntity.getRentAreaEntities());

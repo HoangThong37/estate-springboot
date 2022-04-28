@@ -1,9 +1,11 @@
 package com.laptrinhjavaweb.dto.request;
 
+import com.laptrinhjavaweb.entity.BuildingEntity;
+
 import java.util.List;
 
 public class BuildingDeleteRequest {
-    List<Long> buildingIDs;
+    private  List<Long> buildingIDs;
 
     public List<Long> getBuildingIDs() {
         return buildingIDs;

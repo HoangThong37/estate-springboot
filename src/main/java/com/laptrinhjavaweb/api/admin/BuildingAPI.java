@@ -58,9 +58,14 @@ public class BuildingAPI {
    // DELETE
    @DeleteMapping("/{id}")
    public Long delete(@PathVariable("id") Long id) {
+       buildingService.delete(id);
+       return id;
+   }
+/*      @DeleteMapping
+      public BuildingDeleteRequest delete(@RequestBody BuildingDeleteRequest id) throws NotFoundException {
       buildingService.delete(id);
       return id;
-   }
+   }*/
 
 }
 

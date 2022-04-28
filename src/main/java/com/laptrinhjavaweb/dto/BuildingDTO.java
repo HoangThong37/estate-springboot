@@ -1,5 +1,6 @@
 package com.laptrinhjavaweb.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuildingDTO extends AbstractDTO {
@@ -28,6 +29,24 @@ public class BuildingDTO extends AbstractDTO {
     private String managerPhone;
     private String managerName;
     private List<String> type;
+    private List<RentAreaDTO> rentAreaDTOS = new ArrayList<>();
+    private List<UserDTO> userDTOS = new ArrayList<>();
+
+    public List<RentAreaDTO> getRentAreaDTOS() {
+        return rentAreaDTOS;
+    }
+
+    public void setRentAreaDTOS(List<RentAreaDTO> rentAreaDTOS) {
+        this.rentAreaDTOS = rentAreaDTOS;
+    }
+
+    public List<UserDTO> getUserDTOS() {
+        return userDTOS;
+    }
+
+    public void setUserDTOS(List<UserDTO> userDTOS) {
+        this.userDTOS = userDTOS;
+    }
 
     public String getName() {
         return name;
