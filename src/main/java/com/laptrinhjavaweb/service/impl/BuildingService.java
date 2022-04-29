@@ -163,7 +163,7 @@ public class BuildingService implements IBuildingService {
     public void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingId) {
         List<UserEntity> result = new ArrayList<>();
         for (Integer item : assignmentBuildingRequest.getStaffIds()) {
-            result.add(userRepository.findOnedById(item.longValue()));
+            result.add(userRepository.findOneById(item.longValue()));
         }
         BuildingEntity buildingEntity = buildingRepository.findById(buildingId);
         buildingRepository.assignmentBuilding(result, buildingEntity);
@@ -188,12 +188,20 @@ public class BuildingService implements IBuildingService {
 
     @Override
     @Transactional
+    public void delete(BuildingDeleteRequest buildingDeleteRequest) {
+        if (buildingDeleteRequest.getBuildingIDs() != null) {
+            buildingRepository.deleteById(buildingDeleteRequest.getBuildingIDs());
+        }
+    }
+
+/*    @Override
+     @Transactional
     public void delete(Long id) {
         BuildingEntity buildingEntity = buildingRepository.findById(id);
         if (buildingEntity != null) {
             buildingRepository.deleteById(buildingEntity.getId());
         }
-    }
+    }*/
 
     // JAVA 7
  /*       List<BuildingSearchReponse> result = new ArrayList<>();

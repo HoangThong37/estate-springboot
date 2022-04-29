@@ -1,5 +1,4 @@
 <%@ page import="com.laptrinhjavaweb.dto.DistrictDTO" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
 <c:url var="buildingListURL" value="/admin/building-list"></c:url>
@@ -339,7 +338,6 @@
 </div>
 <script>
     let buildingAssId;
-
     function assignmentBuilding(value) {
         buildingAssId = value;
         $.ajax({
@@ -365,15 +363,12 @@
         });
         openModalAssignmentBuilding();
     }
-
     function openModalAssignmentBuilding() {
         $('#assignmentBuildingModal').modal();
     }
-
     $("#btnSearch").click(function (e) {
         e.preventDefault();
         $("#listForm").submit();
-
     })
     $("#xoaBuilding").click(function (e) {
         e.preventDefault();
@@ -388,28 +383,27 @@
         $.each($("input[name='checkBuildings[]']:checked"), function () {
             values.push($(this).val());
         });
-        values.forEach(item => {
-            $.ajax({
-                type: "DELETE",
-                url: '<c:url value="/api/building/"/>' + item,
-                dataType: "json",//kieu du lieu tu server tra ve client
-                contentType: "application/json",//kieu du lieu tu client gui ve server
-                success: function (response) {
-                    window.location.reload();
-                },
-                error: function (response) {
-                    alert("fail")
-                    console.log(response)
-                }
-            });
-        })
+        let data = {};
+        data["buildingIDs"] = values;
+        $.ajax({
+            type: "DELETE",
+            url: '<c:url value="/api/building"/>',
+            data:JSON.stringify(data),
+            dataType: "json",//kieu du lieu tu server tra ve client
+            contentType: "application/json",//kieu du lieu tu client gui ve server
+            success: function (response) {
+                window.location.reload();
+            },
+            error: function (response) {
+                alert("fail")
+                console.log(response)
+            }
+        });
     })
-
     function deleteOneBuilding(value) {
         idOne = value;
         $("#myModal").modal();
     }
-
     $("#assignment").click(function (e) {
         e.preventDefault();
         let values = [];
@@ -417,12 +411,12 @@
             values.push($(this).val());
         });
         let data = {
-            "staffIDs": values
+            "staffIds": values
         }
         $.ajax({
             type: "post",
             url: '<c:url value="/api/building/"/>' + buildingAssId + '/assignment',
-            data: JSON.stringify(data),
+            data: JSON.stringify(values),
             dataType: "json",//kieu du lieu tu server tra ve client
             contentType: "application/json",//kieu du lieu tu client gui ve server
             success: function (response) {
@@ -437,23 +431,18 @@
     })
     $("#selectAll").click(function () {
         $("input[name='checkBuildings[]']").prop('checked', $(this).prop('checked'));
-
     });
     $("#selectAll2").click(function () {
         $("input[name='checkStaffs[]']").prop('checked', $(this).prop('checked'));
-
     });
-
     function editBuilding(value) {
         window.location.href = "<c:url value="/admin/building-edit"/>" + "?buildingid=" + value;
     }
-
     if ((${modelSearch.types}) != []) {
         $.each(${modelSearch.types}, function (index, value) {
             $("#rent[value='" + value + "']").prop('checked', true);
         });
     }
-
 </script>
 </body>
 </html>

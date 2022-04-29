@@ -17,7 +17,7 @@ public interface IBuildingService {
 
     BuildingDTO insert(BuildingDTO buildingDTO);
     BuildingDTO update(Long id, BuildingDTO buildingDTO);
-    void delete(Long id);
+    void delete(BuildingDeleteRequest buildingDeleteRequest);
     BuildingDTO findById(long id);
     BuildingDTO save(BuildingDTO buildingDTO);
     Map<String, String> getDistricts();

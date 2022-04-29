@@ -18,5 +18,6 @@ public interface UserRepository extends UserRepositoryCustom, JpaRepository<User
     long countByUserNameContainingIgnoreCaseOrFullNameContainingIgnoreCaseAndStatusNot(String userName, String fullName, int status);
     long countByStatusNot(int status);
     UserEntity findOneByUserName(String userName);
-    UserEntity findOnedById(Long id);
+    UserEntity findOneById(Long id);
+//    UserEntity findByAllStatusAnAndRoles(Long id);
 }
