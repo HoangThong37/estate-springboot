@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AssignmentBuildingRequest  {
-     private List<Integer> staffIds = new ArrayList<>();
+     private List<Long> staffIds = new ArrayList<>();
 
-    public List<Integer> getStaffIds() {
+    public List<Long> getStaffIds() {
         return staffIds;
     }
 
-    public void setStaffIds(List<Integer> staffIds) {
+    public void setStaffIds(List<Long> staffIds) {
         this.staffIds = staffIds;
     }
 }

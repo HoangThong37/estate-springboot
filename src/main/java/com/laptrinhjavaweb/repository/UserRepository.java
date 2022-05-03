@@ -19,5 +19,6 @@ public interface UserRepository extends UserRepositoryCustom, JpaRepository<User
     long countByStatusNot(int status);
     UserEntity findOneByUserName(String userName);
     UserEntity findOneById(Long id);
-//    UserEntity findByAllStatusAnAndRoles(Long id);
+
+
 }

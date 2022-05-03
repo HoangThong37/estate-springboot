@@ -16,6 +16,7 @@ public class AssignmentBuildingEntity extends BaseEntity {
     @JoinColumn(name = "staffid",nullable = false)
     private UserEntity userEntity;
 
+
     public BuildingEntity getBuildingEntity() {
         return buildingEntity;
     }

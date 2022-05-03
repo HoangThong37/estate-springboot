@@ -129,7 +129,7 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
     public void assignmentBuilding(List<UserEntity> userEntities, BuildingEntity buildingEntity) {
     }*/
 
-    @Transactional
+    /*@Transactional
     @Override
     public void assignmentBuilding(List<UserEntity> userEntities, BuildingEntity buildingEntity) {
         for (UserEntity item : userRepository.getAllStaffByBuildingId(buildingEntity.getId())) {
@@ -159,7 +159,7 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
                 entityManager.persist(assignmentBuildingEntity); // thêm mới
             }
         }
-    }
+    }*/
 
    /* @Transactional
     @Override

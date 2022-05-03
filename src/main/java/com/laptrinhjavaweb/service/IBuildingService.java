@@ -5,6 +5,7 @@ import com.laptrinhjavaweb.dto.reponse.BuildingSearchReponse;
 import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
+import javassist.NotFoundException;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ public interface IBuildingService {
 
     BuildingDTO insert(BuildingDTO buildingDTO);
     BuildingDTO update(Long id, BuildingDTO buildingDTO);
-    void delete(BuildingDeleteRequest buildingDeleteRequest);
+    void delete(BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException;
     BuildingDTO findById(long id);
     BuildingDTO save(BuildingDTO buildingDTO);
     Map<String, String> getDistricts();

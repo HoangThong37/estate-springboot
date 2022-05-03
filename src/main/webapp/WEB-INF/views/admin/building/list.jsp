@@ -411,7 +411,7 @@
             values.push($(this).val());
         });
         let data = {
-            "staffIds": values
+            "stafIds": values
         }
         $.ajax({
             type: "post",

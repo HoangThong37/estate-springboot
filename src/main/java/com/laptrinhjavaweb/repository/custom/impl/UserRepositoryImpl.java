@@ -29,11 +29,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom  {
         return query.getResultList();
     }
 
-    @Override
+/*    @Override
     public List<UserEntity> getAllBuildingByStaffId(Long staffId) {
         StringBuilder sql = new StringBuilder(" Select * from user as u inner join assignmentcustomer as ac on u.id = ac.customerid ");
         sql.append( " where ac.customerid = ").append(staffId).append(" and u.status = 1 ");
         Query query = entityManager.createNativeQuery(sql.toString(),UserEntity.class);
         return query.getResultList();
-    }
+    }*/
 }

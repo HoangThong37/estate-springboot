@@ -10,11 +10,13 @@ import com.laptrinhjavaweb.dto.reponse.BuildingSearchReponse;
 import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
+import com.laptrinhjavaweb.entity.AssignmentBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.enums.DistrictsEnum;
 import com.laptrinhjavaweb.exception.FieldNullException;
+import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
@@ -22,11 +24,13 @@ import com.laptrinhjavaweb.service.IBuildingService;
 import com.laptrinhjavaweb.service.IRentAreaService;
 import com.laptrinhjavaweb.utils.MapUtil;
 import com.laptrinhjavaweb.utils.ValidateUtils;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BuildingService implements IBuildingService {
@@ -48,6 +52,9 @@ public class BuildingService implements IBuildingService {
 
     @Autowired
     private RentAreaConverter rentAreaConverter;
+
+    @Autowired
+    private AssignmentBuildingRepository assignmentBuildingRepository;
 
 
     @Override
@@ -161,13 +168,33 @@ public class BuildingService implements IBuildingService {
     @Override
     @Transactional
     public void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingId) {
+        List<Long> oldStaffId = assignmentBuildingRepository.findByBuildingEntity_Id(buildingId).stream()
+                                .map(item -> item.getId()).collect(Collectors.toList());
+        List<Long> newStaffId = assignmentBuildingRequest.getStaffIds();
+        newStaffId.forEach(item -> {
+            if (!oldStaffId.contains(item)) {
+                AssignmentBuildingEntity assignmentBuilding = new AssignmentBuildingEntity();
+                assignmentBuilding.setBuildingEntity(buildingRepository.findOne(buildingId));
+                assignmentBuilding.setUserEntity(userRepository.findOne(item));
+            }
+        });
+        oldStaffId.forEach(item -> {
+            if (!newStaffId.contains(item)) {
+                assignmentBuildingRepository.delete(item);
+            }
+        });
+    }
+
+/*    @Override
+    @Transactional
+    public void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingId) {
         List<UserEntity> result = new ArrayList<>();
         for (Integer item : assignmentBuildingRequest.getStaffIds()) {
             result.add(userRepository.findOneById(item.longValue()));
         }
         BuildingEntity buildingEntity = buildingRepository.findById(buildingId);
         buildingRepository.assignmentBuilding(result, buildingEntity);
-    }
+    }*/
 
 
     @Override
@@ -188,8 +215,17 @@ public class BuildingService implements IBuildingService {
 
     @Override
     @Transactional
-    public void delete(BuildingDeleteRequest buildingDeleteRequest) {
-        if (buildingDeleteRequest.getBuildingIDs() != null) {
+    public void delete(BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException {
+/*        if (buildingDeleteRequest.getBuildingIDs() != null) {
+            buildingRepository.deleteById(buildingDeleteRequest.getBuildingIDs());
+        }*/
+        if (buildingDeleteRequest.getBuildingIDs().size() > 0) {
+            Long count = buildingRepository.countByIdIn(buildingDeleteRequest.getBuildingIDs());
+            if (count != buildingDeleteRequest.getBuildingIDs().size()) {
+                throw new NotFoundException("No Builidng");
+            }
+            rentAreaRepository.deleteByBuildingEntity_IdIn(buildingDeleteRequest.getBuildingIDs());
+            assignmentBuildingRepository.deleteByBuildingEntity_IdIn(buildingDeleteRequest.getBuildingIDs());
             buildingRepository.deleteById(buildingDeleteRequest.getBuildingIDs());
         }
     }

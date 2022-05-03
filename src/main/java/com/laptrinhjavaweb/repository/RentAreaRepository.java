@@ -12,7 +12,7 @@ import java.util.List;
 public interface RentAreaRepository extends RentAreaRepositoryCustom, JpaRepository<RentAreaEntity, Long>  {
     List<RentAreaEntity> findByBuildingEntity(BuildingEntity buildingEntity);
     void deleteByBuildingEntityId(Long id);
-
+    void deleteByBuildingEntity_IdIn(List<Long> id);
 
 
 //    void saveAllByBuilding(List<RentAreaDTO> rentAreaDTOS, BuildingDTO buildingDTO);
