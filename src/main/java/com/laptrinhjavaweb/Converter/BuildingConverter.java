@@ -6,7 +6,6 @@ import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RentAreaEntity;
 import com.laptrinhjavaweb.enums.DistrictsEnum;
-import com.laptrinhjavaweb.service.impl.BuildingService;
 import com.laptrinhjavaweb.utils.ParseIntUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +13,16 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class BuildingConverter {
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private UserConverter userConverter;
+
+
 
 //    @Autowired
 //    private BuildingService buildingService;
@@ -89,7 +92,7 @@ public class BuildingConverter {
         if (buildingSearchRequest.getTypes() != null) {
             List<String> result = new ArrayList<>();
             for (String item : buildingSearchRequest.getTypes()) {
-                result.add("" + item + "");
+                result.add("'" + item + "'");
             }
         }
         return buildingSearchRequest;

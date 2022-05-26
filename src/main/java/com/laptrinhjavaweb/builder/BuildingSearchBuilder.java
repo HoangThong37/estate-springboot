@@ -16,7 +16,7 @@ public class BuildingSearchBuilder {
     private Integer rentPriceTo;
     private String managerName;
     private String managerPhone;
-    private Integer staffID;
+    private Long staffID;
     private List<String> types;
 
     public String getName() {
@@ -75,7 +75,11 @@ public class BuildingSearchBuilder {
         return managerPhone;
     }
 
-    public Integer getStaffID() {
+//    public Integer getStaffID() {
+//        return staffID;
+//    }
+
+    public Long getStaffID() {
         return staffID;
     }
 
@@ -117,7 +121,7 @@ public class BuildingSearchBuilder {
         private Integer rentPriceTo;
         private String managerName;
         private String managerPhone;
-        private Integer staffID;
+        private Long staffID;
         private List<String> types;
 
         public Builder() {
@@ -193,7 +197,7 @@ public class BuildingSearchBuilder {
             return this;
         }
 
-        public Builder staffID(Integer val) {
+        public Builder staffID(Long val) {
             staffID = val;
             return this;
         }

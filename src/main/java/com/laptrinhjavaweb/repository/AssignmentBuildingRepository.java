@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AssignmentBuildingRepository extends JpaRepository<AssignmentBuildingEntity, Long> {
     AssignmentBuildingEntity findByBuildingEntityAndUserEntity(BuildingEntity buildingEntity, UserEntity userEntity);
-    void deleteByBuildingEntity_IdIn(List<Long> id);
-    void deleteByBuildingEntity_Id(Long id);
+    void deleteByBuildingEntity_IdIn(List<Long> id); // delete nhiều luôn
+    void deleteByBuildingEntity_Id(Long id); // delete item
     List<AssignmentBuildingEntity> findByBuildingEntity_Id(Long id);
 }

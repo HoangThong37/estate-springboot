@@ -13,35 +13,31 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
 public class RentAreaRepositoryImpl implements RentAreaRepositoryCustom  {
+
+    @PersistenceContext
+    EntityManager entityManager;
+
+    @Autowired
+    RentAreaRepository rentAreaRepository;
+
+    @Transactional
     @Override
     public void saveAllByBuilding(List<RentAreaEntity> rentAreaEntitis, BuildingEntity buildingEntity) {
+        List<RentAreaEntity> rentAreaEntityListByBuilding = new ArrayList<>();
+        if (buildingEntity.getRentAreaEntities().size() > 0){
+            rentAreaEntityListByBuilding = rentAreaRepository.findByBuildingEntity(buildingEntity);
+        }
 
+        if(rentAreaEntitis.size() > 0){
+            rentAreaEntityListByBuilding.forEach(item->{
+                entityManager.remove(item);
+            });
+            rentAreaEntitis.forEach(item->{
+                entityManager.persist(item);
+            });
+        }
     }
-
-//    @PersistenceContext
-//    EntityManager entityManager;
-//    @Autowired
-//    RentAreaRepository rentAreaRepository;
-//
-//    @Transactional
-//    @Override
-//    public void saveAllByBuilding(List<RentAreaEntity> rentAreaEntitis, BuildingEntity buildingEntity) {
-//        List<RentAreaEntity> rentAreaEntityListByBuilding = new ArrayList<>();
-//        if (buildingEntity.getRentAreaEntities().size()>0){
-//            rentAreaEntityListByBuilding = rentAreaRepository.findByBuildingEntity(buildingEntity);
-//        }
-//
-//        if(rentAreaEntitis.size() > 0){
-//            rentAreaEntityListByBuilding.forEach(item->{
-//                entityManager.remove(item);
-//            });
-//            rentAreaEntitis.forEach(item->{
-//                entityManager.persist(item);
-//            });
-//        }
-//    }
 
 }
 

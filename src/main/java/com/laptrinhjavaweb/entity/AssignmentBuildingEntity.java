@@ -6,8 +6,6 @@ import javax.persistence.*;
 @Table(name = "assignmentbuilding")
 public class AssignmentBuildingEntity extends BaseEntity {
 
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buildingid",nullable = false)
     private BuildingEntity buildingEntity;
@@ -15,6 +13,15 @@ public class AssignmentBuildingEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "staffid",nullable = false)
     private UserEntity userEntity;
+
+// contructor
+    public AssignmentBuildingEntity() {
+    }
+
+    public AssignmentBuildingEntity(BuildingEntity buildingEntity, UserEntity userEntity) {
+        this.buildingEntity = buildingEntity;
+        this.userEntity = userEntity;
+    }
 
 
     public BuildingEntity getBuildingEntity() {

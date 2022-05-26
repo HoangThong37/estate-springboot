@@ -18,8 +18,18 @@ public class BuildingSearchRequest { // đầu vào
     private Integer rentPriceTo;
     private String managerName;
     private String managerPhone;
-    private Integer staffID;
+    private Long  staffID;
+
+    public Long getStaffID() {
+        return staffID;
+    }
+
+    public void setStaffID(Long staffID) {
+        this.staffID = staffID;
+    }
+
     private List<String> types = new ArrayList<>();
+
 
     public String getName() {
         return name;
@@ -133,13 +143,13 @@ public class BuildingSearchRequest { // đầu vào
         this.managerPhone = managerPhone;
     }
 
-    public Integer getStaffID() {
+/*    public Integer getStaffID() {
         return staffID;
     }
 
     public void setStaffID(Integer staffID) {
         this.staffID = staffID;
-    }
+    }*/
 
     public List<String> getTypes() {
         return types;

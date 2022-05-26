@@ -30,11 +30,11 @@ public class RentAreaService implements IRentAreaService {
     @Override
     public void saveAllByBuilding(List<RentAreaDTO> rentAreaDTOS, BuildingDTO buildingDTO) {
         List<RentAreaEntity> result = new ArrayList<>();
+
         for (RentAreaDTO item : rentAreaDTOS) {
             RentAreaEntity rentAreaEntity = rentAreaConverter.convertToRentAreaEntity(item);
             result.add(rentAreaEntity);
         }
-
         if (buildingDTO.getId() != null) {
             BuildingEntity buildingEntity = buildingRepository.findById(buildingDTO.getId());
             rentAreaRepository.saveAllByBuilding(result, buildingEntity);

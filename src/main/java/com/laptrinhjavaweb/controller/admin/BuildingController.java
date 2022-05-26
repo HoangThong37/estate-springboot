@@ -5,6 +5,7 @@ import com.laptrinhjavaweb.converter.BuildingConverter;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.reponse.BuildingTypeReponse;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
+import com.laptrinhjavaweb.security.utils.SecurityUtils;
 import com.laptrinhjavaweb.service.IBuildingService;
 
 import com.laptrinhjavaweb.service.IDistrictService;
@@ -41,6 +42,13 @@ public class BuildingController {
     @GetMapping("/building-list")
     public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest) {
         ModelAndView mav = new ModelAndView("admin/building/list");
+
+        // check role is Staff
+        if (!SecurityUtils.getAuthorities().contains(SystemConstant.ADMIN_ROLE)) { // nếu kp là admin thì -> staff
+            Long staffId = SecurityUtils.getPrincipal().getId();
+            buildingSearchRequest.setStaffID(staffId);
+        }
+
         mav.addObject("modelDistrict",districtService.getAll());
         mav.addObject("modelStaff",userService.getAllStaff());
         mav.addObject("modelBuildingType",buildingTypesService.getAll());

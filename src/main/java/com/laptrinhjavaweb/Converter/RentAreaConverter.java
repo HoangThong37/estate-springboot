@@ -45,7 +45,7 @@ public class RentAreaConverter {
         if (buildingDTOGetRentArea.getRentArea().equals(buildingDTO.getRentArea())) {
             return new ArrayList<>();
         }
-        String[] rentArea = (buildingDTO.getRentArea() != null) ? buildingDTO.getRentArea().trim().split(",") : null;
+        String[] rentArea = buildingDTO.getRentArea() != null ? buildingDTO.getRentArea().trim().split(",") : null;
         if (rentArea != null) {
             for (String item : rentArea) {
                 RentAreaDTO rentAreaDTO = new RentAreaDTO();
