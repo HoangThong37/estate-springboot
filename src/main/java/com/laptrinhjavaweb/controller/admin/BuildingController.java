@@ -38,8 +38,48 @@ public class BuildingController {
     @Autowired
     private BuildingTypesService buildingTypesService;
 
+    @Autowired
+    private BuildingConverter buildingConverter;
 
     @GetMapping("/building-list")
+    public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest) {
+/*                                     @RequestParam(required = false) Map<String, Object> params,
+                                     @RequestParam(name = "types",required = false) List<String> types){*/
+
+        ModelAndView modelAndView = new ModelAndView("admin/building/list");
+
+        // check role is Staff
+        if (!SecurityUtils.getAuthorities().contains(SystemConstant.ADMIN_ROLE)) { // nếu kp là admin thì -> staff
+            Long staffId = SecurityUtils.getPrincipal().getId();
+            buildingSearchRequest.setStaffID(staffId);
+        }
+
+        modelAndView.addObject("modelSearch",buildingConverter.convertToBuildingSearchRequest(buildingSearchRequest));
+        modelAndView.addObject("modelDistrict",districtService.getAll());
+        modelAndView.addObject("modelStaff",userService.getAllStaff());
+        modelAndView.addObject("modelBuildingType",buildingTypesService.getAll());
+        modelAndView.addObject("modelBuildings",buildingService.findAll(buildingSearchRequest));
+        return modelAndView;
+    }
+
+    @GetMapping("/building-edit")
+    public  ModelAndView buildingEdit(@RequestParam(name = "buildingid",required = false) Long id){
+
+        ModelAndView modelAndView = new ModelAndView("admin/building/edit");
+        if(id!=null){
+            modelAndView.addObject("modelDistrict",districtService.getDistrictByBuilding(buildingService.findById(id)));
+            modelAndView.addObject("modelBuildingType",buildingTypesService.getAllByBuilding(buildingService.findById(id)));
+            modelAndView.addObject("modelBuilding",buildingService.findById(id));
+        }else{
+            modelAndView.addObject("modelDistrict",districtService.getAll());
+            modelAndView.addObject("modelBuildingType",buildingTypesService.getAll());
+            modelAndView.addObject("modelBuilding", new BuildingDTO());
+        }
+        return modelAndView;
+    }
+
+
+   /* @GetMapping("/building-list")
     public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest) {
         ModelAndView mav = new ModelAndView("admin/building/list");
 
@@ -71,7 +111,7 @@ public class BuildingController {
       }
 //
         return modelAndView;
-    }
+    }*/
 
 //    private void initMessageResponse(ModelAndView mav, HttpServletRequest request) {
 //        String message = request.getParameter("message");

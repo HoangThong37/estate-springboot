@@ -44,8 +44,6 @@ public class BuildingConverter {
             }
             result.setType(arrayList);
          }
-
-
        /* result.setAddress(entity.getStreet() + entity.getWard() + buildingService.getDistrictByEnums(entity.getDistrict()));
         result.setRentArea(entity.getRentAreas().stream()
                 .map(item -> item.getValue()).map(item -> item.toString()).collect(Collectors.joining()));*/
@@ -54,15 +52,15 @@ public class BuildingConverter {
 
     // cv từ DTO -> Entity
     public BuildingEntity convertToEntity(BuildingDTO dto) {
-        BuildingEntity result = modelMapper.map(dto, BuildingEntity.class);
+        BuildingEntity result = modelMapper.map(dto, BuildingEntity.class); // đựng kết quả
         if (dto.getType() != null) {
             String type = String.join(",", dto.getType());
             result.setType(type);
         }
-        // update 27/4
+        // update 27/4, dtich thuê
         if (dto.getRentArea() != null) {
             List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
-            String[] renAreaValue = dto.getRentArea().trim().split(",");
+            String[] renAreaValue = dto.getRentArea().trim().split(","); // tách chuoi
             for (String item : renAreaValue) {
                 RentAreaEntity rentAreaEntity = new RentAreaEntity();
                 rentAreaEntity.setBuildingEntity(result);

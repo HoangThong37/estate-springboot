@@ -25,20 +25,20 @@ public class TransactionEntity extends BaseEntity {
         this.code = code;
     }
 
-    public Long getStaffID() {
-        return staffID;
-    }
-
-    public void setStaffID(Long staffID) {
-        this.staffID = staffID;
-    }
-
     public String getNote() {
         return note;
     }
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Long getStaffID() {
+        return staffID;
+    }
+
+    public void setStaffID(Long staffID) {
+        this.staffID = staffID;
     }
 
     public CustomerEntity getCustomerEntity() {
@@ -48,5 +48,4 @@ public class TransactionEntity extends BaseEntity {
     public void setCustomerEntity(CustomerEntity customerEntity) {
         this.customerEntity = customerEntity;
     }
-
 }

@@ -9,7 +9,7 @@ public class RentAreaEntity extends BaseEntity {
     @Column(name = "value")
     private Integer value;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "buildingid",nullable = false)
     private BuildingEntity buildingEntity;
 
@@ -28,6 +28,4 @@ public class RentAreaEntity extends BaseEntity {
     public void setBuildingEntity(BuildingEntity buildingEntity) {
         this.buildingEntity = buildingEntity;
     }
-
-
 }

@@ -384,7 +384,7 @@
             values.push($(this).val());
         });
         let data = {};
-        data["buildingIDs"] = values;
+        data["buildingIds"] = values;
         $.ajax({
             type: "DELETE",
             url: '<c:url value="/api/building"/>',
@@ -411,12 +411,12 @@
             values.push($(this).val());
         });
         let data = {
-            "stafIds": values
+            "staffIDs": values
         }
         $.ajax({
             type: "post",
             url: '<c:url value="/api/building/"/>' + buildingAssId + '/assignment',
-            data: JSON.stringify(values),
+            data: JSON.stringify(data),
             dataType: "json",//kieu du lieu tu server tra ve client
             contentType: "application/json",//kieu du lieu tu client gui ve server
             success: function (response) {

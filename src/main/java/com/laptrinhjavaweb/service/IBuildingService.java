@@ -15,6 +15,7 @@ public interface IBuildingService {
     List<BuildingSearchReponse> findAll(BuildingSearchRequest buildingSearchRequest);
     List<BuildingSearchReponse> findFieldName(String name);
     void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingId);
+    void assignmentBuilding(List<Long> staffId, Long buildingId);
 
     BuildingDTO insert(BuildingDTO buildingDTO);
     BuildingDTO update(Long id, BuildingDTO buildingDTO);

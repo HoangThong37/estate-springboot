@@ -31,6 +31,15 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "roleid", nullable = false))
     private List<RoleEntity> roles = new ArrayList<>();
 
+    // n-n vs customer
+    @ManyToMany(mappedBy = "userEntities", fetch = FetchType.LAZY)
+    private List<CustomerEntity> customerEntities = new ArrayList<>();
+
+    // n-n vs building
+    @ManyToMany(mappedBy = "userEntities", fetch = FetchType.LAZY)
+    private List<BuildingEntity> buildingEntities = new ArrayList<>();
+
+
     public String getUserName() {
         return userName;
     }
@@ -63,6 +72,14 @@ public class UserEntity extends BaseEntity {
         this.status = status;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public List<RoleEntity> getRoles() {
         return roles;
     }
@@ -71,11 +88,19 @@ public class UserEntity extends BaseEntity {
         this.roles = roles;
     }
 
-    public String getEmail() {
-        return email;
+    public List<CustomerEntity> getCustomerEntities() {
+        return customerEntities;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCustomerEntities(List<CustomerEntity> customerEntities) {
+        this.customerEntities = customerEntities;
+    }
+
+    public List<BuildingEntity> getBuildingEntities() {
+        return buildingEntities;
+    }
+
+    public void setBuildingEntities(List<BuildingEntity> buildingEntities) {
+        this.buildingEntities = buildingEntities;
     }
 }

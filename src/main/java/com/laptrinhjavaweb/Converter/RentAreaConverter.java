@@ -39,6 +39,7 @@ public class RentAreaConverter {
         return result;
     }
 
+    // convert entity -> dto
     public List<RentAreaDTO> convertRentAreaToDto(Long buildingIdAfterSave, BuildingDTO buildingDTO) {
         List<RentAreaDTO> rentAreaDTOS = new ArrayList<>();
         BuildingDTO buildingDTOGetRentArea = buildingConverter.convertToDto(buildingRepository.findById(buildingIdAfterSave));

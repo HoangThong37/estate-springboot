@@ -23,7 +23,7 @@
             </script>
             <ul class="breadcrumb">
                 <li>
-                    <i class="ace-icon fa fa-home home- icon"></i>
+                    <i class="ace-icon fa fa-home home-icon"></i>
                     <a href="#">Trang chủ</a>
                 </li>
                 <li class="active">Chỉnh sửa người dùng</li>
@@ -129,13 +129,11 @@
             }
         }
     });
-
     $('#btnResetPassword').click(function (event) {
         event.preventDefault();
         $('#loading_image').show();
         resetPassword($('#userId').val());
     });
-
     function addUser(data) {
         $.ajax({
             url: '${formUrl}',
@@ -152,7 +150,6 @@
             }
         });
     }
-
     function updateUser(data, id) {
         $.ajax({
             url: '${formUrl}/' + id,
@@ -168,7 +165,6 @@
             }
         });
     }
-
     function resetPassword(id) {
         $.ajax({
             url: '${formUrl}/password/'+id+'/reset',

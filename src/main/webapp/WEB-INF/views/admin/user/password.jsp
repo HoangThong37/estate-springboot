@@ -39,8 +39,8 @@
                             <div class="space-4"></div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right">
-                                    <%--<spring:message code="label.password.old"/>--%>
-                                        Mật khẩu cũ
+                                        <%--<spring:message code="label.password.old"/>--%>
+                                    Mật khẩu cũ
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="password" class="form-control" id="oldPassword" name="oldPassword"/>
@@ -49,8 +49,8 @@
                             <div class="space-4"></div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right">
-                                    <%--<spring:message code="label.password.new"/>--%>
-                                        Mật khẩu mới
+                                        <%--<spring:message code="label.password.new"/>--%>
+                                    Mật khẩu mới
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="password" class="form-control" id="newPassword" name="newPassword"/>
@@ -59,8 +59,8 @@
                             <div class="space-4"></div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right">
-                                    <%--<spring:message code="label.password.repeat"/>--%>
-                                        Nhập lại mật khẩu mới
+                                        <%--<spring:message code="label.password.repeat"/>--%>
+                                    Nhập lại mật khẩu mới
                                 </label>
                                 <div class="col-sm-9">
                                     <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"/>
@@ -113,7 +113,6 @@
                 }
             });
         });
-
         function changePassword(data, id) {
             $.ajax({
                 url: '${changePasswordURL}/'+id,

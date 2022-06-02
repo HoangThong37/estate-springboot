@@ -9,7 +9,7 @@ import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.service.impl.BuildingService;
 import com.laptrinhjavaweb.service.impl.UserService;
 import javassist.NotFoundException;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +26,12 @@ public class BuildingAPI {
    @Autowired
    private UserService userService;
 
-   private Logger LOGGER = Logger.getLogger(BuildingAPI.class);
+//   private Logger LOGGER = Logger.getLogger(BuildingAPI.class);
 
    @GetMapping
    public List<BuildingSearchReponse> findAll(@RequestParam(required = false) Map<String, Object> params,
                                               @RequestParam(required = false) List<String> types) {
-       return buildingService.findAll(params, types);
+      return buildingService.findAll(params, types);
    }
 
    @GetMapping("/name")
@@ -46,11 +46,17 @@ public class BuildingAPI {
 
    @PostMapping("/{id}/assignment")
    public AssignmentBuildingRequest assignmentBuilding(@RequestBody(required = false) AssignmentBuildingRequest assignmentBuildingRequest
-                                                            ,@PathVariable("id") Long buildingId) {
+           , @PathVariable("id") Long buildingId) {
       buildingService.assignmentBuilding(assignmentBuildingRequest, buildingId);
       return assignmentBuildingRequest;
    }
 
+ /*  @PostMapping("/{id}/assignment") // giao tòa nhà cho nv quản lí
+   public Long assignmentBuilding(@RequestBody(required = false) List<Long> staffId, @PathVariable("id") Long buildingId) {
+      buildingService.assignmentBuilding(staffId, buildingId);
+      return buildingId;
+   }
+*/
 
    @PostMapping
    public BuildingDTO save(@RequestBody(required = false) BuildingDTO buildingDTO) {
@@ -60,9 +66,10 @@ public class BuildingAPI {
    // DELETE
    @DeleteMapping
    public BuildingDeleteRequest deleteRequest(@RequestBody BuildingDeleteRequest id) throws NotFoundException {
-       buildingService.delete(id);
-       return id;
+      buildingService.delete(id);
+      return id;
    }
+}
 
 /*   @DeleteMapping("/{id}")
    public Long delete(@PathVariable("id") Long id) {
@@ -74,10 +81,6 @@ public class BuildingAPI {
       buildingService.delete(id);
       return id;
    }*/
-
-}
-
-
 
 
 // INSERT

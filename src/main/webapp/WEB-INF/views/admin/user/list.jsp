@@ -173,7 +173,6 @@
             $('#listForm').submit();
         });
     });
-
     function warningBeforeDelete() {
         showAlertBeforeDelete(function () {
             event.preventDefault();
@@ -183,7 +182,6 @@
             deleteUser(dataArray);
         });
     }
-
     function deleteUser(data) {
         $.ajax({
             url: '${formAjax}/',

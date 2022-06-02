@@ -10,9 +10,7 @@ import com.laptrinhjavaweb.dto.reponse.BuildingSearchReponse;
 import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
-import com.laptrinhjavaweb.entity.AssignmentBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
-import com.laptrinhjavaweb.entity.RentAreaEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.enums.DistrictsEnum;
@@ -158,6 +156,8 @@ public class BuildingService implements IBuildingService {
         return result;
     }
 
+
+
     @Override
     @Transactional
     public void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingId) {
@@ -168,20 +168,42 @@ public class BuildingService implements IBuildingService {
 
         newStaffId.forEach(item -> {
             if (!oldStaffId.contains(item))  { // khác nhân viên cũ
-                assignmentBuildingRepository.save( // lưu lại
-                        new AssignmentBuildingEntity(
-                                buildingRepository.findOne(buildingId), // building
-                                userRepository.findOne(item) // lưu lại user
-                        )
-                );
+                try {
+                    assignmentBuildingRepository.save( // lưu lại
+                            new AssignmentBuildingEntity(
+                                    buildingRepository.findOne(buildingId), // building
+                                    userRepository.findOne(item) // lưu lại user
+                    ));
+    //                                buildingRepository.findOne(buildingId), // building
+    //                                userRepository.findOne(item) // lưu lại user
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
-
         oldStaffId.forEach(item -> { // nv cũ nếu thêm tiếp thì mình xóa
             if (!newStaffId.contains(item)) {  //nếu nó khác nhân viên mới thì mình xóa tránh việc lặp lại
                 assignmentBuildingRepository.delete(item);
             }
         });
+    }
+
+    // new
+    @Override
+    @Transactional
+    public void assignmentBuilding(List<Long> staffId, Long buildingId) {
+        // giao tòa nhà cho nhân viên quản lí
+        try {
+            List<UserEntity> userEntities = new ArrayList<>();
+            for (Long item: staffId) {
+                userEntities.add(userRepository.findOne(item));
+            }
+            BuildingEntity buildingEntity = buildingRepository.findOne(buildingId);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -200,6 +222,7 @@ public class BuildingService implements IBuildingService {
     public BuildingDTO update(Long id, BuildingDTO buildingDTO) {
         return null;
     }
+
 
     @Override
     @Transactional
