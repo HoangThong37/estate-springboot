@@ -1,3 +1,4 @@
+
 package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ public class TransactionEntity extends BaseEntity {
     @Column(name = "staffid")
     private Long staffID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "customerid",nullable = false)
     private CustomerEntity customerEntity;
 

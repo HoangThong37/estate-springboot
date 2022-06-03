@@ -3,25 +3,18 @@ package com.laptrinhjavaweb.controller.admin;
 import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.converter.BuildingConverter;
 import com.laptrinhjavaweb.dto.BuildingDTO;
-import com.laptrinhjavaweb.dto.reponse.BuildingTypeReponse;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.security.utils.SecurityUtils;
-import com.laptrinhjavaweb.service.IBuildingService;
 
+import com.laptrinhjavaweb.service.IBuildingService;
 import com.laptrinhjavaweb.service.IDistrictService;
 import com.laptrinhjavaweb.service.IUserService;
 
 import com.laptrinhjavaweb.service.impl.BuildingTypesService;
-import com.laptrinhjavaweb.utils.MessageUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -54,7 +47,7 @@ public class BuildingController {
             buildingSearchRequest.setStaffID(staffId);
         }
 
-        modelAndView.addObject("modelSearch",buildingConverter.convertToBuildingSearchRequest(buildingSearchRequest));
+//        modelAndView.addObject("modelSearch",buildingConverter.convertToBuildingSearchRequest(buildingSearchRequest));
         modelAndView.addObject("modelDistrict",districtService.getAll());
         modelAndView.addObject("modelStaff",userService.getAllStaff());
         modelAndView.addObject("modelBuildingType",buildingTypesService.getAll());

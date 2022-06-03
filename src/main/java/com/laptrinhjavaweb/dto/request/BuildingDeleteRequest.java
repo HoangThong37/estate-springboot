@@ -1,17 +1,17 @@
 package com.laptrinhjavaweb.dto.request;
 
-import com.laptrinhjavaweb.entity.BuildingEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuildingDeleteRequest {
-    private  List<Long> buildingIDs;
+    private List<Long> buildingId = new ArrayList<>();
 
-    public List<Long> getBuildingIDs() {
-        return buildingIDs;
+    public List<Long> getBuildingId() {
+        return buildingId;
     }
 
-    public void setBuildingIDs(List<Long> buildingIDs) {
-        this.buildingIDs = buildingIDs;
+    public void setBuildingId(List<Long> buildingId) {
+        this.buildingId = buildingId;
     }
 }

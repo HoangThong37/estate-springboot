@@ -1,6 +1,7 @@
 package com.laptrinhjavaweb.converter;
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.dto.reponse.BuildingSearchReponse;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.entity.BuildingEntity;
@@ -22,8 +23,6 @@ public class BuildingConverter {
     @Autowired
     private UserConverter userConverter;
 
-
-
 //    @Autowired
 //    private BuildingService buildingService;
 
@@ -44,9 +43,13 @@ public class BuildingConverter {
             }
             result.setType(arrayList);
          }
-       /* result.setAddress(entity.getStreet() + entity.getWard() + buildingService.getDistrictByEnums(entity.getDistrict()));
-        result.setRentArea(entity.getRentAreas().stream()
-                .map(item -> item.getValue()).map(item -> item.toString()).collect(Collectors.joining()));*/
+        List<UserDTO> userDTOS = new ArrayList<>();
+        if (entity.getUserEntities().size() > 0) {
+            entity.getUserEntities().forEach(item -> {
+                userDTOS.add(userConverter.convertToDto(item));
+            });
+            result.setUserDTOS(userDTOS);
+        }
         return result;
     }
 
@@ -84,7 +87,6 @@ public class BuildingConverter {
                 + districtName);
         return building;
     }
-
 
     public BuildingSearchRequest convertToBuildingSearchRequest(BuildingSearchRequest buildingSearchRequest) {
         if (buildingSearchRequest.getTypes() != null) {

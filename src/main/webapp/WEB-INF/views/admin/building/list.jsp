@@ -1,4 +1,5 @@
 <%@ page import="com.laptrinhjavaweb.dto.DistrictDTO" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
 <c:url var="buildingListURL" value="/admin/building-list"></c:url>
@@ -411,12 +412,12 @@
             values.push($(this).val());
         });
         let data = {
-            "staffIDs": values
+            "staffIds": values
         }
         $.ajax({
             type: "post",
             url: '<c:url value="/api/building/"/>' + buildingAssId + '/assignment',
-            data: JSON.stringify(data),
+            data: JSON.stringify(values),
             dataType: "json",//kieu du lieu tu server tra ve client
             contentType: "application/json",//kieu du lieu tu client gui ve server
             success: function (response) {

@@ -4,7 +4,6 @@ package com.laptrinhjavaweb.api.admin;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.reponse.BuildingSearchReponse;
 import com.laptrinhjavaweb.dto.reponse.StaffAssignmentReponse;
-import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.service.impl.BuildingService;
 import com.laptrinhjavaweb.service.impl.UserService;
@@ -45,10 +44,10 @@ public class BuildingAPI {
    }
 
    @PostMapping("/{id}/assignment")
-   public AssignmentBuildingRequest assignmentBuilding(@RequestBody(required = false) AssignmentBuildingRequest assignmentBuildingRequest
+   public Long assignmentBuilding(@RequestBody(required = false) List<Long> userId
            , @PathVariable("id") Long buildingId) {
-      buildingService.assignmentBuilding(assignmentBuildingRequest, buildingId);
-      return assignmentBuildingRequest;
+      buildingService.assignmentBuildingWithCascade(userId, buildingId);
+      return buildingId;
    }
 
  /*  @PostMapping("/{id}/assignment") // giao tòa nhà cho nv quản lí
@@ -60,14 +59,14 @@ public class BuildingAPI {
 
    @PostMapping
    public BuildingDTO save(@RequestBody(required = false) BuildingDTO buildingDTO) {
-      return buildingService.save(buildingDTO);
+      return buildingService.saveWithCascade(buildingDTO);
    }
 
    // DELETE
    @DeleteMapping
-   public BuildingDeleteRequest deleteRequest(@RequestBody BuildingDeleteRequest id) throws NotFoundException {
-      buildingService.delete(id);
-      return id;
+   public BuildingDeleteRequest deleteRequest(@RequestBody BuildingDeleteRequest buildingDeleteRequest) {
+      buildingService.deleteWithCascade(buildingDeleteRequest);
+      return buildingDeleteRequest;
    }
 }
 

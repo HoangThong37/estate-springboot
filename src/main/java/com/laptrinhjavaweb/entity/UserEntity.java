@@ -1,3 +1,4 @@
+
 package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
@@ -38,7 +39,6 @@ public class UserEntity extends BaseEntity {
     // n-n vs building
     @ManyToMany(mappedBy = "userEntities", fetch = FetchType.LAZY)
     private List<BuildingEntity> buildingEntities = new ArrayList<>();
-
 
     public String getUserName() {
         return userName;

@@ -1,3 +1,4 @@
+
 package com.laptrinhjavaweb.entity;
 
 
@@ -61,11 +62,12 @@ public class BuildingEntity extends BaseEntity {
     @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
 
-/*    @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
-    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();*/
+//    @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
+//    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
+//
 
     // building - user
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "assignmentbuilding",
             joinColumns = @JoinColumn(name = "buildingid", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))

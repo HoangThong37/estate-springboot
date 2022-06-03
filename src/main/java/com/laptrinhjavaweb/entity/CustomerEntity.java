@@ -1,3 +1,4 @@
+
 package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
@@ -15,9 +16,10 @@ public class CustomerEntity extends BaseEntity {
     @Column(name = "email")
     private String email;
 
-    /*@OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+/*@OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private List<AssignmentCustomerEntity> assignmentCustomerEntities = new ArrayList<>();*/
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "assignmentcustomer",
             joinColumns = @JoinColumn(name = "customerid", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))

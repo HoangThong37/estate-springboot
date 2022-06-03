@@ -3,7 +3,6 @@ package com.laptrinhjavaweb.repository.custom.impl;
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 //import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
-import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
 import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.repository.custom.BuildingRepsitoryCustom;
@@ -30,8 +29,8 @@ public class BuildingRepositoryImpl implements BuildingRepsitoryCustom {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private AssignmentBuildingRepository assignmentBuildingRepository;
+/*    @Autowired
+    private AssignmentBuildingRepository assignmentBuildingRepository;*/
 
     @Override
     public List<BuildingEntity> findAll(BuildingSearchBuilder builder) {
