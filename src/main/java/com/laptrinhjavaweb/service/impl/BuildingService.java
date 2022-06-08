@@ -20,14 +20,12 @@ import com.laptrinhjavaweb.service.IBuildingService;
 import com.laptrinhjavaweb.service.IRentAreaService;
 import com.laptrinhjavaweb.utils.MapUtil;
 import com.laptrinhjavaweb.utils.ValidateUtils;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class BuildingService implements IBuildingService {
@@ -154,7 +152,7 @@ public class BuildingService implements IBuildingService {
         try { // lấy id -> setUser
             BuildingEntity buildingEntity = buildingRepository.findOne(buildingId);
             if (buildingEntity != null) {
-                buildingEntity.setUserEntities(new ArrayList<>(userRepository.findAll(staffId)));
+                buildingEntity.setUserEntities(new HashSet<>(userRepository.findAll(staffId)));
             }
             buildingRepository.save(buildingEntity);
         } catch (Exception e) {
@@ -193,6 +191,23 @@ public class BuildingService implements IBuildingService {
             buildingRepository.deleteByIdIn(buildingDeleteRequest.getBuildingIDs());
         }
     }*/
+
+    @Override
+    @Transactional
+    public void delete(BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException {
+/*        if (buildingDeleteRequest.getBuildingIDs() != null) {
+            buildingRepository.deleteById(buildingDeleteRequest.getBuildingIDs());
+        }*/
+        if (buildingDeleteRequest.getBuildingId().size() > 0) {
+            Long count = buildingRepository.countByIdIn(buildingDeleteRequest.getBuildingId());
+            if (count != buildingDeleteRequest.getBuildingId().size()) {
+                throw new NotFoundException("No Builidng");
+            }
+            rentAreaRepository.deleteByBuildingEntity_IdIn(buildingDeleteRequest.getBuildingId());
+//            assignmentBuildingRepository.deleteByBuildingEntity_IdIn(buildingDeleteRequest.getBuildingIDs());
+            buildingRepository.deleteById(buildingDeleteRequest.getBuildingId());
+        }
+    }
 
     @Override
     @Transactional

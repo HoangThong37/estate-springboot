@@ -36,9 +36,6 @@ public class BuildingController {
 
     @GetMapping("/building-list")
     public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest) {
-/*                                     @RequestParam(required = false) Map<String, Object> params,
-                                     @RequestParam(name = "types",required = false) List<String> types){*/
-
         ModelAndView modelAndView = new ModelAndView("admin/building/list");
 
         // check role is Staff
@@ -46,7 +43,6 @@ public class BuildingController {
             Long staffId = SecurityUtils.getPrincipal().getId();
             buildingSearchRequest.setStaffID(staffId);
         }
-
 //        modelAndView.addObject("modelSearch",buildingConverter.convertToBuildingSearchRequest(buildingSearchRequest));
         modelAndView.addObject("modelDistrict",districtService.getAll());
         modelAndView.addObject("modelStaff",userService.getAllStaff());

@@ -1,4 +1,3 @@
-
 package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
@@ -16,17 +15,13 @@ public class CustomerEntity extends BaseEntity {
     @Column(name = "email")
     private String email;
 
-/*@OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-    private List<AssignmentCustomerEntity> assignmentCustomerEntities = new ArrayList<>();*/
+//    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    private List<AssignmentCustomerEntity> assignmentCustomerEntities = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "assignmentcustomer",
-            joinColumns = @JoinColumn(name = "customerid", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
+    @ManyToMany(mappedBy = "customerEntities",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<UserEntity> userEntities = new ArrayList<>();
 
-    // one to many
-    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<TransactionEntity> transactionEntities = new ArrayList<>();
 
     public String getFullName() {
@@ -53,19 +48,19 @@ public class CustomerEntity extends BaseEntity {
         this.email = email;
     }
 
-    public List<UserEntity> getUserEntities() {
-        return userEntities;
-    }
-
-    public void setUserEntities(List<UserEntity> userEntities) {
-        this.userEntities = userEntities;
-    }
-
     public List<TransactionEntity> getTransactionEntities() {
         return transactionEntities;
     }
 
     public void setTransactionEntities(List<TransactionEntity> transactionEntities) {
         this.transactionEntities = transactionEntities;
+    }
+
+    public List<UserEntity> getUserEntities() {
+        return userEntities;
+    }
+
+    public void setUserEntities(List<UserEntity> userEntities) {
+        this.userEntities = userEntities;
     }
 }

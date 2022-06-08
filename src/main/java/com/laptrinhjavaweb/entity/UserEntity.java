@@ -1,9 +1,10 @@
-
 package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -32,13 +33,30 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "roleid", nullable = false))
     private List<RoleEntity> roles = new ArrayList<>();
 
-    // n-n vs customer
-    @ManyToMany(mappedBy = "userEntities", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "userEntities",fetch = FetchType.LAZY)
+    private Set<BuildingEntity> buildingEntities = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "assignmentcustomer",
+            joinColumns = @JoinColumn(name = "staffid",nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "customerid",nullable = false))
     private List<CustomerEntity> customerEntities = new ArrayList<>();
 
-    // n-n vs building
-    @ManyToMany(mappedBy = "userEntities", fetch = FetchType.LAZY)
-    private List<BuildingEntity> buildingEntities = new ArrayList<>();
+    public List<CustomerEntity> getCustomerEntities() {
+        return customerEntities;
+    }
+
+    public void setCustomerEntities(List<CustomerEntity> customerEntities) {
+        this.customerEntities = customerEntities;
+    }
+
+    public Set<BuildingEntity> getBuildingEntities() {
+        return buildingEntities;
+    }
+
+    public void setBuildingEntities(Set<BuildingEntity> buildingEntities) {
+        this.buildingEntities = buildingEntities;
+    }
 
     public String getUserName() {
         return userName;
@@ -72,14 +90,6 @@ public class UserEntity extends BaseEntity {
         this.status = status;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public List<RoleEntity> getRoles() {
         return roles;
     }
@@ -88,19 +98,11 @@ public class UserEntity extends BaseEntity {
         this.roles = roles;
     }
 
-    public List<CustomerEntity> getCustomerEntities() {
-        return customerEntities;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCustomerEntities(List<CustomerEntity> customerEntities) {
-        this.customerEntities = customerEntities;
-    }
-
-    public List<BuildingEntity> getBuildingEntities() {
-        return buildingEntities;
-    }
-
-    public void setBuildingEntities(List<BuildingEntity> buildingEntities) {
-        this.buildingEntities = buildingEntities;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

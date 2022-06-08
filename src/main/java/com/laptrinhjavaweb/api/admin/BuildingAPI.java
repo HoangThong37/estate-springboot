@@ -50,25 +50,22 @@ public class BuildingAPI {
       return buildingId;
    }
 
- /*  @PostMapping("/{id}/assignment") // giao tòa nhà cho nv quản lí
-   public Long assignmentBuilding(@RequestBody(required = false) List<Long> staffId, @PathVariable("id") Long buildingId) {
-      buildingService.assignmentBuilding(staffId, buildingId);
-      return buildingId;
-   }
-*/
-
+   // save
    @PostMapping
    public BuildingDTO save(@RequestBody(required = false) BuildingDTO buildingDTO) {
       return buildingService.saveWithCascade(buildingDTO);
    }
 
-   // DELETE
-   @DeleteMapping
-   public BuildingDeleteRequest deleteRequest(@RequestBody BuildingDeleteRequest buildingDeleteRequest) {
-      buildingService.deleteWithCascade(buildingDeleteRequest);
-      return buildingDeleteRequest;
+    // delete
+    @DeleteMapping
+    public BuildingDeleteRequest delete(@RequestBody BuildingDeleteRequest id) throws NotFoundException {
+      buildingService.deleteWithCascade(id);
+    return id;
    }
 }
+
+
+
 
 /*   @DeleteMapping("/{id}")
    public Long delete(@PathVariable("id") Long id) {

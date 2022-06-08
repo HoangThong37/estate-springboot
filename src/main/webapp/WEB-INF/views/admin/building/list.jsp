@@ -375,6 +375,7 @@
         e.preventDefault();
         $("#myModal").modal();
     })
+
     let idOne;
     $("#btnXoa").click(function (e) {
         e.preventDefault();
@@ -385,7 +386,7 @@
             values.push($(this).val());
         });
         let data = {};
-        data["buildingIds"] = values;
+        data["buildingId"] = values;
         $.ajax({
             type: "DELETE",
             url: '<c:url value="/api/building"/>',
@@ -412,7 +413,7 @@
             values.push($(this).val());
         });
         let data = {
-            "staffIds": values
+            "staffids": values
         }
         $.ajax({
             type: "post",
@@ -423,6 +424,7 @@
             success: function (response) {
                 console.log("sucess");
                 window.location.reload();
+                <%--window.location.href = "<c:url value='/admin/building-list?message=delete_success'/>";--%>
             },
             error: function (response) {
                 alert("fail")

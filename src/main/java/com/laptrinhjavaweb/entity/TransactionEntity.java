@@ -1,4 +1,3 @@
-
 package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
@@ -14,7 +13,7 @@ public class TransactionEntity extends BaseEntity {
     @Column(name = "staffid")
     private Long staffID;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerid",nullable = false)
     private CustomerEntity customerEntity;
 
@@ -26,20 +25,20 @@ public class TransactionEntity extends BaseEntity {
         this.code = code;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
     public Long getStaffID() {
         return staffID;
     }
 
     public void setStaffID(Long staffID) {
         this.staffID = staffID;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public CustomerEntity getCustomerEntity() {
@@ -49,4 +48,5 @@ public class TransactionEntity extends BaseEntity {
     public void setCustomerEntity(CustomerEntity customerEntity) {
         this.customerEntity = customerEntity;
     }
+
 }

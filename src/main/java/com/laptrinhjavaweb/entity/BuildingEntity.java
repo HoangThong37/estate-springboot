@@ -1,14 +1,13 @@
-
 package com.laptrinhjavaweb.entity;
-
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "building")
-
 public class BuildingEntity extends BaseEntity {
     @Column(name = "name")
     private String name;
@@ -59,19 +58,33 @@ public class BuildingEntity extends BaseEntity {
     @Column(name = "type")
     private String type;
 
-    @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
     private List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
-//    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
-//
+//	@OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
+//	private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
 
-    // building - user
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "assignmentbuilding",
-            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
-    private List<UserEntity> userEntities = new ArrayList<>();
+            joinColumns = @JoinColumn(name = "buildingid",nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "staffid",nullable = false))
+    private Set<UserEntity> userEntities = new HashSet<>();
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getName() {
         return name;
@@ -79,6 +92,30 @@ public class BuildingEntity extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getMotoFee() {
+        return motoFee;
+    }
+
+    public void setMotoFee(String motoFee) {
+        this.motoFee = motoFee;
+    }
+
+    public String getManagerPhone() {
+        return managerPhone;
+    }
+
+    public void setManagerPhone(String managerPhone) {
+        this.managerPhone = managerPhone;
+    }
+
+    public String getManagerName() {
+        return managerName;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
     }
 
     public String getStreet() {
@@ -95,14 +132,6 @@ public class BuildingEntity extends BaseEntity {
 
     public void setWard(String ward) {
         this.ward = ward;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
     }
 
     public String getStructure() {
@@ -177,13 +206,6 @@ public class BuildingEntity extends BaseEntity {
         this.carFee = carFee;
     }
 
-    public String getMotoFee() {
-        return motoFee;
-    }
-
-    public void setMotoFee(String motoFee) {
-        this.motoFee = motoFee;
-    }
 
     public String getOverTimeFee() {
         return overTimeFee;
@@ -241,30 +263,6 @@ public class BuildingEntity extends BaseEntity {
         this.decorationTime = decorationTime;
     }
 
-    public String getManagerPhone() {
-        return managerPhone;
-    }
-
-    public void setManagerPhone(String managerPhone) {
-        this.managerPhone = managerPhone;
-    }
-
-    public String getManagerName() {
-        return managerName;
-    }
-
-    public void setManagerName(String managerName) {
-        this.managerName = managerName;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public List<RentAreaEntity> getRentAreaEntities() {
         return rentAreaEntities;
     }
@@ -273,11 +271,11 @@ public class BuildingEntity extends BaseEntity {
         this.rentAreaEntities = rentAreaEntities;
     }
 
-    public List<UserEntity> getUserEntities() {
+    public Set<UserEntity> getUserEntities() {
         return userEntities;
     }
 
-    public void setUserEntities(List<UserEntity> userEntities) {
+    public void setUserEntities(Set<UserEntity> userEntities) {
         this.userEntities = userEntities;
     }
 }
