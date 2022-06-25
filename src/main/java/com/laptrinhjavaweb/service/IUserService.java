@@ -7,7 +7,6 @@ import com.laptrinhjavaweb.exception.MyException;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IUserService {
     UserDTO findOneByUserNameAndStatus(String name, int status);
@@ -23,5 +22,7 @@ public interface IUserService {
     void delete(long[] ids);
     List<UserDTO> getAllStaff();
     List<StaffAssignmentReponse> getAllStaffAssignmentBuilding(Long buildingID);
-//    List<StaffAssignmentReponse> getAllAssignmentBuildingStaffId(Long staffId);
+
+    List<StaffAssignmentReponse> getAllStaffAssignmentCustomer(Long id);
+
 }

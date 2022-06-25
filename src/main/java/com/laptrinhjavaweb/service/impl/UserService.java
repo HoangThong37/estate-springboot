@@ -159,10 +159,13 @@ public class UserService implements IUserService {
 
     @Override
     public List<StaffAssignmentReponse> getAllStaffAssignmentBuilding(Long buildingID) {
-       return userConverter.convertToStaffAssignmentReponse(userRepository.getAllStaffByBuildingId(buildingID));
+       return userConverter.toStaffAssignmentResponses(userRepository.getAllStaffByBuildingId(buildingID));
     }
 
-
+    @Override
+    public List<StaffAssignmentReponse> getAllStaffAssignmentCustomer(Long id) {
+        return userConverter.toStaffAssignmentResponses(userRepository.getAllStaffByBuildingId(id));
+    }
 
 
 /*    @Override

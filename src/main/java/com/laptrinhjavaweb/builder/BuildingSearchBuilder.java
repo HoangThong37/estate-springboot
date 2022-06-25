@@ -75,9 +75,6 @@ public class BuildingSearchBuilder {
         return managerPhone;
     }
 
-//    public Integer getStaffID() {
-//        return staffID;
-//    }
 
     public Long getStaffID() {
         return staffID;
@@ -208,6 +205,7 @@ public class BuildingSearchBuilder {
         }
 
         public BuildingSearchBuilder build() {
+
             return new BuildingSearchBuilder(this);
         }
     }
