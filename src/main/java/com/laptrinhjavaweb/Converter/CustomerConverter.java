@@ -2,8 +2,11 @@ package com.laptrinhjavaweb.converter;
 
 import com.laptrinhjavaweb.dto.CustomerDTO;
 import com.laptrinhjavaweb.dto.reponse.CustomerReponse;
+import com.laptrinhjavaweb.dto.reponse.TransactionReponse;
 import com.laptrinhjavaweb.dto.reponse.TransactionTypeReponse;
 import com.laptrinhjavaweb.entity.CustomerEntity;
+import com.laptrinhjavaweb.entity.TransactionEntity;
+import com.laptrinhjavaweb.enums.TransactionEnum;
 import com.laptrinhjavaweb.utils.DateUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +44,23 @@ public class CustomerConverter {
     public CustomerDTO convertToDTO(CustomerEntity entity) {
         CustomerDTO result = modelMapper.map(entity, CustomerDTO.class); // đựng kết quả
         List<TransactionTypeReponse> transactionTypeReponseList = new ArrayList<>();
-//        for (TransactionEnum item : TransactionEnum.value()) {
-//
-//        }
+        for (TransactionEnum item : TransactionEnum.values()) {
+            TransactionTypeReponse transactionTypeReponse = new TransactionTypeReponse();
+            transactionTypeReponse.setCode(item.name());
+            transactionTypeReponse.setTypeValue(item.getTransactionValue());
 
-
-
+            // set ngày tạo + ghi chú !
+            List<TransactionReponse> transactionReponses = new ArrayList<>();
+            for (TransactionEntity elements : entity.getTransactionEntities()) {
+                if (item.name().equals(elements.getCode())) {
+                    transactionReponses.add(new TransactionReponse(DateUtils.toDate(
+                              Optional.ofNullable(elements.getCreatedDate()).orElse(new Date())), elements.getNote()));
+                }
+            }
+            transactionTypeReponse.setTransaction(transactionReponses);
+            transactionTypeReponseList.add(transactionTypeReponse);
+        }
+        result.setTransactionTypeReponseList(transactionTypeReponseList);
         return result;
     }
 }

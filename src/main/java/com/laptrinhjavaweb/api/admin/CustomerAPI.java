@@ -41,28 +41,17 @@ public class CustomerAPI {
         return ResponseEntity.ok(customerService.save(customerDTO));
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> delete(@RequestBody List<Long> ids) throws NotFoundException {
+        customerService.deleteCustomer(ids);
+        return ResponseEntity.noContent().build();
+    }
 
-
-//    // save
-//    @PostMapping
-//    public BuildingDTO save(@RequestBody(required = false) BuildingDTO buildingDTO) {
-//        return buildingService.saveWithCascade(buildingDTO);
-//    }
-//
-//    // delete
-//    @DeleteMapping
-//    public BuildingDeleteRequest delete(@RequestBody BuildingDeleteRequest id) throws NotFoundException {
-//        buildingService.deleteWithCascade(id);
-//        return id;
-//    }
-
-//    @PostMapping
-//    public ResponseEntity<UserDTO> createCustomers(@RequestBody CustomerDTO newUser) {
-//        return ResponseEntity.ok(customerService.insert(newUser));
-//    }
-//
-//    @PutMapping("/{id}")
-//    public ResponseEntity<UserDTO> updateUsers(@PathVariable("id") long id, @RequestBody UserDTO userDTO) {
-//        return ResponseEntity.ok(customerService.update(id, userDTO));
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<CustomerDTO> findOne(@PathVariable Long id) {
+        return ResponseEntity.ok(customerService.findById(id));
+    }
 }
+
+
+

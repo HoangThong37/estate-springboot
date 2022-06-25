@@ -46,9 +46,18 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    @Transactional
+    // save - cascade
     public CustomerDTO save(CustomerDTO customerDTO) throws NotFoundException {
-
-        return null;
+        CustomerEntity customerEntity = convertCustomer.convertToEntity(customerDTO);
+        if (customerDTO.getId() != null) {
+            // lấy id
+            CustomerEntity customerEntity1 = customerRepository.findOne(customerDTO.getId());
+            customerEntity.setUserEntities(customerEntity1.getUserEntities());
+            customerEntity.setTransactionEntities(customerEntity1.getTransactionEntities());
+         //   customerRepository.delete(customerDTO.getId());
+        }
+        return convertCustomer.convertToDTO(customerRepository.save(customerEntity));
     }
 
     @Override
@@ -60,6 +69,19 @@ public class CustomerService implements ICustomerService {
             result.add(convertCustomer.convertToCustomerReponse(item));
         }
         return result;
+    }
+
+    @Override
+    @Transactional
+    public void deleteCustomer(List<Long> customerId) throws NotFoundException {
+         if (!customerId.isEmpty()) {
+             customerRepository.deleteByIdIn(customerId);
+         }
+    }
+
+    @Override
+    public CustomerDTO findById(Long id) {
+        return id != null ? convertCustomer.convertToDTO(customerRepository.findOne(id)) : new CustomerDTO();
     }
 
     private CustomerSearchBuilder convertParamToBuilder(CustomerSearchRequest customerSearchRequest) {

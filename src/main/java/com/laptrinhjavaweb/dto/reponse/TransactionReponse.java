@@ -1,6 +1,6 @@
 package com.laptrinhjavaweb.dto.reponse;
 
-public class TransactionReponse {
+public class TransactionReponse extends BaseReponse{
     private String createDateStr;
     private String note;
 

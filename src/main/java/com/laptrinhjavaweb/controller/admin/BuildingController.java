@@ -44,70 +44,28 @@ public class BuildingController {
             buildingSearchRequest.setStaffID(staffId);
         }
 //        modelAndView.addObject("modelSearch",buildingConverter.convertToBuildingSearchRequest(buildingSearchRequest));
-        modelAndView.addObject("modelDistrict",districtService.getAll());
-        modelAndView.addObject("modelStaff",userService.getAllStaff());
-        modelAndView.addObject("modelBuildingType",buildingTypesService.getAll());
-        modelAndView.addObject("modelBuildings",buildingService.findAll(buildingSearchRequest));
+        modelAndView.addObject("modelDistrict", districtService.getAll());
+        modelAndView.addObject("modelStaff", userService.getAllStaff());
+        modelAndView.addObject("modelBuildingType", buildingTypesService.getAll());
+        modelAndView.addObject("modelBuildings", buildingService.findAll(buildingSearchRequest));
         return modelAndView;
     }
 
     @GetMapping("/building-edit")
-    public  ModelAndView buildingEdit(@RequestParam(name = "buildingid",required = false) Long id){
+    public ModelAndView buildingEdit(@RequestParam(name = "buildingid", required = false) Long id) {
 
         ModelAndView modelAndView = new ModelAndView("admin/building/edit");
-        if(id!=null){
-            modelAndView.addObject("modelDistrict",districtService.getDistrictByBuilding(buildingService.findById(id)));
-            modelAndView.addObject("modelBuildingType",buildingTypesService.getAllByBuilding(buildingService.findById(id)));
-            modelAndView.addObject("modelBuilding",buildingService.findById(id));
-        }else{
-            modelAndView.addObject("modelDistrict",districtService.getAll());
-            modelAndView.addObject("modelBuildingType",buildingTypesService.getAll());
+        if (id != null) {
+            modelAndView.addObject("modelDistrict", districtService.getDistrictByBuilding(buildingService.findById(id)));
+            modelAndView.addObject("modelBuildingType", buildingTypesService.getAllByBuilding(buildingService.findById(id)));
+            modelAndView.addObject("modelBuilding", buildingService.findById(id));
+        } else {
+            modelAndView.addObject("modelDistrict", districtService.getAll());
+            modelAndView.addObject("modelBuildingType", buildingTypesService.getAll());
             modelAndView.addObject("modelBuilding", new BuildingDTO());
         }
         return modelAndView;
     }
 
 
-   /* @GetMapping("/building-list")
-    public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest) {
-        ModelAndView mav = new ModelAndView("admin/building/list");
-
-        // check role is Staff
-        if (!SecurityUtils.getAuthorities().contains(SystemConstant.ADMIN_ROLE)) { // nếu kp là admin thì -> staff
-            Long staffId = SecurityUtils.getPrincipal().getId();
-            buildingSearchRequest.setStaffID(staffId);
-        }
-
-        mav.addObject("modelDistrict",districtService.getAll());
-        mav.addObject("modelStaff",userService.getAllStaff());
-        mav.addObject("modelBuildingType",buildingTypesService.getAll());
-        mav.addObject("modelBuildings",buildingService.findAll(buildingSearchRequest));
-        return mav;
-    }
-
-    @GetMapping("/building-edit")
-    public  ModelAndView buildingEdit(@RequestParam(name = "buildingid",required = false) Long id){
-        ModelAndView modelAndView = new ModelAndView("admin/building/edit");
-        if(id != null) {
-            modelAndView.addObject("modelDistrict",districtService.getDistrictByBuilding(buildingService.findById(id)));
-            modelAndView.addObject("modelBuildingType",buildingTypesService.getAllByBuilding(buildingService.findById(id)));
-            modelAndView.addObject("modelBuilding",buildingService.findById(id));
-        }
-        else {
-            modelAndView.addObject("modelDistrict",districtService.getAll());
-            modelAndView.addObject("modelBuildingType",buildingTypesService.getAll());
-            modelAndView.addObject("modelBuilding",new BuildingDTO());
-      }
-//
-        return modelAndView;
-    }*/
-
-//    private void initMessageResponse(ModelAndView mav, HttpServletRequest request) {
-//        String message = request.getParameter("message");
-//        if (message != null && StringUtils.isNotEmpty(message)) {
-//            Map<String, String> messageMap = messageUtil.getMessage(message);
-//            mav.addObject(SystemConstant.ALERT, messageMap.get(SystemConstant.ALERT));
-//            mav.addObject(SystemConstant.MESSAGE_RESPONSE, messageMap.get(SystemConstant.MESSAGE_RESPONSE));
-//        }
-//    }
 }

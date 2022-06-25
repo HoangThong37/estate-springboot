@@ -168,11 +168,6 @@ public class UserService implements IUserService {
     }
 
 
-/*    @Override
-    public List<StaffAssignmentReponse> getAllAssignmentBuildingStaffId(Long staffId) {
-        return userConverter.convertToStaffAssignmentReponse(userRepository.getAllBuildingByStaffId(staffId));
-    }*/
-
     @Override
     public List<UserDTO> getAllStaff() {
         List<UserDTO> result = new ArrayList<>();
