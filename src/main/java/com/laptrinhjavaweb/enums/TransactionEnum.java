@@ -5,13 +5,13 @@ public enum TransactionEnum {
     DANDIXEM("DẪN ĐI XEM"),
     DUADIXASTRESS("ĐƯA KHÁCH ĐI XẢ STRESS");
 
-    private final String transactionValue;
+    private final String typeValue;
 
-    TransactionEnum(String transactionValue) {
-        this.transactionValue = transactionValue;
+    TransactionEnum(String typeValue) {
+        this.typeValue = typeValue;
     }
 
-    public String getTransactionValue() {
-        return transactionValue;
+    public String getTypeValue() {
+        return typeValue;
     }
 }

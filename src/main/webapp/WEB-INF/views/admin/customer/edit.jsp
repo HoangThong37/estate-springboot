@@ -39,7 +39,7 @@
                             <label class="col-sm-3">
                                 Tên Đầy Đủ</label>
                             <div class="col-sm-9">
-                                <form:input path="name" cssClass="form-control"/>
+                                <form:input path="fullName" cssClass="form-control"/>
                             </div>
                         </div>
                         <div class="form-group">

@@ -44,15 +44,15 @@ public class CustomerConverter {
     public CustomerDTO convertToDTO(CustomerEntity entity) {
         CustomerDTO result = modelMapper.map(entity, CustomerDTO.class); // đựng kết quả
         List<TransactionTypeReponse> transactionTypeReponseList = new ArrayList<>();
-        for (TransactionEnum item : TransactionEnum.values()) {
+        for (TransactionEnum item1 : TransactionEnum.values()) {
             TransactionTypeReponse transactionTypeReponse = new TransactionTypeReponse();
-            transactionTypeReponse.setCode(item.name());
-            transactionTypeReponse.setTypeValue(item.getTransactionValue());
+            transactionTypeReponse.setCode(item1.name());
+            transactionTypeReponse.setTypeValue(item1.getTypeValue());
 
             // set ngày tạo + ghi chú !
             List<TransactionReponse> transactionReponses = new ArrayList<>();
             for (TransactionEntity elements : entity.getTransactionEntities()) {
-                if (item.name().equals(elements.getCode())) {
+                if (item1.name().equals(elements.getCode())) {
                     transactionReponses.add(new TransactionReponse(DateUtils.toDate(
                               Optional.ofNullable(elements.getCreatedDate()).orElse(new Date())), elements.getNote()));
                 }

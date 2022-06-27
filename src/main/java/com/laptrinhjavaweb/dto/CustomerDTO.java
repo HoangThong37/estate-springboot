@@ -5,7 +5,7 @@ import com.laptrinhjavaweb.dto.reponse.TransactionTypeReponse;
 import java.util.List;
 
 public class CustomerDTO extends AbstractDTO  {
-    private String name;
+    private String fullName; // coi lại
     private String phone;
     private String email;
     private List<TransactionTypeReponse> transactionTypeReponseList;
@@ -18,12 +18,12 @@ public class CustomerDTO extends AbstractDTO  {
         this.transactionTypeReponseList = transactionTypeReponseList;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPhone() {
