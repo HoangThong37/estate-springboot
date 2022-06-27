@@ -55,7 +55,6 @@ public class CustomerService implements ICustomerService {
             CustomerEntity customerEntity1 = customerRepository.findOne(customerDTO.getId());
             customerEntity.setUserEntities(customerEntity1.getUserEntities());
             customerEntity.setTransactionEntities(customerEntity1.getTransactionEntities());
-         //   customerRepository.delete(customerDTO.getId());
         }
         return convertCustomer.convertToDTO(customerRepository.save(customerEntity));
     }
@@ -71,6 +70,21 @@ public class CustomerService implements ICustomerService {
         return result;
     }
 
+    private CustomerSearchBuilder convertParamToBuilder(CustomerSearchRequest customerSearchRequest) {
+        try {
+            CustomerSearchBuilder result = new CustomerSearchBuilder.Builder().
+                    setFullName(customerSearchRequest.getFullName()).
+                    setPhone(customerSearchRequest.getPhone()).
+                    setEmail(customerSearchRequest.getEmail()).
+                    setStaffId(customerSearchRequest.getStaffId()).build();
+            return result;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @Override
     @Transactional
     public void deleteCustomer(List<Long> customerId) throws NotFoundException {
@@ -84,19 +98,7 @@ public class CustomerService implements ICustomerService {
         return id != null ? convertCustomer.convertToDTO(customerRepository.findOne(id)) : new CustomerDTO();
     }
 
-    private CustomerSearchBuilder convertParamToBuilder(CustomerSearchRequest customerSearchRequest) {
-        try {
-            CustomerSearchBuilder result = new CustomerSearchBuilder.Builder().
-                    fullName(customerSearchRequest.getFullName()).
-                    phone(customerSearchRequest.getPhone()).
-                    email(customerSearchRequest.getEmail()).build();
-            return result;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 
 
 }
