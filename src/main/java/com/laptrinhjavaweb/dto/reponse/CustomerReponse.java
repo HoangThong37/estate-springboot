@@ -7,7 +7,9 @@ public class CustomerReponse extends AbstractDTO {
     private String staffNames;
     private String phone;
     private String email;
+    private String needs;
     private String createDateStr;
+    private String status; // tình trạng
 
     public String getFullName() {
         return fullName;
@@ -47,5 +49,21 @@ public class CustomerReponse extends AbstractDTO {
 
     public void setCreateDateStr(String createDateStr) {
         this.createDateStr = createDateStr;
+    }
+
+    public String getNeeds() {
+        return needs;
+    }
+
+    public void setNeeds(String needs) {
+        this.needs = needs;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -8,7 +8,8 @@ import javassist.NotFoundException;
 import java.util.List;
 
 public interface ICustomerService {
-    void assignmentCustomerWithCascade(List<Long> userId, Long customerId);
+//    void assignmentCustomer(List<Long> staffIds, Long customerId) throws NotFoundException;
+    void assignmentCustomer(List<Long> staffIds,Long customerId) throws NotFoundException;
     CustomerDTO save(CustomerDTO customerDTO) throws NotFoundException;
     List<CustomerReponse> findAll(CustomerSearchRequest customerSearchRequest);
     void deleteCustomer(List<Long> customerId) throws NotFoundException;

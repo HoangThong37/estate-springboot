@@ -48,7 +48,6 @@ public class CustomerConverter {
             TransactionTypeReponse transactionTypeReponse = new TransactionTypeReponse();
             transactionTypeReponse.setCode(item1.name());
             transactionTypeReponse.setTypeValue(item1.getTypeValue());
-
             // set ngày tạo + ghi chú !
             List<TransactionReponse> transactionReponses = new ArrayList<>();
             for (TransactionEntity elements : entity.getTransactionEntities()) {

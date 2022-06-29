@@ -14,27 +14,27 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = -863164858986274318L; // để đảm bảo chắc chắn rằng đối tượng trước và sau khi serialization là một
+    private static final long serialVersionUID = -863164858986274318L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "createddate")
+    @Column(name = "createddate",updatable = false)///khong update lai data sau khi update
     @CreatedDate
     private Date createdDate;
 
     @Column(name = "createdby")
     @CreatedBy
-    private String createdBy; // được tạo bởi
+    private String createdBy;
 
     @Column(name = "modifieddate")
     @LastModifiedDate
-    private Date modifiedDate; // ngày sửa đổi
+    private Date modifiedDate;
 
     @Column(name = "modifiedby")
     @LastModifiedBy
-    private String modifiedBy; // được sửa đổi bởi
+    private String modifiedBy;
 
     public Long getId() {
         return id;
@@ -76,3 +76,5 @@ public class BaseEntity implements Serializable {
         this.modifiedBy = modifiedBy;
     }
 }
+
+

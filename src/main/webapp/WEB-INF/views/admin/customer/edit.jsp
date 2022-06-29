@@ -27,7 +27,7 @@
                     <i class="ace-icon fa fa-home home-icon"></i>
                     <a href="<c:url value="/admin/home"/> ">Trang chủ</a>
                 </li>
-                <li class="active">Chi tiết Khách Hàng</li>
+                <li class="active">Chỉnh sửa người dùng</li>
             </ul><!-- /.breadcrumb -->
         </div>
 
@@ -54,6 +54,30 @@
                                 Email</label>
                             <div class="col-sm-9">
                                 <form:input path="email" cssClass="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3">
+                                Tên công ty</label>
+                            <div class="col-sm-9">
+                                <form:input path="companyName" cssClass="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3">
+                                Nhu cầu</label>
+                            <div class="col-sm-9">
+                                <form:input path="needs" cssClass="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3">
+                                Ghi chú</label>
+                            <div class="col-sm-9">
+                                <form:input path="note" cssClass="form-control"/>
                             </div>
                         </div>
 

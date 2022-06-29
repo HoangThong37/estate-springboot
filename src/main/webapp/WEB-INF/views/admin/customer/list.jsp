@@ -152,8 +152,10 @@
                             <th>Nhân Viên Quản Lí</th>
                             <th>Di Động</th>
                             <th>Email</th>
+                            <th>Nhu cầu</th>
                             <th>Người Nhập</th>
                             <th>Ngày Nhập</th>
+                            <th>Tình trạng</th>
                             <th>Thao Tác</th>
                         </tr>
                         </thead>
@@ -171,8 +173,10 @@
                                 <td>${item.staffNames}</td>
                                 <td>${item.phone}</td>
                                 <td>${item.email}</td>
+                                <td>${item.needs}</td>
                                 <td>${item.createdBy}</td>
                                 <td>${item.createDateStr}</td>
+                                <td>${item.status}</td>
                                 <td>
                                     <button class="btn btn-xs btn-info" data-toggle="tooltip"
                                             title="Giao Khách Hàng cho nhân viên quản lí" value="${item.id}"
@@ -196,8 +200,6 @@
                     </table>
                 </div>
             </div><!-- /.span -->
-
-
         </div>
     </div><!-- /.page-content -->
 </div>

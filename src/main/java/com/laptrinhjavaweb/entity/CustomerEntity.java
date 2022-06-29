@@ -2,9 +2,7 @@ package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -17,8 +15,14 @@ public class CustomerEntity extends BaseEntity {
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(mappedBy = "customerEntities",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private Set<UserEntity> userEntities = new HashSet<>();
+//    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    private List<AssignmentCustomerEntity> assignmentCustomerEntities = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "assignmentcustomer",
+            joinColumns = @JoinColumn(name = "customerid",nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "staffid",nullable = false))
+    private List<UserEntity> userEntities = new ArrayList<>();
 
     @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<TransactionEntity> transactionEntities = new ArrayList<>();
@@ -47,19 +51,19 @@ public class CustomerEntity extends BaseEntity {
         this.email = email;
     }
 
-    public Set<UserEntity> getUserEntities() {
-        return userEntities;
-    }
-
-    public void setUserEntities(Set<UserEntity> userEntities) {
-        this.userEntities = userEntities;
-    }
-
     public List<TransactionEntity> getTransactionEntities() {
         return transactionEntities;
     }
 
     public void setTransactionEntities(List<TransactionEntity> transactionEntities) {
         this.transactionEntities = transactionEntities;
+    }
+
+    public List<UserEntity> getUserEntities() {
+        return userEntities;
+    }
+
+    public void setUserEntities(List<UserEntity> userEntities) {
+        this.userEntities = userEntities;
     }
 }

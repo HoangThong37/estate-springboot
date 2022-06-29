@@ -30,12 +30,11 @@ public class CustomerAPI {
     }
 
     @PostMapping("/{id}/assignment")
-    public Long assignmentBuildingCustomer(@RequestBody(required = false) List<Long> userId
-            , @PathVariable("id") Long customerId) {
-        customerService.assignmentCustomerWithCascade(userId, customerId);
+    public Long assignmentBuilding(@RequestBody(required = false) List<Long> staffIds
+            , @PathVariable("id") Long customerId) throws NotFoundException {
+        customerService.assignmentCustomer(staffIds, customerId);
         return customerId;
     }
-
     @PostMapping
     public ResponseEntity<CustomerDTO> saveCustomer(@RequestBody CustomerDTO customerDTO) throws NotFoundException {
         return ResponseEntity.ok(customerService.save(customerDTO));

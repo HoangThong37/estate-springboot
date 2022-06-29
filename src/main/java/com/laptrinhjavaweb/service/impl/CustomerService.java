@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -31,19 +30,19 @@ public class CustomerService implements ICustomerService {
     private CustomerConverter convertCustomer;
 
     @Override
-    @Transactional
-    public void assignmentCustomerWithCascade(List<Long> userId, Long customerId) {
+    public void assignmentCustomer(List<Long> staffIds, Long customerId) {
         // giao tòa nhà cho nhân viên quản lí
         try {
             CustomerEntity customerEntity = customerRepository.findOne(customerId); // lấy id
             if (customerEntity != null) {
-                customerEntity.setUserEntities(new HashSet<>(userRepository.findAll(userId)));
+                customerEntity.setUserEntities(new ArrayList<>(userRepository.findAll(staffIds)));
             }
             customerRepository.save(customerEntity);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     @Transactional

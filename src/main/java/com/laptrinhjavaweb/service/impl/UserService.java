@@ -164,7 +164,7 @@ public class UserService implements IUserService {
 
     @Override
     public List<StaffAssignmentReponse> getAllStaffAssignmentCustomer(Long id) {
-        return userConverter.toStaffAssignmentResponses(userRepository.getAllStaffByBuildingId(id));
+        return userConverter.toStaffAssignmentResponses(userRepository.getAllStaffByCustomerId(id));
     }
 
 
@@ -174,7 +174,6 @@ public class UserService implements IUserService {
         for (UserEntity item : userRepository.getAllStaff()) {
             UserDTO userDTO = userConverter.convertToDto(item);
             result.add(userDTO);
-//            result.add(userConverter.convertToDto(item));
         }
         return result;
     }

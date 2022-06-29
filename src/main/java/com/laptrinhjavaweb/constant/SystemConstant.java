@@ -22,4 +22,7 @@ public class SystemConstant {
 
     public static final String FIELD_IS_NULL_OR_EMPTY = "Giá_trị_rỗng";
     public static final String EMPTY_STRING = "";
+
+//    public static final String NF_CUSTOMER = " fail ";
+    public static final String NF_CUSTOMER = "Not Found Building";
 }

@@ -8,6 +8,10 @@ public class CustomerDTO extends AbstractDTO  {
     private String fullName; // coi lại
     private String phone;
     private String email;
+    private String companyName; // tên công ty
+    private String needs; // nhu cầu
+    private String note; // ghi chú
+
     private List<TransactionTypeReponse> transactionTypeReponseList;
 
     public List<TransactionTypeReponse> getTransactionTypeReponseList() {
@@ -40,5 +44,29 @@ public class CustomerDTO extends AbstractDTO  {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getNeeds() {
+        return needs;
+    }
+
+    public void setNeeds(String needs) {
+        this.needs = needs;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
