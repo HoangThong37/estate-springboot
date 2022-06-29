@@ -14,9 +14,13 @@ public class CustomerEntity extends BaseEntity {
     private String phone;
     @Column(name = "email")
     private String email;
+    @Column(name = "company")
+    private String companyName;
+    @Column(name = "needs")
+    private String needs;
+    @Column(name = "note")
+    private String note;
 
-//    @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-//    private List<AssignmentCustomerEntity> assignmentCustomerEntities = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "assignmentcustomer",
@@ -26,6 +30,30 @@ public class CustomerEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<TransactionEntity> transactionEntities = new ArrayList<>();
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getNeeds() {
+        return needs;
+    }
+
+    public void setNeeds(String needs) {
+        this.needs = needs;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     public String getFullName() {
         return fullName;
@@ -67,3 +95,4 @@ public class CustomerEntity extends BaseEntity {
         this.userEntities = userEntities;
     }
 }
+
