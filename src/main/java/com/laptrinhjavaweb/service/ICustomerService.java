@@ -12,6 +12,6 @@ public interface ICustomerService {
     void assignmentCustomer(List<Long> staffIds,Long customerId) throws NotFoundException;
     CustomerDTO save(CustomerDTO customerDTO) throws NotFoundException;
     List<CustomerReponse> findAll(CustomerSearchRequest customerSearchRequest);
-    void deleteCustomer(List<Long> customerId) throws NotFoundException;
+    List<Long> deleteCustomer(List<Long> customerId) throws NotFoundException;
     CustomerDTO findById(Long id);
 }

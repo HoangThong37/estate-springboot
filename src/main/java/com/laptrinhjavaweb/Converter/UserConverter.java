@@ -40,7 +40,7 @@ public class UserConverter {
             }
             StaffAssignmentReponse staffAssignmentResponse = modelMapper.map(item,StaffAssignmentReponse.class);
             if(i>0)
-                staffAssignmentResponse.setCheckes("checked");
+             staffAssignmentResponse.setCheckes("checked");
             staffAssignmentResponses.add(staffAssignmentResponse);
         }
         return staffAssignmentResponses;

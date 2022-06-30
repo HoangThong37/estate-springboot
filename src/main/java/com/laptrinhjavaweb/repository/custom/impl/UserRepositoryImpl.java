@@ -16,7 +16,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom  {
     @Override
     public List<UserEntity> getAllStaff() {
         StringBuilder sql = new StringBuilder(" select * from user as u inner join user_role as ur on u.id = ur.userid ");
-      //  sql.append("where ur.roleid = 2 and u.status = 1");
+        sql.append("where ur.roleid = 2 and u.status = 1");
         Query query = entityManager.createNativeQuery(sql.toString(),UserEntity.class);
         return query.getResultList();
     }

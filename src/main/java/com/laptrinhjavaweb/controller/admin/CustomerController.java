@@ -1,7 +1,9 @@
 package com.laptrinhjavaweb.controller.admin;
 
 
+import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.dto.request.CustomerSearchRequest;
+import com.laptrinhjavaweb.security.utils.SecurityUtils;
 import com.laptrinhjavaweb.service.impl.CustomerService;
 import com.laptrinhjavaweb.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,13 @@ public class CustomerController {
 
     @GetMapping("/customer-list")
     public ModelAndView customerList(@ModelAttribute("modelSearch") CustomerSearchRequest customerSearchRequest) {
+
+        // check role is Staff
+        if (!SecurityUtils.getAuthorities().contains(SystemConstant.ADMIN_ROLE)) { // nếu kp là admin thì -> staff
+            Long staffId = SecurityUtils.getPrincipal().getId();
+            customerSearchRequest.setStaffId(staffId);
+        }
+
         ModelAndView modelAndView = new ModelAndView("admin/customer/list");
         modelAndView.addObject("customers",customerService.findAll(customerSearchRequest));
         modelAndView.addObject("modelStaff",userService.getAllStaff());

@@ -256,7 +256,6 @@ public class BuildingService implements IBuildingService {
         }
     }
 
-
     @Override
     public Map<String, String> getDistricts() {
         Map<String, String> districts = new HashMap<>();
