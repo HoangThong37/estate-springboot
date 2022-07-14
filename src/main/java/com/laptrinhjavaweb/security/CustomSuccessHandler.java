@@ -1,7 +1,5 @@
 package com.laptrinhjavaweb.security;
 
-import com.laptrinhjavaweb.constant.SystemConstant;
-import com.laptrinhjavaweb.security.utils.SecurityUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @Component
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -30,14 +27,15 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     }
 
     public String determineTargetUrl(Authentication authentication) {
-        String url = "";
+       /* String url = "";
         List<String> roles = SecurityUtils.getAuthorities();
         if (isUser(roles)) {
-            url = SystemConstant.HOME;
+            url = SystemConstant.ADMIN_HOME;
         } else if (isAdmin(roles)) {
             url = SystemConstant.ADMIN_HOME;
         }
-        return url;
+        return url;*/
+        return "/admin/home";
     }
 
     public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
@@ -48,7 +46,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         return redirectStrategy;
     }
 
-    private boolean isAdmin(List<String> roles) {
+   /* private boolean isAdmin(List<String> roles) {
         if (roles.contains(SystemConstant.ADMIN_ROLE)) {
             return true;
         }
@@ -60,5 +58,5 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             return true;
         }
         return false;
-    }
+    }*/
 }

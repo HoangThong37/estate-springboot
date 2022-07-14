@@ -8,6 +8,7 @@ import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.service.impl.BuildingService;
 import com.laptrinhjavaweb.service.impl.UserService;
 import javassist.NotFoundException;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class BuildingAPI {
    @Autowired
    private UserService userService;
 
-  // private Logger LOGGER = Logger.getLogger(BuildingAPI.class);
+   private Logger LOGGER = Logger.getLogger(BuildingAPI.class);
 
    @GetMapping
    public List<BuildingSearchReponse> findAll(@RequestParam(required = false) Map<String, Object> params,

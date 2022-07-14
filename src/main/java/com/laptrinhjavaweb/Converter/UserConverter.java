@@ -32,15 +32,14 @@ public class UserConverter {
 
     public List<StaffAssignmentReponse> toStaffAssignmentResponses(List<UserEntity> staffAssignments) {
         List<StaffAssignmentReponse> staffAssignmentResponses = new ArrayList<>();
-        for (UserEntity item : userRepository.getAllStaff()) {
+        for (UserEntity flag : userRepository.getAllStaff()) {
             int i = 0;
             for (UserEntity item2 : staffAssignments) {
-                if(item.getId()==item2.getId())
+                if(flag.getId()==item2.getId())
                     i++;
             }
-            StaffAssignmentReponse staffAssignmentResponse = modelMapper.map(item,StaffAssignmentReponse.class);
-            if(i>0)
-             staffAssignmentResponse.setCheckes("checked");
+            StaffAssignmentReponse staffAssignmentResponse = modelMapper.map(flag,StaffAssignmentReponse.class);
+            if(i>0) staffAssignmentResponse.setCheckes("checked");
             staffAssignmentResponses.add(staffAssignmentResponse);
         }
         return staffAssignmentResponses;

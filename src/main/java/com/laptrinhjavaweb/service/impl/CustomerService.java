@@ -97,10 +97,10 @@ public class CustomerService implements ICustomerService {
     @Override
     @Transactional
     public List<Long> deleteCustomer(List<Long> customerId) throws NotFoundException {
-         if (customerRepository.findAll(customerId).size() != customerId.size()) {
+      /*   if (customerRepository.findAll(customerId).size() != customerId.size()) {
              throw new NotFoundException(SystemConstant.NF_CUSTOMER);
-         }
-        return customerRepository.deleteByIdIn(customerId);
+         }*/
+        return Optional.ofNullable(customerRepository.deleteByIdIn(customerId)).orElseThrow(() -> new NotFoundException(SystemConstant.NF_CUSTOMER));
     }
 
     @Override

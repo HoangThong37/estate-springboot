@@ -52,6 +52,7 @@ public class BuildingService implements IBuildingService {
             result.add(buildingConverter.convertToBuildingSearchReponse(item));
         }
         return result;
+
 /*        // java 8
         List<BuildingSearchReponse> buildingSearchReponses = buildingEntities.stream()
                                                                              .map(item -> buildingConverter.convertToBuildingSearchReponse(item))
